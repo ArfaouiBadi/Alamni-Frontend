@@ -1,0 +1,49 @@
+.gradient-custom-2 {
+   
+   background-color: #A020F0;
+    
+  
+    background-color: #A020F0;
+    
+
+    background: #A020F0;
+    }
+    
+    @media (min-width: 768px) {
+    .gradient-form {
+    height: 100vh !important;
+    }
+    }
+    @media (min-width: 769px) {
+    .gradient-custom-2 {
+    border-top-right-radius: .3rem;
+    border-bottom-right-radius: .3rem;
+    }
+    }
+
+
+
+    .btn-outline-purple {
+        border-color: #A020F0;
+        color: #A020F0;
+        background-color: white;
+      }
+      
+      .btn-outline-purple:hover {
+        background-color: #A020F0;
+        color: white;
+      }
+    
+.image-container {
+    display: flex;
+    justify-content: center;  
+    align-items: center;      
+    height: 100%;               
+  }
+  
+  
+  .centered-image {
+    width: 400px;            
+    height: auto;             
+  }
+  
