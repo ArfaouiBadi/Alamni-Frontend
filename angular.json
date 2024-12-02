@@ -30,11 +30,33 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/css/linearicons.css",
+  "src/assets/css/font-awesome.min.css",
+  "src/assets/css/bootstrap.css",
+  "src/assets/css/magnific-popup.css",
+  "src/assets/css/nice-select.css",
+  "src/assets/css/hexagons.min.css",
+  "https://cdn.jsdelivr.net/themify-icons/0.1.2/css/themify-icons.css",
+  "src/assets/css/main.css"
             ],
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-            ],
+ "scripts": [
+  "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+  "src/assets/js/vendor/jquery-2.2.4.min.js",
+  "src/assets/js/vendor/bootstrap.min.js",
+  "src/assets/js/jquery.ajaxchimp.min.js",
+  "src/assets/js/jquery.magnific-popup.min.js",
+  "src/assets/js/parallax.min.js",
+  "src/assets/js/owl.carousel.min.js",
+  "src/assets/js/jquery.sticky.js",
+  "src/assets/js/hexagons.min.js",
+  "src/assets/js/jquery.counterup.min.js",
+  "src/assets/js/waypoints.min.js",
+  "src/assets/js/jquery.nice-select.min.js",
+  "src/assets/js/main.js"
+]
+,
+
             "server": "src/main.server.ts",
             "prerender": true,
             "ssr": {
