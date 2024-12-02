@@ -1,0 +1,14 @@
+
+.navbar-title {
+    font-size: 36px; 
+    font-family: 'Baskerville'; 
+    font-weight: bold; 
+    color:white; 
+    text-transform: uppercase; 
+  }
+  
+  
+  .navbar .navbar-brand {
+    margin-right: 20px;
+  }
+  
