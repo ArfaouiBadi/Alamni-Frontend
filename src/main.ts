@@ -3,13 +3,15 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { AppComponent } from './app/app.component';
 import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideToastr } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { importProvidersFrom } from '@angular/core';
+
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
     provideHttpClient(withFetch()), // Enable fetch API
-    provideAnimations(),
-    provideToastr(),
+    importProvidersFrom(BrowserAnimationsModule),
+    importProvidersFrom(ToastrModule.forRoot()),
   ],
 }).catch((err) => console.error(err));
