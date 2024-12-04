@@ -19,6 +19,7 @@ export class UsersListComponent implements OnInit {
   users: any[] = [];
   addUserForm: FormGroup;
   isEmailVerified: boolean = false;
+  userIdToDelete: number | null = null; // Store the user ID to delete
 
   constructor(private userService: UserService, private fb: FormBuilder) {
     this.addUserForm = this.fb.group({
@@ -31,6 +32,8 @@ export class UsersListComponent implements OnInit {
       username: ['', [Validators.required, Validators.maxLength(20)]],
       password: ['', [Validators.required, Validators.maxLength(120)]],
       dateOfBirth: ['', Validators.required],
+      level: ['', Validators.required],
+      points: ['', Validators.required],
     });
   }
 
@@ -79,16 +82,25 @@ export class UsersListComponent implements OnInit {
     }
   }
 
-  deleteUser(id: number): void {
-    const confirmed = confirm('Are you sure you want to delete this user?');
-    if (confirmed) {
-      this.userService.deleteUser(id).subscribe(
+  confirmDeleteUser(id: number): void {
+    this.userIdToDelete = id; // Store the user ID to delete
+  }
+
+  deleteUser(): void {
+    if (this.userIdToDelete !== null) {
+      this.userService.deleteUser(this.userIdToDelete).subscribe(
         () => {
           console.log('User deleted successfully');
-          this.users = this.users.filter((user) => user.id !== id);
+
+          this.users = this.users.filter(
+            (user) => user.id !== this.userIdToDelete
+          );
+          this.userIdToDelete = null; // Reset the user ID to delete
         },
         (error: any) => {
           console.error('Error deleting user', error);
+          alert('Error deleting user.');
+          this.userIdToDelete = null; // Reset the user ID to delete
         }
       );
     }
