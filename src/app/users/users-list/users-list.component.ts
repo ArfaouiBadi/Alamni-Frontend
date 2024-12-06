@@ -7,6 +7,7 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-users-list',
@@ -21,7 +22,11 @@ export class UsersListComponent implements OnInit {
   isEmailVerified: boolean = false;
   userIdToDelete: number | null = null; // Store the user ID to delete
 
-  constructor(private userService: UserService, private fb: FormBuilder) {
+  constructor(
+    private userService: UserService,
+    private fb: FormBuilder,
+    private authService: AuthService
+  ) {
     this.addUserForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.maxLength(20)]],
       lastName: ['', [Validators.required, Validators.maxLength(20)]],
@@ -32,8 +37,8 @@ export class UsersListComponent implements OnInit {
       username: ['', [Validators.required, Validators.maxLength(20)]],
       password: ['', [Validators.required, Validators.maxLength(120)]],
       dateOfBirth: ['', Validators.required],
-      level: ['', Validators.required],
-      points: ['', Validators.required],
+      level: [1, Validators.required],
+      points: [0, Validators.required],
     });
   }
 
@@ -50,8 +55,10 @@ export class UsersListComponent implements OnInit {
   }
 
   registerUser(): void {
+    console.log('Registering user', this.addUserForm.value);
+    console.log('Form validity', this.addUserForm.valid);
     if (this.addUserForm.valid) {
-      this.userService.registerUser(this.addUserForm.value).subscribe(
+      this.authService.signUp(this.addUserForm.value).subscribe(
         (response: any) => {
           console.log('User registered successfully', response);
           alert('User registered successfully. Please verify your email.');

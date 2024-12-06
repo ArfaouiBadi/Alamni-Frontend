@@ -16,6 +16,7 @@ export class AuthService {
   }
 
   signUp(signUpData: any): Observable<any> {
+    console.log('signUpData', signUpData);
     return this.http.post(`${this.apiUrl}/auth/signup`, signUpData);
   }
 

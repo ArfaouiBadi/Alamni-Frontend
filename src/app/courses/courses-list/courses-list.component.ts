@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Console } from 'console';
 
 @Component({
   selector: 'app-courses-list',
@@ -30,6 +31,7 @@ export class CoursesListComponent implements OnInit {
   ) {
     this.addCourseForm = this.fb.group({
       title: ['', Validators.required],
+      imageUrl: ['', Validators.required],
       description: ['', Validators.required],
       duration: [0, Validators.required],
       category: ['', Validators.required],
@@ -40,7 +42,6 @@ export class CoursesListComponent implements OnInit {
         badges: this.fb.array([]),
         levels: [0, Validators.required],
       }),
-      imageUrl: ['', Validators.required],
     });
 
     this.editCourseForm = this.fb.group({
@@ -169,6 +170,7 @@ export class CoursesListComponent implements OnInit {
 
   onAddCourse(): void {
     if (this.addCourseForm.invalid) {
+      this.toastr.error('Please fill in all required fields.');
       return;
     }
 
