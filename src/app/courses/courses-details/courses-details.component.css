@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    color: #f3f3f3;
   }
   
   /* Main Container */
@@ -12,16 +13,17 @@
     height: 100vh;
     width: 100%;
     background-color: white;
+    
   }
   
   /* Course Header */
   .course-header {
-    display: flex;
+    display: flex;color: #f3f3f3;
     justify-content: flex-start;
     align-items: center;
-    padding: 40px 20px;
+    padding: 40px 80px;
     flex: 1;
-    background-image: url('https://i.pinimg.com/originals/30/6f/eb/306febf54e65d0bf77056bfc9dc1cd40.jpg'); /* Set the background image */
+    background-image: url('../../../assets/img/detailpage.png'); /* Set the background image */
     background-size: cover; /* Cover the entire header area */
     background-position: center; /* Center the image */
     color: white; /* Make sure text is readable on top of the background */
@@ -38,18 +40,18 @@
   }
   
   .header-left h1 {
-    font-size: 32px;
-    color: #333;
+    font-size: 50px;
+    color: #fff;
     margin-bottom: 15px;
   }
   
   .header-left .instructor {
-    color: gray;
+    color: white;
     margin-bottom: 20px;
   }
   
   .header-left .instructor a {
-    color: #A020F0;
+    color: white;
     text-decoration: none;
     font-weight: bold;
   }
@@ -72,7 +74,7 @@
   .header-left .stats,
   .header-left .coursera-plus {
     font-size: 16px;
-    color:#333;
+    color: white;
   }
   
   .header-left .plus {
@@ -100,8 +102,8 @@
   }
   
   .detail-box h3 {
-    font-size: 20px;
-    color: #333;
+    font-size: 30px;
+    color: #555;
     margin-bottom: 10px;
   }
   
@@ -114,8 +116,8 @@
   }
   
   .modules-section h3 {
-    font-size: 20px;
-    color: #333;
+    font-size: 30px;
+    color: white;
     margin-bottom: 10px;
   }
   
