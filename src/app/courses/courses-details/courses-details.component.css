@@ -21,7 +21,7 @@
     align-items: center;
     padding: 40px 20px;
     flex: 1;
-    background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20230706/pngtree-3d-rendered-graphic-design-on-computer-image_3815260.jpg'); /* Set the background image */
+    background-image: url('https://i.pinimg.com/originals/30/6f/eb/306febf54e65d0bf77056bfc9dc1cd40.jpg'); /* Set the background image */
     background-size: cover; /* Cover the entire header area */
     background-position: center; /* Center the image */
     color: white; /* Make sure text is readable on top of the background */
@@ -72,11 +72,11 @@
   .header-left .stats,
   .header-left .coursera-plus {
     font-size: 16px;
-    color: gray;
+    color:#333;
   }
   
   .header-left .plus {
-    color: #A020F0;
+    color: white;
     font-weight: bold;
   }
   
@@ -108,5 +108,55 @@
   .detail-box p {
     color: gray;
     font-size: 14px;
+  }
+  .modules-section {
+    margin-top: 20px;
+  }
+  
+  .modules-section h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .modules-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .modules-list li {
+    margin: 5px 0;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color:black;
+  }
+  
+  .modules-list li span {
+    font-size: 14px;
+    color: #555;
+  }
+  .lesson-btn {
+    background-color: #A020F0;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 150px; 
+    text-align: center;
+    margin-left: auto; 
+    display: block;
+  }
+  
+  .lesson-btn:hover {
+    background-color: #800080;
+  }
+  
+  
+  .lesson-btn + .lesson-btn {
+    margin-top: 10px;
   }
   

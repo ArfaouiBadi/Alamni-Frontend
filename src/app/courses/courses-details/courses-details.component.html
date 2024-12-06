@@ -1,21 +1,42 @@
 <div class="course-container" *ngIf="course">
     <div class="course-header">
       <div class="header-left">
-        <img
-          [src]="course.imageUrl || '../../assets/img/blog-post/default.jpg'"
-          alt="{{ course.title }}"
-          class="logo"
-        />
         <h1>{{ course.title }}</h1>
-       
-  
         <button class="enroll-btn">Enroll for Free</button>
-        <br>
-        <button class="enroll-btn">Quiz</button>
-        <p class="stats"> already enrolled</p>
+        <br />
+       
+        <p class="stats">Already enrolled</p>
         <p class="coursera-plus">
           Included with <span class="plus">Alamni</span>
         </p>
+  
+        <div class="modules-section" *ngIf="course.modules && course.modules.length > 0">
+          <h3>Modules</h3>
+          <ul class="modules-list">
+            <li *ngFor="let module of course.modules">
+              <span>{{ module.title }}</span>
+              <ul>
+                <li *ngFor="let lesson of module.lessons">
+                  {{ lesson.title }} - {{ lesson.type }}
+                  <button
+                    *ngIf="lesson.type === 'Video'"
+                    class="lesson-btn"
+                    
+                  >
+                    Watch Video
+                  </button>
+                  <button
+                    *ngIf="lesson.type === 'PDF'"
+                    class="lesson-btn"
+                    
+                  >
+                    Quiz
+                  </button>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   
