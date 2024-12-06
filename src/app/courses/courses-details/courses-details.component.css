@@ -21,6 +21,10 @@
     align-items: center;
     padding: 40px 20px;
     flex: 1;
+    background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20230706/pngtree-3d-rendered-graphic-design-on-computer-image_3815260.jpg'); /* Set the background image */
+    background-size: cover; /* Cover the entire header area */
+    background-position: center; /* Center the image */
+    color: white; /* Make sure text is readable on top of the background */
   }
   
   .header-left {
