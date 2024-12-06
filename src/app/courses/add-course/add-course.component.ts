@@ -1,78 +1,79 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { CourseService } from '../../service/course.service';
-import { Course } from '../../service/course.service';
-import { ReactiveFormsModule } from '@angular/forms';
-
-interface AddCourseFormControls {
-  title: FormControl<string | null>;
-  description: FormControl<string | null>;
-  levelRequired: FormControl<string | null>;
-  duration: FormControl<string | null>;
-  category: FormControl<string | null>;
-}
+import { Course } from '../../interface/course';
 
 @Component({
   selector: 'app-add-course',
-  standalone: true,
   templateUrl: './add-course.component.html',
   styleUrls: ['./add-course.component.css'],
-  imports: [ReactiveFormsModule],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
 })
-export class AddCourseComponent {
-  addCourseForm: FormGroup<AddCourseFormControls>;
-  isSubmitted = false;
+export class AddCourseComponent implements OnInit {
+  addCourseForm: FormGroup;
+  selectedFile: File | null = null;
   successMessage: string | null = null;
   errorMessage: string | null = null;
 
-  constructor(
-    private fb: FormBuilder,
-    private courseService: CourseService,
-    private router: Router
-  ) {
+  constructor(private fb: FormBuilder, private courseService: CourseService) {
     this.addCourseForm = this.fb.group({
-      title: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
-      levelRequired: new FormControl('', [Validators.required]),
-      duration: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
-      category: new FormControl('', [Validators.required]),
+      title: ['', Validators.required],
+      description: ['', Validators.required],
+      duration: [0, Validators.required],
+      category: ['', Validators.required],
+      levelRequired: [0, Validators.required],
+      modules: this.fb.array([]), // Initialize modules as a FormArray
+      rewardSystem: this.fb.group({
+        points: [0],
+        badges: this.fb.array([]),
+        levels: this.fb.array([]),
+      }),
+      visibility: ['Public', Validators.required],
     });
   }
 
-  // Convenience getter for easy access to form fields
-  get f() {
-    return this.addCourseForm.controls;
+  ngOnInit(): void {}
+
+  get modules(): FormArray {
+    return this.addCourseForm.get('modules') as FormArray;
   }
 
-  onSubmit(): void {
-    this.isSubmitted = true;
-
-    // If the form is invalid, return
-    if (this.addCourseForm.invalid) {
-      return;
-    }
-
-    // Create course object
-    const newCourse: Course = {
-      title: this.f.title.value,
-      description: this.f.description.value,
-      levelRequired: this.f.levelRequired.value,
-      duration: this.f.duration.value,
-      category: this.f.category.value,
-    };
-
-    // Call the service to add the course
-    this.courseService.addCourse(newCourse).subscribe(
-      (response) => {
-        this.successMessage = 'Course added successfully!';
-        this.errorMessage = null;
-        this.router.navigate(['/courses']); // Navigate to the course list after successful submission
-      },
-      (error) => {
-        this.errorMessage = 'Error adding course. Please try again!';
-        this.successMessage = null;
-      }
+  addModule(): void {
+    this.modules.push(
+      this.fb.group({
+        title: ['', Validators.required],
+        duration: [0, Validators.required],
+        lessons: this.fb.array([]), // Initialize lessons as a FormArray within each module
+      })
     );
   }
+
+  addLesson(moduleIndex: number): void {
+    const lessons = this.modules.at(moduleIndex).get('lessons') as FormArray;
+    lessons.push(
+      this.fb.group({
+        title: ['', Validators.required],
+        type: ['Video', Validators.required],
+        videoUrl: [''],
+        pdfUrl: [''],
+        generateQuiz: [false],
+        content: [''],
+      })
+    );
+  }
+
+  removeLesson(moduleIndex: number, lessonIndex: number): void {
+    const lessons = this.modules.at(moduleIndex).get('lessons') as FormArray;
+    lessons.removeAt(lessonIndex);
+  }
+
+  onAddCourse(): void {}
 }

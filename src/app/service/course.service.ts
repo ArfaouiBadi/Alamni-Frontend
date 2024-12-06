@@ -1,46 +1,29 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-export interface Course {
-  id?: string;
-  title: string;
-  description: string;
-  levelRequired: string;
-  duration: number;
-  category: string;
-}
+import { Course } from '../interface/course';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CourseService {
-  private apiUrl = 'http://localhost:8000/api/courses';
+  private readonly apiUrl = 'http://localhost:8000/api';
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
- 
+  addCourse(course: Course): Observable<any> {
+    return this.http.post(`${this.apiUrl}/courses`, course);
+  }
+
   getCourses(): Observable<Course[]> {
-    return this.http.get<Course[]>(this.apiUrl);
+    return this.http.get<Course[]>(`${this.apiUrl}/courses`);
+  }
+  updateCourse(course: Course): Observable<any> {
+    console.log(course);
+    return this.http.put(`${this.apiUrl}/courses`, course);
   }
 
- 
-  getCourseById(id: string): Observable<Course> {
-    return this.http.get<Course>(`${this.apiUrl}/${id}`);
-  }
-
- 
-  addCourse(course: Course): Observable<Course> {
-    return this.http.post<Course>(this.apiUrl, course);
-  }
-
- 
-  updateCourse(id: string, course: Course): Observable<Course> {
-    return this.http.put<Course>(`${this.apiUrl}/${id}`, course);
-  }
-
-
-  deleteCourse(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  deleteCourse(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/courses/${id}`);
   }
 }
