@@ -1,0 +1,108 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Main Container */
+  .course-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    background-color: white;
+  }
+  
+  /* Course Header */
+  .course-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 40px 20px;
+    flex: 1;
+  }
+  
+  .header-left {
+    width: 40%; /* Adjust this percentage to control the size */
+    text-align: left;
+  }
+  
+  .header-left .logo {
+    max-height: 50px;
+    margin-bottom: 10px;
+  }
+  
+  .header-left h1 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  .header-left .instructor {
+    color: gray;
+    margin-bottom: 20px;
+  }
+  
+  .header-left .instructor a {
+    color: #A020F0;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .header-left .enroll-btn {
+    background-color: #A020F0;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  .header-left .enroll-btn:hover {
+    background-color: #800080;
+  }
+  
+  .header-left .stats,
+  .header-left .coursera-plus {
+    font-size: 16px;
+    color: gray;
+  }
+  
+  .header-left .plus {
+    color: #A020F0;
+    font-weight: bold;
+  }
+  
+  /* Course Details Section */
+  .course-details {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    background-color: #f3f3f3;
+    padding: 20px;
+  }
+  
+  .detail-box {
+    text-align: center;
+    flex: 1 1 180px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .detail-box h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .detail-box p {
+    color: gray;
+    font-size: 14px;
+  }
+  

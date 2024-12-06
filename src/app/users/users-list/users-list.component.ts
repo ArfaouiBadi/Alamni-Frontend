@@ -32,8 +32,8 @@ export class UsersListComponent implements OnInit {
       username: ['', [Validators.required, Validators.maxLength(20)]],
       password: ['', [Validators.required, Validators.maxLength(120)]],
       dateOfBirth: ['', Validators.required],
-      level: ['', Validators.required],
-      points: ['', Validators.required],
+      level: [0, Validators.required],
+      points: [0, Validators.required],
     });
   }
 
@@ -50,6 +50,8 @@ export class UsersListComponent implements OnInit {
   }
 
   registerUser(): void {
+    console.log(this.addUserForm.value);
+    console.log(this.addUserForm.valid);
     if (this.addUserForm.valid) {
       this.userService.registerUser(this.addUserForm.value).subscribe(
         (response: any) => {
