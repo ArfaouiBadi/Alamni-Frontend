@@ -1,0 +1,39 @@
+<div class="course-container" *ngIf="course">
+    <div class="course-header">
+      <div class="header-left">
+        <img
+          [src]="course.imageUrl || '../../assets/img/blog-post/default.jpg'"
+          alt="{{ course.title }}"
+          class="logo"
+        />
+        <h1>{{ course.title }}</h1>
+        <p class="instructor">Instructor: </p>
+  
+        <button class="enroll-btn">Enroll for Free</button>
+        <p class="stats"> already enrolled</p>
+        <p class="coursera-plus">
+          Included with <span class="plus">Alamni</span>
+        </p>
+      </div>
+    </div>
+  
+    <div class="course-details">
+      <div class="detail-box">
+        <h3>Category</h3>
+        <p>{{ course.category }}</p>
+      </div>
+      <div class="detail-box">
+        <h3>Level Required</h3>
+        <p>{{ course.levelRequired }}</p>
+      </div>
+      <div class="detail-box">
+        <h3>Duration</h3>
+        <p>{{ course.duration }} mins</p>
+      </div>
+      <div class="detail-box">
+        <h3>Description</h3>
+        <p>{{ course.description }}</p>
+      </div>
+    </div>
+  </div>
+  
