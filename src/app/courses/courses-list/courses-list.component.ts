@@ -23,7 +23,7 @@ export class CoursesListComponent implements OnInit {
   selectedCourse: Course | null = null;
   successMessage: string | null = null;
   errorMessage: string | null = null;
-
+  courseIdToDelete: string | null = null;
   constructor(
     private readonly fb: FormBuilder,
     private readonly courseService: CourseService,
@@ -69,7 +69,9 @@ export class CoursesListComponent implements OnInit {
       this.courses = courses;
     });
   }
-
+  confirmDeleteCourse(courseId: string): void {
+    this.courseIdToDelete = courseId;
+  }
   get modules(): FormArray {
     return this.addCourseForm.get('modules') as FormArray;
   }
@@ -245,10 +247,11 @@ export class CoursesListComponent implements OnInit {
     });
   }
 
-  onDeleteCourse(courseId: string | undefined): void {
-    if (!courseId) return;
+  deleteCourse(): void {
+    console.log('Deleting course:', this.courseIdToDelete);
+    if (!this.courseIdToDelete) return;
 
-    this.courseService.deleteCourse(courseId).subscribe({
+    this.courseService.deleteCourse(this.courseIdToDelete).subscribe({
       next: () => {
         this.loadCourses();
         this.toastr.success('Course deleted successfully!');
