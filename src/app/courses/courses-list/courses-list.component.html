@@ -168,7 +168,14 @@
               </button>
             </div>
             <div class="modal-body">
-              <div class="form-group">
+              <div
+                class="form-group"
+                [ngClass]="{
+                  'has-error':
+                    addCourseForm.get('title')?.invalid &&
+                    addCourseForm.get('title')?.touched
+                }"
+              >
                 <label>Title</label>
                 <input
                   type="text"
@@ -176,16 +183,73 @@
                   formControlName="title"
                   required
                 />
+                <div
+                  *ngIf="
+                    addCourseForm.get('title')?.invalid &&
+                    addCourseForm.get('title')?.touched
+                  "
+                  class="text-danger"
+                >
+                  Title is required.
+                </div>
               </div>
-              <div class="form-group">
+              <div
+                class="form-group"
+                [ngClass]="{
+                  'has-error':
+                    addCourseForm.get('imageUrl')?.invalid &&
+                    addCourseForm.get('imageUrl')?.touched
+                }"
+              >
+                <label>Image URL</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="imageUrl"
+                  required
+                />
+                <div
+                  *ngIf="
+                    addCourseForm.get('imageUrl')?.invalid &&
+                    addCourseForm.get('imageUrl')?.touched
+                  "
+                  class="text-danger"
+                >
+                  Image URL is required.
+                </div>
+              </div>
+              <div
+                class="form-group"
+                [ngClass]="{
+                  'has-error':
+                    addCourseForm.get('description')?.invalid &&
+                    addCourseForm.get('description')?.touched
+                }"
+              >
                 <label>Description</label>
                 <textarea
                   class="form-control"
                   formControlName="description"
                   required
                 ></textarea>
+                <div
+                  *ngIf="
+                    addCourseForm.get('description')?.invalid &&
+                    addCourseForm.get('description')?.touched
+                  "
+                  class="text-danger"
+                >
+                  Description is required.
+                </div>
               </div>
-              <div class="form-group">
+              <div
+                class="form-group"
+                [ngClass]="{
+                  'has-error':
+                    addCourseForm.get('duration')?.invalid &&
+                    addCourseForm.get('duration')?.touched
+                }"
+              >
                 <label>Duration (minutes)</label>
                 <input
                   type="number"
@@ -193,8 +257,24 @@
                   formControlName="duration"
                   required
                 />
+                <div
+                  *ngIf="
+                    addCourseForm.get('duration')?.invalid &&
+                    addCourseForm.get('duration')?.touched
+                  "
+                  class="text-danger"
+                >
+                  Duration is required.
+                </div>
               </div>
-              <div class="form-group">
+              <div
+                class="form-group"
+                [ngClass]="{
+                  'has-error':
+                    addCourseForm.get('category')?.invalid &&
+                    addCourseForm.get('category')?.touched
+                }"
+              >
                 <label>Category</label>
                 <input
                   type="text"
@@ -202,8 +282,24 @@
                   formControlName="category"
                   required
                 />
+                <div
+                  *ngIf="
+                    addCourseForm.get('category')?.invalid &&
+                    addCourseForm.get('category')?.touched
+                  "
+                  class="text-danger"
+                >
+                  Category is required.
+                </div>
               </div>
-              <div class="form-group">
+              <div
+                class="form-group"
+                [ngClass]="{
+                  'has-error':
+                    addCourseForm.get('levelRequired')?.invalid &&
+                    addCourseForm.get('levelRequired')?.touched
+                }"
+              >
                 <label>Level Required</label>
                 <input
                   type="number"
@@ -211,8 +307,16 @@
                   formControlName="levelRequired"
                   required
                 />
+                <div
+                  *ngIf="
+                    addCourseForm.get('levelRequired')?.invalid &&
+                    addCourseForm.get('levelRequired')?.touched
+                  "
+                  class="text-danger"
+                >
+                  Level Required is required.
+                </div>
               </div>
-
               <div class="form-group">
                 <label>Modules</label>
                 <div formArrayName="modules">
@@ -221,7 +325,14 @@
                     [formGroupName]="i"
                     class="module-section"
                   >
-                    <div class="form-group">
+                    <div
+                      class="form-group"
+                      [ngClass]="{
+                        'has-error':
+                          module.get('title')?.invalid &&
+                          module.get('title')?.touched
+                      }"
+                    >
                       <label>Module Title</label>
                       <input
                         type="text"
@@ -229,8 +340,24 @@
                         formControlName="title"
                         required
                       />
+                      <div
+                        *ngIf="
+                          module.get('title')?.invalid &&
+                          module.get('title')?.touched
+                        "
+                        class="text-danger"
+                      >
+                        Module Title is required.
+                      </div>
                     </div>
-                    <div class="form-group">
+                    <div
+                      class="form-group"
+                      [ngClass]="{
+                        'has-error':
+                          module.get('duration')?.invalid &&
+                          module.get('duration')?.touched
+                      }"
+                    >
                       <label>Module Duration (minutes)</label>
                       <input
                         type="number"
@@ -238,6 +365,15 @@
                         formControlName="duration"
                         required
                       />
+                      <div
+                        *ngIf="
+                          module.get('duration')?.invalid &&
+                          module.get('duration')?.touched
+                        "
+                        class="text-danger"
+                      >
+                        Module Duration is required.
+                      </div>
                     </div>
                     <div class="form-group">
                       <label>Lessons</label>
@@ -250,7 +386,14 @@
                           [formGroupName]="j"
                           class="lesson-section"
                         >
-                          <div class="form-group">
+                          <div
+                            class="form-group"
+                            [ngClass]="{
+                              'has-error':
+                                lesson.get('title')?.invalid &&
+                                lesson.get('title')?.touched
+                            }"
+                          >
                             <label>Lesson Title</label>
                             <input
                               type="text"
@@ -258,8 +401,24 @@
                               formControlName="title"
                               required
                             />
+                            <div
+                              *ngIf="
+                                lesson.get('title')?.invalid &&
+                                lesson.get('title')?.touched
+                              "
+                              class="text-danger"
+                            >
+                              Lesson Title is required.
+                            </div>
                           </div>
-                          <div class="form-group">
+                          <div
+                            class="form-group"
+                            [ngClass]="{
+                              'has-error':
+                                lesson.get('type')?.invalid &&
+                                lesson.get('type')?.touched
+                            }"
+                          >
                             <label>Type</label>
                             <select
                               class="form-control"
@@ -270,10 +429,24 @@
                               <option value="Video">Video</option>
                               <option value="PDF">PDF</option>
                             </select>
+                            <div
+                              *ngIf="
+                                lesson.get('type')?.invalid &&
+                                lesson.get('type')?.touched
+                              "
+                              class="text-danger"
+                            >
+                              Type is required.
+                            </div>
                           </div>
                           <div
                             class="form-group"
                             *ngIf="lesson.get('type')?.value === 'Video'"
+                            [ngClass]="{
+                              'has-error':
+                                lesson.get('videoUrl')?.invalid &&
+                                lesson.get('videoUrl')?.touched
+                            }"
                           >
                             <label>Video URL</label>
                             <input
@@ -281,10 +454,24 @@
                               class="form-control"
                               formControlName="videoUrl"
                             />
+                            <div
+                              *ngIf="
+                                lesson.get('videoUrl')?.invalid &&
+                                lesson.get('videoUrl')?.touched
+                              "
+                              class="text-danger"
+                            >
+                              Video URL is required.
+                            </div>
                           </div>
                           <div
                             class="form-group"
                             *ngIf="lesson.get('type')?.value === 'PDF'"
+                            [ngClass]="{
+                              'has-error':
+                                lesson.get('pdfUrl')?.invalid &&
+                                lesson.get('pdfUrl')?.touched
+                            }"
                           >
                             <label>PDF URL</label>
                             <input
@@ -292,13 +479,38 @@
                               class="form-control"
                               formControlName="pdfUrl"
                             />
+                            <div
+                              *ngIf="
+                                lesson.get('pdfUrl')?.invalid &&
+                                lesson.get('pdfUrl')?.touched
+                              "
+                              class="text-danger"
+                            >
+                              PDF URL is required.
+                            </div>
                           </div>
-                          <div class="form-group">
+                          <div
+                            class="form-group"
+                            [ngClass]="{
+                              'has-error':
+                                lesson.get('content')?.invalid &&
+                                lesson.get('content')?.touched
+                            }"
+                          >
                             <label>Content</label>
                             <textarea
                               class="form-control"
                               formControlName="content"
                             ></textarea>
+                            <div
+                              *ngIf="
+                                lesson.get('content')?.invalid &&
+                                lesson.get('content')?.touched
+                              "
+                              class="text-danger"
+                            >
+                              Content is required.
+                            </div>
                           </div>
                           <button
                             type="button"
@@ -330,23 +542,50 @@
               <div class="form-group">
                 <label>Reward System</label>
                 <div formGroupName="rewardSystem">
-                  <div class="form-group">
+                  <div
+                    class="form-group"
+                    [ngClass]="{
+                      'has-error':
+                        addCourseForm.get('rewardSystem.points')?.invalid &&
+                        addCourseForm.get('rewardSystem.points')?.touched
+                    }"
+                  >
                     <label>Points</label>
                     <input
                       type="number"
                       class="form-control"
                       formControlName="points"
                     />
+                    <div
+                      *ngIf="
+                        addCourseForm.get('rewardSystem.points')?.invalid &&
+                        addCourseForm.get('rewardSystem.points')?.touched
+                      "
+                      class="text-danger"
+                    >
+                      Points are required.
+                    </div>
                   </div>
                   <div class="form-group">
                     <label>Badges</label>
                     <div formArrayName="badges">
-                      <div *ngFor="let badge of badges.controls; let i = index">
+                      <div
+                        *ngFor="let badge of badges.controls; let i = index"
+                        [ngClass]="{
+                          'has-error': badge.invalid && badge.touched
+                        }"
+                      >
                         <input
                           type="text"
                           class="form-control"
                           [formControlName]="i"
                         />
+                        <div
+                          *ngIf="badge.invalid && badge.touched"
+                          class="text-danger"
+                        >
+                          Badge is required.
+                        </div>
                         <button
                           type="button"
                           class="btn btn-danger"
@@ -364,13 +603,29 @@
                       </button>
                     </div>
                   </div>
-                  <div class="form-group">
+                  <div
+                    class="form-group"
+                    [ngClass]="{
+                      'has-error':
+                        addCourseForm.get('rewardSystem.levels')?.invalid &&
+                        addCourseForm.get('rewardSystem.levels')?.touched
+                    }"
+                  >
                     <label>Levels</label>
                     <input
                       type="number"
                       class="form-control"
                       formControlName="levels"
                     />
+                    <div
+                      *ngIf="
+                        addCourseForm.get('rewardSystem.levels')?.invalid &&
+                        addCourseForm.get('rewardSystem.levels')?.touched
+                      "
+                      class="text-danger"
+                    >
+                      Levels are required.
+                    </div>
                   </div>
                 </div>
               </div>
@@ -382,7 +637,13 @@
                 data-dismiss="modal"
                 value="Cancel"
               />
-              <button type="submit" class="btn btn-primary">Add Course</button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="addCourseForm.invalid"
+              >
+                Add Course
+              </button>
             </div>
           </form>
         </div>
@@ -405,7 +666,14 @@
               </button>
             </div>
             <div class="modal-body">
-              <div class="form-group">
+              <div
+                class="form-group"
+                [ngClass]="{
+                  'has-error':
+                    editCourseForm.get('title')?.invalid &&
+                    editCourseForm.get('title')?.touched
+                }"
+              >
                 <label>Title</label>
                 <input
                   type="text"
@@ -413,8 +681,24 @@
                   formControlName="title"
                   required
                 />
+                <div
+                  *ngIf="
+                    editCourseForm.get('title')?.invalid &&
+                    editCourseForm.get('title')?.touched
+                  "
+                  class="text-danger"
+                >
+                  Title is required.
+                </div>
               </div>
-              <div class="form-group">
+              <div
+                class="form-group"
+                [ngClass]="{
+                  'has-error':
+                    editCourseForm.get('imageUrl')?.invalid &&
+                    editCourseForm.get('imageUrl')?.touched
+                }"
+              >
                 <label>Image URL</label>
                 <input
                   type="text"
@@ -422,16 +706,48 @@
                   formControlName="imageUrl"
                   required
                 />
+                <div
+                  *ngIf="
+                    editCourseForm.get('imageUrl')?.invalid &&
+                    editCourseForm.get('imageUrl')?.touched
+                  "
+                  class="text-danger"
+                >
+                  Image URL is required.
+                </div>
               </div>
-              <div class="form-group">
+              <div
+                class="form-group"
+                [ngClass]="{
+                  'has-error':
+                    editCourseForm.get('description')?.invalid &&
+                    editCourseForm.get('description')?.touched
+                }"
+              >
                 <label>Description</label>
                 <textarea
                   class="form-control"
                   formControlName="description"
                   required
                 ></textarea>
+                <div
+                  *ngIf="
+                    editCourseForm.get('description')?.invalid &&
+                    editCourseForm.get('description')?.touched
+                  "
+                  class="text-danger"
+                >
+                  Description is required.
+                </div>
               </div>
-              <div class="form-group">
+              <div
+                class="form-group"
+                [ngClass]="{
+                  'has-error':
+                    editCourseForm.get('duration')?.invalid &&
+                    editCourseForm.get('duration')?.touched
+                }"
+              >
                 <label>Duration (minutes)</label>
                 <input
                   type="number"
@@ -439,8 +755,24 @@
                   formControlName="duration"
                   required
                 />
+                <div
+                  *ngIf="
+                    editCourseForm.get('duration')?.invalid &&
+                    editCourseForm.get('duration')?.touched
+                  "
+                  class="text-danger"
+                >
+                  Duration is required.
+                </div>
               </div>
-              <div class="form-group">
+              <div
+                class="form-group"
+                [ngClass]="{
+                  'has-error':
+                    editCourseForm.get('category')?.invalid &&
+                    editCourseForm.get('category')?.touched
+                }"
+              >
                 <label>Category</label>
                 <input
                   type="text"
@@ -448,8 +780,24 @@
                   formControlName="category"
                   required
                 />
+                <div
+                  *ngIf="
+                    editCourseForm.get('category')?.invalid &&
+                    editCourseForm.get('category')?.touched
+                  "
+                  class="text-danger"
+                >
+                  Category is required.
+                </div>
               </div>
-              <div class="form-group">
+              <div
+                class="form-group"
+                [ngClass]="{
+                  'has-error':
+                    editCourseForm.get('levelRequired')?.invalid &&
+                    editCourseForm.get('levelRequired')?.touched
+                }"
+              >
                 <label>Level Required</label>
                 <input
                   type="number"
@@ -457,8 +805,16 @@
                   formControlName="levelRequired"
                   required
                 />
+                <div
+                  *ngIf="
+                    editCourseForm.get('levelRequired')?.invalid &&
+                    editCourseForm.get('levelRequired')?.touched
+                  "
+                  class="text-danger"
+                >
+                  Level Required is required.
+                </div>
               </div>
-
               <div class="form-group">
                 <label>Modules</label>
                 <div formArrayName="modules">
@@ -467,7 +823,14 @@
                     [formGroupName]="i"
                     class="module-section"
                   >
-                    <div class="form-group">
+                    <div
+                      class="form-group"
+                      [ngClass]="{
+                        'has-error':
+                          module.get('title')?.invalid &&
+                          module.get('title')?.touched
+                      }"
+                    >
                       <label>Module Title</label>
                       <input
                         type="text"
@@ -475,8 +838,24 @@
                         formControlName="title"
                         required
                       />
+                      <div
+                        *ngIf="
+                          module.get('title')?.invalid &&
+                          module.get('title')?.touched
+                        "
+                        class="text-danger"
+                      >
+                        Module Title is required.
+                      </div>
                     </div>
-                    <div class="form-group">
+                    <div
+                      class="form-group"
+                      [ngClass]="{
+                        'has-error':
+                          module.get('duration')?.invalid &&
+                          module.get('duration')?.touched
+                      }"
+                    >
                       <label>Module Duration (minutes)</label>
                       <input
                         type="number"
@@ -484,6 +863,15 @@
                         formControlName="duration"
                         required
                       />
+                      <div
+                        *ngIf="
+                          module.get('duration')?.invalid &&
+                          module.get('duration')?.touched
+                        "
+                        class="text-danger"
+                      >
+                        Module Duration is required.
+                      </div>
                     </div>
                     <div class="form-group">
                       <label>Lessons</label>
@@ -496,7 +884,14 @@
                           [formGroupName]="j"
                           class="lesson-section"
                         >
-                          <div class="form-group">
+                          <div
+                            class="form-group"
+                            [ngClass]="{
+                              'has-error':
+                                lesson.get('title')?.invalid &&
+                                lesson.get('title')?.touched
+                            }"
+                          >
                             <label>Lesson Title</label>
                             <input
                               type="text"
@@ -504,8 +899,24 @@
                               formControlName="title"
                               required
                             />
+                            <div
+                              *ngIf="
+                                lesson.get('title')?.invalid &&
+                                lesson.get('title')?.touched
+                              "
+                              class="text-danger"
+                            >
+                              Lesson Title is required.
+                            </div>
                           </div>
-                          <div class="form-group">
+                          <div
+                            class="form-group"
+                            [ngClass]="{
+                              'has-error':
+                                lesson.get('type')?.invalid &&
+                                lesson.get('type')?.touched
+                            }"
+                          >
                             <label>Type</label>
                             <select
                               class="form-control"
@@ -516,10 +927,24 @@
                               <option value="Video">Video</option>
                               <option value="PDF">PDF</option>
                             </select>
+                            <div
+                              *ngIf="
+                                lesson.get('type')?.invalid &&
+                                lesson.get('type')?.touched
+                              "
+                              class="text-danger"
+                            >
+                              Type is required.
+                            </div>
                           </div>
                           <div
                             class="form-group"
                             *ngIf="lesson.get('type')?.value === 'Video'"
+                            [ngClass]="{
+                              'has-error':
+                                lesson.get('videoUrl')?.invalid &&
+                                lesson.get('videoUrl')?.touched
+                            }"
                           >
                             <label>Video URL</label>
                             <input
@@ -527,10 +952,24 @@
                               class="form-control"
                               formControlName="videoUrl"
                             />
+                            <div
+                              *ngIf="
+                                lesson.get('videoUrl')?.invalid &&
+                                lesson.get('videoUrl')?.touched
+                              "
+                              class="text-danger"
+                            >
+                              Video URL is required.
+                            </div>
                           </div>
                           <div
                             class="form-group"
                             *ngIf="lesson.get('type')?.value === 'PDF'"
+                            [ngClass]="{
+                              'has-error':
+                                lesson.get('pdfUrl')?.invalid &&
+                                lesson.get('pdfUrl')?.touched
+                            }"
                           >
                             <label>PDF URL</label>
                             <input
@@ -538,13 +977,38 @@
                               class="form-control"
                               formControlName="pdfUrl"
                             />
+                            <div
+                              *ngIf="
+                                lesson.get('pdfUrl')?.invalid &&
+                                lesson.get('pdfUrl')?.touched
+                              "
+                              class="text-danger"
+                            >
+                              PDF URL is required.
+                            </div>
                           </div>
-                          <div class="form-group">
+                          <div
+                            class="form-group"
+                            [ngClass]="{
+                              'has-error':
+                                lesson.get('content')?.invalid &&
+                                lesson.get('content')?.touched
+                            }"
+                          >
                             <label>Content</label>
                             <textarea
                               class="form-control"
                               formControlName="content"
                             ></textarea>
+                            <div
+                              *ngIf="
+                                lesson.get('content')?.invalid &&
+                                lesson.get('content')?.touched
+                              "
+                              class="text-danger"
+                            >
+                              Content is required.
+                            </div>
                           </div>
                           <button
                             type="button"
@@ -576,27 +1040,51 @@
               <div class="form-group">
                 <label>Reward System</label>
                 <div formGroupName="rewardSystem">
-                  <div class="form-group">
+                  <div
+                    class="form-group"
+                    [ngClass]="{
+                      'has-error':
+                        editCourseForm.get('rewardSystem.points')?.invalid &&
+                        editCourseForm.get('rewardSystem.points')?.touched
+                    }"
+                  >
                     <label>Points</label>
                     <input
                       type="number"
                       class="form-control"
                       formControlName="points"
                     />
+                    <div
+                      *ngIf="
+                        editCourseForm.get('rewardSystem.points')?.invalid &&
+                        editCourseForm.get('rewardSystem.points')?.touched
+                      "
+                      class="text-danger"
+                    >
+                      Points are required.
+                    </div>
                   </div>
                   <div class="form-group">
                     <label>Badges</label>
                     <div formArrayName="badges">
-                      <div *ngFor="let badge of badges.controls; let i = index">
+                      <div
+                        *ngFor="let badge of editBadges.controls; let i = index"
+                      >
                         <input
                           type="text"
                           class="form-control"
                           [formControlName]="i"
                         />
+                        <div
+                          *ngIf="badge.invalid && badge.touched"
+                          class="text-danger"
+                        >
+                          Badge is required.
+                        </div>
                         <button
                           type="button"
                           class="btn btn-danger"
-                          (click)="removeBadge(i)"
+                          (click)="removeEditBadge(i)"
                         >
                           Remove Badge
                         </button>
@@ -604,19 +1092,35 @@
                       <button
                         type="button"
                         class="btn btn-secondary"
-                        (click)="addBadge()"
+                        (click)="addEditBadge()"
                       >
                         Add Badge
                       </button>
                     </div>
                   </div>
-                  <div class="form-group">
+                  <div
+                    class="form-group"
+                    [ngClass]="{
+                      'has-error':
+                        editCourseForm.get('rewardSystem.levels')?.invalid &&
+                        editCourseForm.get('rewardSystem.levels')?.touched
+                    }"
+                  >
                     <label>Levels</label>
                     <input
                       type="number"
                       class="form-control"
                       formControlName="levels"
                     />
+                    <div
+                      *ngIf="
+                        editCourseForm.get('rewardSystem.levels')?.invalid &&
+                        editCourseForm.get('rewardSystem.levels')?.touched
+                      "
+                      class="text-danger"
+                    >
+                      Levels are required.
+                    </div>
                   </div>
                 </div>
               </div>
