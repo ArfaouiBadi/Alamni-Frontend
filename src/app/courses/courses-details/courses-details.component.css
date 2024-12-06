@@ -161,4 +161,12 @@
   .lesson-btn + .lesson-btn {
     margin-top: 10px;
   }
+  .lesson-btn.read-pdf-btn {
+    margin-left: 0; /* Align to the left */
+    display: inline-block; /* Keep the button inline with the text or other elements */
+  }
   
+  .lesson-btn:not(.read-pdf-btn) {
+    margin-left: auto; /* Push other buttons to the right */
+    display: block; /* Ensure the buttons stay aligned properly */
+  }
