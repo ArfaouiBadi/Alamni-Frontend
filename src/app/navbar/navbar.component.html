@@ -1,0 +1,32 @@
+<nav class="navbar">
+    <div class="logo">
+      <span>Alamni</span>
+    </div>
+  
+    <div class="menu">
+      <a [routerLink]="['/home']" class="menu-item active">Home</a>
+      <a href="#" class="menu-item">Learn</a>
+      <a href="#" class="menu-item">Courses</a>
+      <a href="#" class="menu-item">Sandbox</a>
+      <a [routerLink]="['/profile']" routerLinkActive="router-link-active"  class="menu-item">Profile</a>
+      <a href="#" class="menu-item">Data</a>
+    </div>
+  
+  
+    <div class="search-zone">
+      <input type="text" placeholder="Search" class="search-input" />
+      <button class="search-button">
+        <i class="fas fa-search"></i> 
+      </button>
+    </div>
+  
+  
+    <div class="profile">
+      <i class="fas fa-bell notification-icon"></i> 
+      <div class="profile-info">
+        <span>Hey, {{ username }}</span>
+        <img src="assets/profile-pic.jpg" alt="Profile" class="profile-pic" />
+      </div>
+    </div>
+  </nav>
+  

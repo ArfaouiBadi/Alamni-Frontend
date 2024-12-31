@@ -1,0 +1,67 @@
+<app-navbar></app-navbar>
+<div class="dashboard">
+    <!-- Left Section -->
+    <div class="section learn-section">
+      <h2 class="section-title">
+        <i class="fas fa-book"></i> Learn
+      </h2>
+      <div class="card track-card wide-card">
+        <p class="enrollment-text">
+          You're enrolled in the <a href="#">SQL Fundamentals</a> track.
+        </p>
+        <h3 class="card-title">Introduction to SQL</h3>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress" style="width: 0%;"></div>
+          </div>
+          <p class="progress-text">0% | 2 hours to go</p>
+        </div>
+        <div class="button-container">
+          <button class="btn-primary">Keep Making Progress</button>
+        </div>
+      </div>
+  
+      <h2 class="section-title">
+        <i class="fas fa-flask"></i> DataLab
+      </h2>
+      <div class="card datalab-card wide-card">
+        <img src="assets/datalab-example.png" alt="DataLab Example" />
+        <p class="datalab-description">
+          Leverage AI while you experiment and learn faster! Increase your learning velocity in DataLab.
+        </p>
+        <div class="button-container">
+          <button class="btn-secondary">Try It Out</button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Right Section -->
+    <div class="section profile-section">
+      <div class="card profile-summary">
+        <h3 class="profile-name">
+          <i class="fas fa-user-circle"></i> Hey, {{username}}!
+        </h3>
+        <p class="profile-completion">Profile 30% complete</p>
+        <div class="progress-bar">
+          <div class="progress" style="width: 30%;"></div>
+        </div>
+      </div>
+  
+      <div class="card stats-card">
+        <div class="stat">
+          <p class="stat-value">0/250</p>
+          <p class="stat-label">Daily points</p>
+        </div>
+        <div class="stat">
+          <p class="stat-value">1450</p>
+          <p class="stat-label">Total points</p>
+        </div>
+      </div>
+  
+      <div class="card progress-card">
+        <p><i class="fas fa-check-circle"></i> Courses completed: <strong>0</strong></p>
+        <p><i class="fas fa-trophy"></i> Tracks completed: <strong>0</strong></p>
+        <p><i class="fas fa-clipboard-list"></i> Projects completed: <strong>0</strong></p>
+      </div>
+    </div>
+</div>

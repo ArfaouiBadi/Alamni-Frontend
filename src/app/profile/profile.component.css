@@ -1,0 +1,73 @@
+/* Ensure that html and body are covering the entire viewport */
+html, body {
+    height: 100%; /* Full height */
+    margin: 0;
+    padding: 0;
+    background-image: url('../../assets/img/detailpage.png'); /* Correct path to the image */
+    background-size: cover; /* Optional: Ensure the image covers the entire background */
+    background-position: center center; /* Optional: Center the image */
+    background-repeat: no-repeat; /* Optional: Prevent the image from repeating */
+}
+
+/* Make sure the body takes up full height and removes any margin/padding */
+body {
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    flex-direction: column; /* Stack content vertically */
+}
+
+/* Ensure container is centered and background is white */
+.container {
+    background-color: #fff; /* White background for the content */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional shadow for the content */
+    margin: 0; /* Remove the margin to prevent the white space */
+    padding: 20px;
+    max-width: 1100px; /* You can adjust this based on your design */
+}
+
+/* Optional: Style the form fields */
+.form-control:focus {
+    box-shadow: none;
+    border-color: #BA68C8;
+}
+
+/* Profile button styles */
+.profile-button {
+    background: rgb(99, 39, 120);
+    box-shadow: none;
+    border: none;
+}
+
+.profile-button:hover {
+    background: #682773;
+}
+
+.profile-button:focus {
+    background: #682773;
+    box-shadow: none;
+}
+
+.profile-button:active {
+    background: #682773;
+    box-shadow: none;
+}
+
+.back:hover {
+    color: #682773;
+    cursor: pointer;
+}
+
+/* Label font size */
+.labels {
+    font-size: 11px;
+}
+
+/* Add experience button hover style */
+.add-experience:hover {
+    background: #BA68C8;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #BA68C8;
+}

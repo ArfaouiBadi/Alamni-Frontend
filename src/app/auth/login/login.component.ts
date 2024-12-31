@@ -36,9 +36,17 @@ export class LoginComponent {
       this.authService.login(this.loginForm.value).subscribe(
         (response: any) => {
           console.log('Login successful', response);
+          console.log('Email:', response.email);
+          console.log('id:', response.id);  // Display email in the console
+  
+          // Store the data in local storage
           localStorage.setItem('token', response.token); // Store the token in local storage
-          localStorage.setItem('role', JSON.stringify(response.roles[0])); // Store the user in local storage
-          this.router.navigate(['/home']); // Navigate to the dashboard or another page
+          localStorage.setItem('role', JSON.stringify(response.roles[0])); // Store the user role in local storage
+          localStorage.setItem('username', response.username); 
+          localStorage.setItem('email', response.email); 
+          localStorage.setItem('id',response.id);
+          // Navigate to the home page
+          this.router.navigate(['/home']);
         },
         (error: any) => {
           console.error('Login error', error);
@@ -47,4 +55,5 @@ export class LoginComponent {
       );
     }
   }
+  
 }

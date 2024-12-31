@@ -29,4 +29,7 @@ export class UserService {
   verifyEmail(email: string): Observable<any> {
     return this.authService.checkEmailVerification(email);
   }
+  getUserById(id: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/users/${id}`);
+  }
 }
