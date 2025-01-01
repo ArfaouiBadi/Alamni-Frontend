@@ -2,13 +2,17 @@ import { Component, AfterViewInit } from '@angular/core';
 import { CourseService } from '../service/course.service';
 import { UserService } from '../service/user.service';
 import { CategoryService } from '../service/category.service';
-import { Chart, registerables } from 'chart.js'; 
+import { Chart, registerables } from 'chart.js';
+import { UsersListComponent } from "../users/users-list/users-list.component"; 
+import { CommonModule } from '@angular/common';
+import { CoursesListComponent } from "../courses/courses-list.component";
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css'],
+  imports: [UsersListComponent, CommonModule, CoursesListComponent],
 })
 export class AdminDashboardComponent implements AfterViewInit {
   totalCourses: number = 0;
@@ -156,5 +160,17 @@ export class AdminDashboardComponent implements AfterViewInit {
         responsive: true,
       }
     });
+  }
+  currentView: string = 'dashboard'; 
+
+  showManageUsers() {
+    this.currentView = 'manageUsers';
+  }
+
+  showDashboard() {
+    this.currentView = 'dashboard';
+  }
+  showManageCourses(){
+    this.currentView= 'manageCourses'
   }
 }
