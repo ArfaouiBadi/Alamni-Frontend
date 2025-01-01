@@ -28,4 +28,11 @@ export class CourseService {
   deleteCourse(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/courses/${id}`);
   }
+  getTotalCourses(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/courses/count`);
+  }
+  getCoursesPerCategory(): Observable<{ category: string, count: number }[]> {
+    return this.http.get<{ category: string, count: number }[]>(`${this.apiUrl}/courses/courses-per-category`);
+}
+
 }

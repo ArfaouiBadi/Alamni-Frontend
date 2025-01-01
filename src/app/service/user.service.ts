@@ -32,4 +32,14 @@ export class UserService {
   getUserById(id: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/users/${id}`);
   }
+  getTotalUsers(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/users/count`);
+  }
+  getTotalEnrolledCourses(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/users/total-enrolled-courses`);
+  }
+  getUsersByAgeGroup(): Observable<Map<string, number>> {
+    return this.http.get<Map<string, number>>(`${this.apiUrl}/users/age-distribution`);
+  }
+  
 }

@@ -10,6 +10,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { CoursesComponent } from './courses/courses.component';
+import { CoursesListComponent } from './courses/courses-list.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -33,4 +34,7 @@ export const routes: Routes = [
     path: 'courses',
     component: CoursesComponent,
   },
+  {
+    path:'courses-admin',component:CoursesListComponent
+  }
 ];
