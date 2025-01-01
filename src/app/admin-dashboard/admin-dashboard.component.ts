@@ -141,7 +141,15 @@ export class AdminDashboardComponent implements AfterViewInit {
         datasets: [{
           label: 'User Age Distribution',
           data: data,
-          backgroundColor: ['#FF5733', '#33FF57', '#3357FF', '#FF33F6', '#F6FF33', '#57FF33'],
+          backgroundColor: [
+            '#7234f0', // Purple
+            '#0d47a1', // Blue
+            '#00c853', // Green
+            '#ffeb3b', // Yellow
+            '#f44336', // Red
+            '#4caf50', // Light Green
+          ]
+          
         }]
       },
       options: {
