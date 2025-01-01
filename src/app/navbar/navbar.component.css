@@ -1,122 +1,134 @@
 /* Navbar Container */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1% 5%;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo Section */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   
-  /* Logo Section */
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .logo img {
-    height: 40px;
-  }
-  
-  .logo span {
-    font-size: 20px;
-    font-weight: bold;
-  }
-  
-  /* Menu Links */
-  /* Menu Links */
+}
+
+.logo img {
+  height: 40px;
+}
+
+.logo span {
+  font-size: 35px;
+  font-weight: bold;
+  color: #7234f0;
+  font-family: "Lobster", serif !important;
+}
+
+/* Menu Links */
 .menu {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    background-color: #e6f2ff;
-    border-radius: 20px;
-    padding: 5px 10px;
-  }
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: #e6f2ff;
+  border-radius: 30px;
+  padding: 5px ;
   
-  .menu-item {
-    text-decoration: none;
-    color: #333;
-    font-size: 16px;
-    font-weight: 500;
-    padding: 5px 10px;
-    border-radius: 20px; /* Rounded corners */
-    transition: background-color 0.3s ease;
-    
-  }
+  justify-content: center;
+}
+
+.menu-item {
+  text-decoration: none;
+  color: #333;
+  font-size: 13px;
+  font-weight: 400;
+  padding: 10px 20px;
+  border-radius: 20px; /* Rounded corners */
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.menu-item.active {
+  color: #fff;
+  background-color: #7234f0; /* Active background */
+
+  transition: all 0.3s ease;
+}
+
+.menu-item:hover {
   
-  
-  .menu-item.active {
-    color: #fff;
-    background-color: #7234f0; /* Active background */
-  }
-  
-  /* Search Zone */
-  .search-zone {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .search-input {
-    border: 1px solid #ccc;
-    border-radius: 15px;
-    padding: 5px 10px;
-    font-size: 16px;
-    width: 350px;
-  }
-  
-  .search-button {
-    background-color: #7234f0;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .search-button i {
-    margin-right: 5px;
-  }
-  
-  /* Profile Section */
-  .profile {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-  
-  .notification-icon {
-    font-size: 20px;
-    color: #333;
-    cursor: pointer;
-  }
-  
-  .notification-icon:hover {
-    color: #0056b3;
-  }
-  
-  .profile-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background-color: #e6f2ff;
-    padding: 5px 10px;
-    border-radius: 20px;
-  }
-  
-  .profile-info span {
-    font-size: 16px;
-    color: #333;
-  }
-  
-  .profile-pic {
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
+}
+
+/* Search Zone */
+.search-zone {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-input {
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  padding: 5px 10px;
+  font-size: 16px;
+  width: 350px;
+}
+
+.search-button {
+  background-color: #7234f0;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.search-button i {
+  margin-right: 5px;
+}
+
+/* Profile Section */
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.notification-icon {
+  font-size: 20px;
+  color: #333;
+  cursor: pointer;
+}
+
+.notification-icon:hover {
+  color: #0056b3;
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #e6f2ff;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.profile-info span {
+  font-size: 16px;
+  color: #333;
+}
+
+.profile-pic {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.custom-dropdown-menu {
+  right: 0;
+  left: auto;
+}

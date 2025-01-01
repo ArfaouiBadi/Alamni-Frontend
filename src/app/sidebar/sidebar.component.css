@@ -1,0 +1,47 @@
+.sidebar {
+   width: 250px;
+   height: 100%;
+   background-color: #f9f9f9;
+   position: fixed;
+   top: 0;
+   left: 0;
+   overflow-x: hidden;
+   transition: transform 0.3s ease-in-out;
+   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+ }
+ 
+ .sidebar-item {
+   padding: 15px 20px;
+   text-decoration: none;
+   font-size: 18px;
+   color: #333;
+   display: block;
+   transition: background-color 0.3s ease;
+ }
+ 
+ .sidebar-item:hover {
+   background-color: #ddd;
+ }
+ 
+ .close-btn {
+   font-size: 30px;
+   margin: 10px;
+   cursor: pointer;
+   background: none;
+   border: none;
+ }
+ 
+ .content {
+   margin-left: 250px;
+   padding: 20px;
+ }
+ 
+ .open-btn {
+   font-size: 30px;
+   cursor: pointer;
+   background: none;
+   border: none;
+   position: fixed;
+   top: 10px;
+   left: 10px;
+ }

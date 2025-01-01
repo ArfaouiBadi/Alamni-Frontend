@@ -1,28 +1,17 @@
-import { Component,OnInit } from '@angular/core';
-import { CourseService } from '../service/course.service';
-import { Course } from '../interface/course';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { RouterOutlet } from '@angular/router';
+
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [NavbarComponent, RouterOutlet],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
 export class HomePageComponent implements OnInit {
-  courses: Course[] = [];
-
-  constructor(private courseService: CourseService) {}
-
+  username: string | null = null;
   ngOnInit(): void {
-    this.courseService.getCourses().subscribe({
-      next: (data) => {
-        this.courses = data;
-      },
-      error: (error) => {
-        console.error('Error fetching courses', error);
-      },
-    });
+    this.username = localStorage.getItem('username');
   }
 }

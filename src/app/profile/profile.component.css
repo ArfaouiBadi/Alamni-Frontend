@@ -1,4 +1,6 @@
 /* Ensure that html and body are covering the entire viewport */
+
+
 html, body {
     height: 100%; /* Full height */
     margin: 0;
@@ -7,6 +9,7 @@ html, body {
     background-size: cover; /* Optional: Ensure the image covers the entire background */
     background-position: center center; /* Optional: Center the image */
     background-repeat: no-repeat; /* Optional: Prevent the image from repeating */
+    
 }
 
 /* Make sure the body takes up full height and removes any margin/padding */
@@ -25,8 +28,12 @@ body {
     margin: 0; /* Remove the margin to prevent the white space */
     padding: 20px;
     max-width: 1100px; /* You can adjust this based on your design */
+    
 }
-
+.text-right {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 900;
+}
 /* Optional: Style the form fields */
 .form-control:focus {
     box-shadow: none;
