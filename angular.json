@@ -39,6 +39,8 @@
               "src/assets/css/main.css",
               "src/assets/dashboard/vendor/fontawesome-free/css/all.min.css",
               "src/assets/dashboard/css/sb-admin-2.min.css"
+              
+
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
@@ -53,7 +55,13 @@
               "src/assets/js/jquery.counterup.min.js",
               "src/assets/js/waypoints.min.js",
               "src/assets/js/jquery.nice-select.min.js",
-              "src/assets/js/main.js"
+              "src/assets/js/main.js",
+              "src/assets/dashboard/vendor/jquery/jquery.min.js",
+              "src/assets/dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js",
+              "src/assets/dashboard/js/sb-admin-2.min.js",
+              "src/assets/dashboard/vendor/chart.js/Chart.min.js",
+              "src/assets/dashboard/js/demo/chart-area-demo.js",
+              "src/assets/dashboard/js/demo/chart-pie-demo.js"
             ],
             "server": "src/main.server.ts",
             "prerender": true,
