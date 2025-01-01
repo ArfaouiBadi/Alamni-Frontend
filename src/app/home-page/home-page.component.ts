@@ -12,6 +12,8 @@ import { RouterOutlet } from '@angular/router';
 export class HomePageComponent implements OnInit {
   username: string | null = null;
   ngOnInit(): void {
-    this.username = localStorage.getItem('username');
+    if (localStorage.getItem('username')) {
+      this.username = localStorage.getItem('username');
+    }
   }
 }
