@@ -1,0 +1,48 @@
+<div class="leaderboard-container">
+  <app-sidebar></app-sidebar>
+  <div class="leaderboard-content">
+    <div class="leaderboard-header">
+      <h1>Leaderboard</h1>
+      <div class="filter-container">
+        <input
+          type="text"
+          placeholder="Search by name"
+          [(ngModel)]="searchTerm"
+          (input)="filterUsers()"
+        />
+        <select [(ngModel)]="sortOrder" (change)="sortUsers()">
+          <option value="asc">Ascending</option>
+          <option value="desc">Descending</option>
+        </select>
+      </div>
+    </div>
+    <div class="leaderboard-body">
+      <div class="leaderboard-table">
+        <div class="leaderboard-row">
+          <div class="leaderboard-cell">Rank</div>
+          <div class="leaderboard-cell">Name</div>
+          <div class="leaderboard-cell">Score</div>
+        </div>
+        <div
+          class="leaderboard-row"
+          *ngFor="let user of paginatedUsers; let i = index"
+        >
+          <div class="leaderboard-cell">
+            {{ (currentPage - 1) * pageSize + i + 1 }}
+          </div>
+          <div class="leaderboard-cell">{{ user.username }}</div>
+          <div class="leaderboard-cell">{{ user.points }}</div>
+        </div>
+      </div>
+      <div class="pagination">
+        <button (click)="previousPage()" [disabled]="currentPage === 1">
+          Previous
+        </button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -46,10 +46,7 @@
           class="sidebar-brand d-flex align-items-center justify-content-center"
           href="index.html"
         >
-          <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
-          </div>
-          <div class="sidebar-brand-text mx-3">Welcome Admin</div>
+          <div class="sidebar-brand-text mx-3 fontLobser">Alamni</div>
         </a>
 
         <!-- Divider -->
@@ -59,7 +56,7 @@
         <li class="nav-item">
           <a class="nav-link" (click)="showDashboard()">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span>
+            <span clas>Dashboard</span>
           </a>
         </li>
 
@@ -449,7 +446,9 @@
               <div
                 class="d-sm-flex align-items-center justify-content-between mb-4"
               >
-                <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                <h1 class="h3 mb-0 text-gray-800 fontArchivos font-weight-bold">
+                  Dashboard
+                </h1>
                 <a
                   href="#"
                   class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
@@ -472,7 +471,9 @@
                           >
                             Total courses
                           </div>
-                          <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          <div
+                            class="h5 mb-0 font-weight-bold text-gray-800 fontArchivos"
+                          >
                             {{ totalCourses }}
                           </div>
                         </div>
@@ -495,7 +496,9 @@
                           >
                             Total Users
                           </div>
-                          <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          <div
+                            class="h5 mb-0 font-weight-bold text-gray-800 fontArchivos"
+                          >
                             {{ totalUsers }}
                           </div>
                         </div>
@@ -519,7 +522,9 @@
                             Categories
                           </div>
                           <div class="row no-gutters align-items-center">
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            <div
+                              class="h5 mb-0 font-weight-bold text-gray-800 fontArchivos"
+                            >
                               {{ totalCategories }}
                             </div>
                           </div>
@@ -545,7 +550,9 @@
                           >
                             Enrolled courses
                           </div>
-                          <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          <div
+                            class="h5 mb-0 font-weight-bold text-gray-800 fontArchivos"
+                          >
                             {{ totalEnrolledCourses }}
                           </div>
                         </div>
@@ -568,8 +575,10 @@
                     <div
                       class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
                     >
-                      <h6 class="m-0 font-weight-bold text-primary">
-                        Total Books per Category
+                      <h6
+                        class="m-0 font-weight-bold text-primary fontArchivos"
+                      >
+                        Total Courses per Category
                       </h6>
                     </div>
                     <!-- Card Body -->
@@ -589,7 +598,9 @@
                     <div
                       class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
                     >
-                      <h6 class="m-0 font-weight-bold text-primary">
+                      <h6
+                        class="m-0 font-weight-bold text-primary fontArchivos"
+                      >
                         User Age distribution
                       </h6>
                       <div class="dropdown no-arrow">

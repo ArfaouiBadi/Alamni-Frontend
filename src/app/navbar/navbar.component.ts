@@ -34,6 +34,7 @@ export class NavbarComponent implements OnInit {
       this.username = localStorage.getItem('username');
     }
   }
+  constructor(private router: RouterModule) {}
   switchView(view: string) {
     this.currentView = view;
   }

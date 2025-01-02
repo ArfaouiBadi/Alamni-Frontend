@@ -9,8 +9,12 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import { CoursesComponent } from './courses/courses.component';
-import { CoursesListComponent } from './courses/courses-list.component';
+
+import { CoursesListComponent } from './courses/courses-list/courses-list.component';
+import { CoursesComponent } from './courses/course/courses.component';
+import { CoursesDetailsComponent } from './courses/courses-details/courses-details.component';
+import { LibraryComponent } from './library/library.component';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -22,6 +26,8 @@ export const routes: Routes = [
       { path: 'home', component: HomePageComponent },
       { path: 'courses', component: CoursesComponent },
       { path: 'profile', component: ProfileComponent },
+      { path: 'library', component: LibraryComponent },
+      { path: 'leaderboard', component: LeaderboardComponent },
     ],
   },
   { path: 'signup', component: SignUpComponent },
@@ -33,8 +39,17 @@ export const routes: Routes = [
   {
     path: 'courses',
     component: CoursesComponent,
+    children: [
+      { path: 'library', component: LibraryComponent },
+      { path: 'leaderboard', component: LeaderboardComponent },
+    ],
   },
   {
-    path:'courses-admin',component:CoursesListComponent
-  }
+    path: 'courses-admin',
+    component: CoursesListComponent,
+  },
+  {
+    path: 'course-details/:id',
+    component: CoursesDetailsComponent,
+  },
 ];

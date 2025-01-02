@@ -1,3 +1,18 @@
 #accordionSidebar {
     background-color: #7234f0;
 }
+
+body{
+    font-family: 'Archivo', sans-serif;
+}
+
+.fontArchivos{
+    font-family: 'Archivo', sans-serif;
+}
+.fontLobser{
+    font-family: 'Lobster', cursive;
+    text-transform: capitalize;
+    font-size: 35px;
+    font-weight: 900;
+    
+}

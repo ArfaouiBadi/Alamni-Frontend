@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Course } from '../interface/course';
+import { Category } from '../interface/category';
 
 @Injectable({
   providedIn: 'root',
@@ -31,8 +32,12 @@ export class CourseService {
   getTotalCourses(): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/courses/count`);
   }
-  getCoursesPerCategory(): Observable<{ category: string, count: number }[]> {
-    return this.http.get<{ category: string, count: number }[]>(`${this.apiUrl}/courses/courses-per-category`);
-}
-
+  getCoursesPerCategory(): Observable<{ category: string; count: number }[]> {
+    return this.http.get<{ category: string; count: number }[]>(
+      `${this.apiUrl}/courses/courses-per-category`
+    );
+  }
+  getCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(`${this.apiUrl}/categories`);
+  }
 }

@@ -1,0 +1,80 @@
+.leaderboard-container{
+   display: flex;
+   flex-direction: row;
+}
+.leaderboard-content{
+   padding: 2% 5% ;
+   width: 100%;
+}
+
+
+.leaderboard-header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-bottom: 20px;
+ }
+ 
+ .filter-container {
+   display: flex;
+   gap: 10px;
+ }
+ 
+ .filter-container input {
+   padding: 10px;
+   font-size: 16px;
+   border: 1px solid #ddd;
+   border-radius: 4px;
+ }
+ h1{
+   font-family: 'Archivo Black', sans-serif;
+ }
+ .filter-container select {
+   padding: 10px;
+   font-size: 16px;
+   border: 1px solid #ddd;
+   border-radius: 4px;
+ }
+ 
+ .leaderboard-table {
+   width: 100%;
+   border-collapse: collapse;
+ }
+ 
+ .leaderboard-row {
+   display: flex;
+   justify-content: space-between;
+   padding: 10px;
+   border-bottom: 1px solid #ddd;
+ }
+ 
+ .leaderboard-cell {
+   flex: 1;
+   text-align: left;
+ }
+ 
+ .pagination {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-top: 20px;
+ }
+ 
+ .pagination button {
+   padding: 10px 20px;
+   font-size: 16px;
+   border: 1px solid #ddd;
+   background-color: #f8f9fa;
+   cursor: pointer;
+   margin: 0 5px;
+   border-radius: 4px;
+ }
+ 
+ .pagination button:disabled {
+   cursor: not-allowed;
+   opacity: 0.5;
+ }
+ 
+ .pagination span {
+   font-size: 16px;
+ }

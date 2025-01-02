@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   trigger,
   state,
@@ -6,7 +6,7 @@ import {
   animate,
   transition,
 } from '@angular/animations';
-import { RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,29 +14,17 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./sidebar.component.css'],
   standalone: true,
   imports: [RouterModule],
-  animations: [
-    trigger('slideInOut', [
-      state(
-        'in',
-        style({
-          transform: 'translateX(0)',
-        })
-      ),
-      state(
-        'out',
-        style({
-          transform: 'translateX(-100%)',
-        })
-      ),
-      transition('in => out', animate('300ms ease-in-out')),
-      transition('out => in', animate('300ms ease-in-out')),
-    ]),
-  ],
 })
-export class SidebarComponent {
-  isSidebarVisible: boolean = false;
+export class SidebarComponent implements OnInit {
+  activeRoute: string = '';
 
-  toggleSidebar() {
-    this.isSidebarVisible = !this.isSidebarVisible;
+  constructor(private router: Router) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.activeRoute = event.urlAfterRedirects;
+      }
+    });
   }
+
+  ngOnInit(): void {}
 }

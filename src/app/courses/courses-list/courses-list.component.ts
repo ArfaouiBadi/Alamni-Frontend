@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { CourseService } from '../service/course.service';
-import { Course } from '../interface/course';
+import { Course } from '../../interface/course';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Console } from 'console';
+import { CourseService } from '../../service/course.service';
 
 @Component({
   selector: 'app-courses-list',

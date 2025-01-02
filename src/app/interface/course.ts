@@ -1,3 +1,4 @@
+import { Category } from './category';
 import { Module } from './module';
 import { RewardSystem } from './reward-system';
 
@@ -7,7 +8,7 @@ export interface Course {
   title: string;
   description: string;
   duration: number; // Total duration in minutes
-  category: string;
+  category: Category;
   levelRequired: number;
   modules: Module[];
   rewardSystem?: RewardSystem;

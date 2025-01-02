@@ -3,10 +3,9 @@
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 20px;
-    padding: 50px 5%;
+    padding: 50px 4%;
     background-color: #f7f9fc;
   }
-  
   /* Section Titles */
   .section-title {
     font-size: 24px;

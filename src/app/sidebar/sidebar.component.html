@@ -1,9 +1,22 @@
-<div class="sidebar" [@slideInOut]="isSidebarVisible ? 'in' : 'out'">
-  <button class="close-btn" (click)="toggleSidebar()">×</button>
-  <a [routerLink]="['/courses']" class="sidebar-item">Courses</a>
-  <a [routerLink]="['/leaderboard']" class="sidebar-item">Leaderboard</a>
+<div class="sidebar">
+  <a [routerLink]="['/library']" routerLinkActive="active" class="sidebar-item">
+    <i class="fas fa-book"></i>
+    My Library
+  </a>
+  <a [routerLink]="['/courses']" routerLinkActive="active" class="sidebar-item">
+    <i class="fas fa-graduation-cap"></i>
+    Courses
+  </a>
+  <a
+    [routerLink]="['/leaderboard']"
+    routerLinkActive="active"
+    class="sidebar-item"
+  >
+    <i class="fas fa-trophy"></i>
+    Leaderboard
+  </a>
 </div>
-<div class="content">
-  <button class="open-btn" (click)="toggleSidebar()">☰</button>
+
+<div class="routes">
   <router-outlet></router-outlet>
 </div>

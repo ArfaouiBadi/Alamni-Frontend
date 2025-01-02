@@ -1,0 +1,9 @@
+.library-container{
+   display: flex;
+   flex-direction: row;
+}
+
+.library-content{
+   padding: 2% 5% ;
+   width: 100%;
+}

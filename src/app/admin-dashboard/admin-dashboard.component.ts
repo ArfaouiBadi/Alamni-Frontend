@@ -3,9 +3,9 @@ import { CourseService } from '../service/course.service';
 import { UserService } from '../service/user.service';
 import { CategoryService } from '../service/category.service';
 import { Chart, registerables } from 'chart.js';
-import { UsersListComponent } from "../users/users-list/users-list.component"; 
+import { UsersListComponent } from '../users/users-list/users-list.component';
 import { CommonModule } from '@angular/common';
-import { CoursesListComponent } from "../courses/courses-list.component";
+import { CoursesListComponent } from '../courses/courses-list/courses-list.component';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -19,8 +19,8 @@ export class AdminDashboardComponent implements AfterViewInit {
   totalUsers: number = 0;
   totalCategories: number = 0;
   totalEnrolledCourses: number = 0;
-  chart: any;  
-  ageDistribution: any = {};  
+  chart: any;
+  ageDistribution: any = {};
 
   constructor(
     private courseService: CourseService,
@@ -29,7 +29,7 @@ export class AdminDashboardComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
-    Chart.register(...registerables); 
+    Chart.register(...registerables);
 
     this.fetchTotalCourses();
     this.fetchTotalUsers();
@@ -90,17 +90,17 @@ export class AdminDashboardComponent implements AfterViewInit {
         const counts = data.map((item) => item.count);
 
         if (this.chart) {
-          this.chart.destroy(); 
+          this.chart.destroy();
         }
 
         this.chart = new Chart('myAreaChart', {
-          type: 'bar', 
+          type: 'bar',
           data: {
-            labels: categories, 
+            labels: categories,
             datasets: [
               {
                 label: 'Courses per Category',
-                data: counts, 
+                data: counts,
                 backgroundColor: 'rgba(54, 162, 235, 0.6)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1,
@@ -111,7 +111,10 @@ export class AdminDashboardComponent implements AfterViewInit {
             responsive: true,
             scales: {
               x: { title: { display: true, text: 'Category' } },
-              y: { title: { display: true, text: 'Number of Courses' }, beginAtZero: true },
+              y: {
+                title: { display: true, text: 'Number of Courses' },
+                beginAtZero: true,
+              },
             },
           },
         });
@@ -135,33 +138,34 @@ export class AdminDashboardComponent implements AfterViewInit {
   }
 
   createPieChart(): void {
-    const labels = Object.keys(this.ageDistribution); 
-    const data = Object.values(this.ageDistribution); 
+    const labels = Object.keys(this.ageDistribution);
+    const data = Object.values(this.ageDistribution);
 
     this.chart = new Chart('ageChart', {
       type: 'pie',
       data: {
         labels: labels,
-        datasets: [{
-          label: 'User Age Distribution',
-          data: data,
-          backgroundColor: [
-            '#7234f0', // Purple
-            '#0d47a1', // Blue
-            '#00c853', // Green
-            '#ffeb3b', // Yellow
-            '#f44336', // Red
-            '#4caf50', // Light Green
-          ]
-          
-        }]
+        datasets: [
+          {
+            label: 'User Age Distribution',
+            data: data,
+            backgroundColor: [
+              '#7234f0', // Purple
+              '#0d47a1', // Blue
+              '#00c853', // Green
+              '#ffeb3b', // Yellow
+              '#f44336', // Red
+              '#4caf50', // Light Green
+            ],
+          },
+        ],
       },
       options: {
         responsive: true,
-      }
+      },
     });
   }
-  currentView: string = 'dashboard'; 
+  currentView: string = 'dashboard';
 
   showManageUsers() {
     this.currentView = 'manageUsers';
@@ -170,7 +174,7 @@ export class AdminDashboardComponent implements AfterViewInit {
   showDashboard() {
     this.currentView = 'dashboard';
   }
-  showManageCourses(){
-    this.currentView= 'manageCourses'
+  showManageCourses() {
+    this.currentView = 'manageCourses';
   }
 }
