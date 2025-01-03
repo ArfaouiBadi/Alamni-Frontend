@@ -19,5 +19,5 @@ export interface User {
   points: number;
   level: number;
   xp: number;
-  enrolledCourses: Course[]; // Adjust the type as needed
+  enrolledCourses: any[]; // Adjust the type as needed
 }

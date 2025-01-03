@@ -179,4 +179,85 @@
     font-size: 20px;
     margin-right: 8px;
   }
-  
+  /* Ensure the card has a fixed size */
+.datalab-card {
+  height: 400px; /* Fixed height for the card */
+  overflow: hidden; /* Hide content that exceeds the fixed height */
+  display: flex;
+  flex-direction: column;
+}
+
+
+.courses-container {
+  flex-grow: 1; 
+  overflow-y: auto; 
+  padding-right: 10px;
+}
+
+
+.courses-container ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+
+.courses-container li {
+  margin-bottom: 15px;
+}
+/* General Styling for the Course Card */
+.courses-container ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.course-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 350px; /* Adjust this based on desired card size */
+  position: relative; /* To position the button at the bottom right */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-5px); /* Slightly lift the card on hover */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+}
+
+
+.course-image {
+ 
+  border-radius: 8px;
+  margin-top: 15px; 
+  max-height: 200px; 
+}
+
+.course-content {
+  flex-grow: 1; /* Ensures the content takes up available space */
+}
+
+/* Button at the bottom-right of the card */
+.btn-course {
+  background-color: #7234f0; /* Button color */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: bold;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-course:hover {
+  background-color: #8d0086; /* Darker shade on hover */
+}

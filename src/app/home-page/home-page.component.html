@@ -1,37 +1,40 @@
 <div class="dashboard">
-  <!-- Left Section -->
   <div class="section learn-section">
     <h2 class="section-title"><i class="fas fa-book"></i> Learn</h2>
     <div class="card track-card wide-card">
       <p class="enrollment-text">
-        You're enrolled in the <a href="#">SQL Fundamentals</a> track.
+        You're enrolled in the <a href="#">{{ lastUnfinishedCourse?.title }}</a> track.
       </p>
-      <h3 class="card-title">Introduction to SQL</h3>
-      <div class="progress-container">
-        <div class="progress-bar">
-          <div class="progress" style="width: 0%"></div>
-        </div>
-        <p class="progress-text">0% | 2 hours to go</p>
+      <h3 class="card-title">{{ lastUnfinishedCourse?.description }}</h3>
+      <div class="status-container">
+        <i class="fas fa-hourglass-half"></i>
+        <p class="status-text">Not finished yet</p>
       </div>
       <div class="button-container">
         <button class="btn-primary">Keep Making Progress</button>
       </div>
     </div>
 
-    <h2 class="section-title"><i class="fas fa-flask"></i> DataLab</h2>
+    <h2 class="section-title"><i class="fas fa-flask"></i> Your Enrolled Courses</h2>
     <div class="card datalab-card wide-card">
-      <img src="assets/datalab-example.png" alt="DataLab Example" />
-      <p class="datalab-description">
-        Leverage AI while you experiment and learn faster! Increase your
-        learning velocity in DataLab.
-      </p>
-      <div class="button-container">
-        <button class="btn-secondary">Try It Out</button>
+      <div *ngIf="courses.length > 0" class="courses-container">
+        <ul>
+          <li *ngFor="let course of courses" class="course-card">
+            <div class="course-content">
+              <h3>{{ course?.title }}</h3>
+              <p>{{ course?.description }}</p>
+              <img *ngIf="course?.imageUrl" [src]="course?.imageUrl" alt="{{ course?.title }}" class="course-image" />
+            </div>
+            <button class="btn-course">Continue</button>
+          </li>
+        </ul>
       </div>
     </div>
+    
+    
   </div>
 
-  <!-- Right Section -->
+  
   <div class="section profile-section">
     <div class="card profile-summary">
       <h3 class="profile-name">
@@ -67,3 +70,6 @@
     </div>
   </div>
 </div>
+
+ 
+
