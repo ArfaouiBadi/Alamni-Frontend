@@ -197,7 +197,7 @@ export class CoursesListComponent implements OnInit {
 
     // Clear existing modules and lessons
     this.editModules.clear();
-    course.modules.forEach((module) => {
+    course.modules!.forEach((module) => {
       const moduleGroup = this.fb.group({
         title: [module.title, Validators.required],
         duration: [module.duration, Validators.required],

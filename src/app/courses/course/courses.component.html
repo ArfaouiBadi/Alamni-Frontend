@@ -100,7 +100,12 @@
           <div class="course-info">
             <div class="course-title">{{ course.title }}</div>
             <div class="course-description">{{ course.description }}</div>
-            <div class="course-modul"><b>Modules : </b> {{ 0 }}</div>
+            <div class="course-modul">
+              <b>Modules : </b> {{ course.modules?.length }}
+            </div>
+            <div class="course-modul">
+              <b>Enrollement : </b> {{ course.enrollments?.length }}
+            </div>
             <div class="course-duration">
               <b>Duration : </b> {{ getDurationString(course.duration) }}
             </div>

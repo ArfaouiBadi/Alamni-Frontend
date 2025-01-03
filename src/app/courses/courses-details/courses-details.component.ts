@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { QuizService } from '../../service/quiz.service';
 import { Lesson } from '../../interface/lesson';
 import { Module } from '../../interface/module';
-import { NavbarComponent } from "../../navbar/navbar.component";
+import { NavbarComponent } from '../../navbar/navbar.component';
 @Component({
   selector: 'app-courses-details',
   standalone: true,
@@ -49,6 +49,18 @@ export class CoursesDetailsComponent implements OnInit {
       error: (err) => {
         console.error('Error starting quiz:', err);
         this.isLoading = false; // Stop loading on error
+      },
+    });
+  }
+
+  enrollCourse(courseId: string) {
+    const id = localStorage.getItem('id');
+    this.courseService.enrollCourse(courseId, id!).subscribe({
+      next: (data) => {
+        console.log('Course enrolled:', data);
+      },
+      error: (err) => {
+        console.error('Error enrolling course:', err);
       },
     });
   }

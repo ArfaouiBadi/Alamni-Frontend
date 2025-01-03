@@ -9,7 +9,9 @@
   <div class="course-header">
     <div class="header-left">
       <h1>{{ course.title }}</h1>
-      <button class="enroll-btn">Enroll for Free</button>
+      <button class="enroll-btn" (click)="enrollCourse(course.id!)">
+        Enroll for Free
+      </button>
       <br />
 
       <p class="stats">Already enrolled</p>

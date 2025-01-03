@@ -40,4 +40,7 @@ export class CourseService {
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(`${this.apiUrl}/categories`);
   }
+  enrollCourse(courseId: string, userId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/users/enroll`, { userId, courseId });
+  }
 }
