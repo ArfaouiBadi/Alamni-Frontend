@@ -17,4 +17,7 @@ export class EnrollmentService {
   getLastUnfinishedCourseByUserId(userId: string): Observable<Course> {
     return this.http.get<Course>(`${this.apiUrl}/${userId}/last-unfinished-course`);
   }
+  getTotalEnrollmentCount(): Observable<number> {
+    return this.http.get<number>('http://localhost:8000/api/enrollments/total-enrollment-count');
+  }
 }

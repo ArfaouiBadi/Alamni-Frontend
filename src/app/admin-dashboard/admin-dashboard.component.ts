@@ -6,7 +6,7 @@ import { Chart, registerables } from 'chart.js';
 import { UsersListComponent } from '../users/users-list/users-list.component';
 import { CommonModule } from '@angular/common';
 import { CoursesListComponent } from '../courses/courses-list/courses-list.component';
-
+import { EnrollmentService } from '../service/enrollment.service';
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
@@ -25,7 +25,8 @@ export class AdminDashboardComponent implements AfterViewInit {
   constructor(
     private courseService: CourseService,
     private userService: UserService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private enrollmentService: EnrollmentService
   ) {}
 
   ngAfterViewInit(): void {
@@ -73,7 +74,7 @@ export class AdminDashboardComponent implements AfterViewInit {
   }
 
   fetchEnrolledCourses(): void {
-    this.userService.getTotalEnrolledCourses().subscribe({
+    this.enrollmentService.getTotalEnrollmentCount().subscribe({
       next: (total) => {
         this.totalEnrolledCourses = total;
       },
