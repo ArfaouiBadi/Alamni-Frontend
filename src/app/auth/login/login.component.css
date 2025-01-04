@@ -1,49 +1,97 @@
+/* General Section Styling */
+.login-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align content to the left */
+  height: 100vh;
+  margin-top: 50px;
+  padding-left: 30px; /* Add left padding to move content further left */
+}
+
 .gradient-custom-2 {
-   
-   background-color: #7234f0;
-    
-  
-    background-color: #7234f0;
-    
+  background-color: #7234f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    background: #7234f0;
-    }
-    
-    @media (min-width: 768px) {
-    .gradient-form {
-    height: 100vh !important;
-    }
-    }
-    @media (min-width: 769px) {
-    .gradient-custom-2 {
-    border-top-right-radius: .3rem;
-    border-bottom-right-radius: .3rem;
-    }
-    }
+.welcome-message {
+  text-align: left;
+  max-width: 600px;
+  color: #7234f0;
+  margin-left: 0; /* Adjust left margin */
+}
 
+.icon-bar {
+  text-align: center;
+  margin-top: 150px; /* Further move icons down */
+}
 
+.icon-bar i {
+  margin: 0 10px;
+  transition: transform 0.3s;
+}
 
-    .btn-outline-purple {
-        border-color: #A020F0;
-        color: #A020F0;
-        background-color: white;
-      }
-      
-      .btn-outline-purple:hover {
-        background-color: #A020F0;
-        color: white;
-      }
-    
-.image-container {
-    display: flex;
-    justify-content: center;  
-    align-items: center;      
-    height: 100%;               
+.icon-bar i:hover {
+  transform: scale(1.2);
+}
+
+.btn-outline-purple {
+  border-color: #7234f0;
+  color: #7234f0;
+  background-color: transparent;
+}
+
+.btn-outline-purple:hover {
+  background-color: #7234f0;
+  color: white;
+}
+
+.img-fluid {
+  max-height: 200px;
+  object-fit: contain;
+}
+
+/* Logo Styling */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+}
+
+.logo img {
+  height: 40px;
+}
+
+.logo span {
+  font-size: 35px;
+  font-weight: bold;
+  color: #7234f0;
+  font-family: "Lobster", serif !important;
+}
+
+/* Card Styling */
+.card {
+  width: 120%; /* Decrease width to fit better */
+  margin-left: -20%; /* Move the card slightly to the left */
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .login-section .card {
+    width: 100%;
+    margin-left: 0; /* Ensure it does not overlap */
   }
-  
-  
-  .centered-image {
-    width: 400px;            
-    height: auto;             
+  .icon-bar {
+    margin-top: 50px; /* Further move icons down */
   }
-  
+}
+
+@media (max-width: 992px) {
+  .login-section .card {
+    width: 80%; /* Adjust the card width */
+  }
+}

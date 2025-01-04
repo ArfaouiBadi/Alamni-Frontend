@@ -1,24 +1,30 @@
-<section class="h-100 gradient-form" style="background-color: #eee">
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-xl-10">
-        <div class="card rounded-3 text-black">
-          <div class="row g-0">
-            <div class="col-lg-6">
-              <div class="card-body p-md-5 mx-md-4">
-                <div class="text-center">
-                  <img
-                    src="../../../assets/img/login1.png"
-                    style="width: 185px"
-                    alt="logo"
-                  />
-                </div>
 
-                <div>
+<body>
+  <div class="logo">
+    <span>Alamni.</span>
+  </div>
+  <section class="login-section h-100 gradient-form">
+    
+    <div class="container py-5 h-100">
+      <div class="row h-100 justify-content-center">
+        <!-- Welcome Message and Button -->
+        <div class="col-md-6 d-flex flex-column justify-content-center align-items-start">
+          <div class="welcome-message">
+            <h2>Welcome to Alamni!</h2>
+            <p>Gamify your learning experience.</p>
+            <button class="btn btn-outline-purple mt-3">Start Learning for Free</button>
+          </div>
+        </div>
+
+        <!-- Login Section -->
+        <div class="col-md-6">
+          <div class="card rounded-3 text-black">
+            <div class="row g-0">
+              <div class="col-lg-6">
+                <div class="card-body p-md-5">
                   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                     <p>Please login to your account</p>
-
-                    <div data-mdb-input-init class="form-outline mb-4">
+                    <div class="form-outline mb-4">
                       <label class="form-label" for="email">Email</label>
                       <input
                         type="email"
@@ -28,14 +34,9 @@
                         placeholder="Email address"
                       />
                       <div
-                        *ngIf="
-                          loginForm.get('email')?.invalid &&
-                          loginForm.get('email')?.touched
-                        "
+                        *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
                       >
-                        <div
-                          *ngIf="loginForm.get('email')?.errors?.['required']"
-                        >
+                        <div *ngIf="loginForm.get('email')?.errors?.['required']">
                           Email is required.
                         </div>
                         <div *ngIf="loginForm.get('email')?.errors?.['email']">
@@ -43,8 +44,7 @@
                         </div>
                       </div>
                     </div>
-
-                    <div data-mdb-input-init class="form-outline mb-4">
+                    <div class="form-outline mb-4">
                       <label class="form-label" for="password">Password</label>
                       <input
                         type="password"
@@ -54,30 +54,19 @@
                         placeholder="Password"
                       />
                       <div
-                        *ngIf="
-                          loginForm.get('password')?.invalid &&
-                          loginForm.get('password')?.touched
-                        "
+                        *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
                       >
-                        <div
-                          *ngIf="loginForm.get('password')?.errors?.['required']"
-                        >
+                        <div *ngIf="loginForm.get('password')?.errors?.['required']">
                           Password is required.
                         </div>
-                        <div
-                          *ngIf="loginForm.get('password')?.errors?.['minlength']"
-                        >
+                        <div *ngIf="loginForm.get('password')?.errors?.['minlength']">
                           Password must be at least 6 characters long.
                         </div>
                       </div>
                     </div>
-
                     <div class="text-center pt-1 mb-5 pb-1">
                       <button
-                        data-mdb-button-init
-                        data-mdb-ripple-init
-                        class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
-                        type="button"
+                        class="btn btn-primary btn-block gradient-custom-2 mb-3"
                         type="submit"
                         [disabled]="loginForm.invalid"
                       >
@@ -89,40 +78,46 @@
                           class="me-3 text-purple"
                           style="font-size: 1.5rem"
                         >
-                          <i class="fab fa-github" style="color: #a020f0"></i>
+                          <i class="fab fa-github"></i>
                         </a>
                         <a
                           href="http://localhost:8000/oauth2/authorization/google"
                           class="text-purple"
                           style="font-size: 1.5rem"
                         >
-                          <i class="fab fa-google" style="color: #a020f0"></i>
+                          <i class="fab fa-google"></i>
                         </a>
                       </div>
-
                       <br />
                       <a class="text-muted" href="#!">Forgot password?</a>
-
-                      <!-- Icons Section -->
                     </div>
                   </form>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
-              <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                <div>
-                  <img
-                    src="../../../assets/img/login2.png"
-                    class="centered-image"
-                    alt="logo"
-                  />
-                </div>
+              <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+                <img
+                  src="../../../assets/img/login2.png"
+                  class="img-fluid"
+                  alt="logo"
+                />
               </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- Icons Section -->
+      <div class="icon-bar mt-4 text-center">
+        <i class="fab fa-html5 fa-2x mx-2" style="color: #E34F26;"></i>
+        <i class="fab fa-css3-alt fa-2x mx-2" style="color: #1572B6;"></i>
+        <i class="fab fa-js-square fa-2x mx-2" style="color: #F7DF1E;"></i>
+        <i class="fab fa-angular fa-2x mx-2" style="color: #DD1B16;"></i>
+        <i class="fab fa-react fa-2x mx-2" style="color: #61DAFB;"></i>
+        <i class="fab fa-python fa-2x mx-2" style="color: #3776AB;"></i>
+        <!-- Added more icons -->
+        <i class="fab fa-java fa-2x mx-2" style="color: #007396;"></i>
+        <i class="fab fa-node fa-2x mx-2" style="color: #8CC84B;"></i>
+        <i class="fab fa-docker fa-2x mx-2" style="color: #2496ED;"></i>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+</body>
