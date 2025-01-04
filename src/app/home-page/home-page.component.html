@@ -40,22 +40,25 @@
       <h3 class="profile-name">
         <i class="fas fa-user-circle"></i> Hey, {{ username }}!
       </h3>
-      <p class="profile-completion">Profile 30% complete</p>
-      <div class="progress-bar">
-        <div class="progress" style="width: 30%"></div>
-      </div>
+     
+      
+        <p>Every great journey begins with the first step. Let's dive in and start learning something new today!</p>
+   
     </div>
 
     <div class="card stats-card">
       <div class="stat">
+        <i class="fas fa-trophy stat-icon">  <p class="stat-label">Level</p></i>
         <p class="stat-value">{{ user?.level }}</p>
-        <p class="stat-label">Level</p>
+      
       </div>
       <div class="stat">
+        <i class="fas fa-star stat-icon"><p class="stat-label">Points</p></i>
         <p class="stat-value">{{ user?.points }}</p>
-        <p class="stat-label">Points</p>
+        
       </div>
     </div>
+    
 
     <div class="card progress-card">
       <p>

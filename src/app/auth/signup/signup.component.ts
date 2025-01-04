@@ -3,6 +3,8 @@ import {
   FormBuilder,
   FormGroup,
   Validators,
+  AbstractControl,
+  ValidationErrors,
   ReactiveFormsModule,
 } from '@angular/forms';
 
@@ -14,7 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule], // Import ReactiveFormsModule here
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
 })
@@ -32,11 +34,29 @@ export class SignUpComponent {
     this.signUpForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      username: ['', Validators.required], // Add username field
-      birthDate: ['', Validators.required], // Add birthDate field
+      username: ['', Validators.required],
+      birthDate: ['', [Validators.required, this.ageValidator]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+  }
+
+  // Custom validator for birth date to check age (16 or older)
+  ageValidator(control: AbstractControl): ValidationErrors | null {
+    const birthDate = control.value;
+    if (!birthDate) return null;
+
+    const today = new Date();
+    const birthDateObj = new Date(birthDate);
+    const age = today.getFullYear() - birthDateObj.getFullYear();
+    const month = today.getMonth() - birthDateObj.getMonth();
+    
+    // Check if the user is 16 years old or older
+    if (age > 16 || (age === 16 && month >= 0)) {
+      return null; // Valid age
+    } else {
+      return { ageTooYoung: true }; // Age is under 16
+    }
   }
 
   onSubmit() {

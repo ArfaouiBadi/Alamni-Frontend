@@ -1,198 +1,109 @@
-<section class="h-100 gradient-form" style="background-color: #eee">
+<div class="logo">
+  <span>Alamni.</span>
+</div>
+<section class="login-section h-100 gradient-form">
   <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-xl-10">
-        <div class="card rounded-3 text-black">
+    <div class="row h-100 justify-content-center">
+      <!-- Welcome Message and Button -->
+      <div class="col-md-6 d-flex flex-column justify-content-center align-items-start">
+        <div class="welcome-message">
+          <h1 class="title">Welcome to Alamni!</h1>
+          <p class="subtitle">Your gateway to a gamified learning journey.</p>
+          <button class="btn btn-purple-outline mt-3" routerLinkActive="router-link-active">Start Learning for Free</button>
+        </div>
+      </div>
+
+      <!-- Sign Up Section -->
+      <div class="col-md-6">
+        <div class="card rounded-3 text-black" style="width: 110%; max-height: 600px; overflow: hidden;">
           <div class="row g-0">
-            <div class="col-lg-6">
-              <div class="card-body p-md-5 mx-md-4">
-                <div class="text-center">
-                  <img
-                    src="../../../assets/img/login1.png"
-                    style="width: 185px"
-                    alt="logo"
-                  />
-                </div>
-                <div>
-                  <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-                    <p>Sign up now</p>
+            <div class="col-lg-6 d-flex align-items-center">
+              <div class="card-body p-md-5">
+                <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="scrollable-form">
+                  <p class="form-title">Sign up now</p>
 
-                    <div data-mdb-input-init class="form-outline mb-4">
-                      <label class="form-label" for="firstName"
-                        >First Name</label
-                      >
-                      <input
-                        type="text"
-                        id="firstName"
-                        formControlName="firstName"
-                        class="form-control"
-                        placeholder=""
-                      />
-                      <div
-                        *ngIf="
-                          signUpForm.get('firstName')?.invalid &&
-                          signUpForm.get('firstName')?.touched
-                        "
-                      >
-                        First Name is required.
+                  <!-- First Name -->
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="firstName">First Name</label>
+                    <input type="text" id="firstName" formControlName="firstName" class="form-control input-wide" />
+                    <div *ngIf="signUpForm.get('firstName')?.invalid && signUpForm.get('firstName')?.touched">
+                      <small>First Name is required.</small>
+                    </div>
+                  </div>
+
+                  <!-- Last Name -->
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="lastName">Last Name</label>
+                    <input type="text" id="lastName" formControlName="lastName" class="form-control input-wide" />
+                    <div *ngIf="signUpForm.get('lastName')?.invalid && signUpForm.get('lastName')?.touched">
+                      <small>Last Name is required.</small>
+                    </div>
+                  </div>
+
+                  <!-- Username -->
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="username">Username</label>
+                    <input type="text" id="username" formControlName="username" class="form-control input-wide" />
+                    <div *ngIf="signUpForm.get('username')?.invalid && signUpForm.get('username')?.touched">
+                      <small>Username is required.</small>
+                    </div>
+                  </div>
+
+                  <div class="form-scroll">
+                    <!-- Birth Date -->
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="birthDate">Birth Date</label>
+                      <input type="date" id="birthDate" formControlName="birthDate" class="form-control input-wide" />
+                      <div *ngIf="signUpForm.get('birthDate')?.invalid && signUpForm.get('birthDate')?.touched">
+                        <small *ngIf="signUpForm.get('birthDate')?.hasError('ageTooYoung')">You must be at least 16 years old.</small>
+                        <small *ngIf="signUpForm.get('birthDate')?.hasError('required')">Birth Date is required.</small>
                       </div>
                     </div>
 
-                    <div data-mdb-input-init class="form-outline mb-4">
-                      <label class="form-label" for="lastName">Last Name</label>
-                      <input
-                        type="text"
-                        id="lastName"
-                        formControlName="lastName"
-                        class="form-control"
-                        placeholder=""
-                      />
-                      <div
-                        *ngIf="
-                          signUpForm.get('lastName')?.invalid &&
-                          signUpForm.get('lastName')?.touched
-                        "
-                      >
-                        Last Name is required.
-                      </div>
-                    </div>
-
-                    <div data-mdb-input-init class="form-outline mb-4">
-                      <label class="form-label" for="username">Username</label>
-                      <input
-                        type="text"
-                        id="username"
-                        formControlName="username"
-                        class="form-control"
-                        placeholder=""
-                      />
-                      <div
-                        *ngIf="
-                          signUpForm.get('username')?.invalid &&
-                          signUpForm.get('username')?.touched
-                        "
-                      >
-                        Username is required.
-                      </div>
-                    </div>
-
-                    <div data-mdb-input-init class="form-outline mb-4">
-                      <label class="form-label" for="birthDate"
-                        >Birth Date</label
-                      >
-                      <input
-                        type="date"
-                        id="birthDate"
-                        formControlName="birthDate"
-                        class="form-control"
-                        placeholder=""
-                      />
-                      <div
-                        *ngIf="
-                          signUpForm.get('birthDate')?.invalid &&
-                          signUpForm.get('birthDate')?.touched
-                        "
-                      >
-                        Birth Date is required.
-                      </div>
-                    </div>
-
-                    <div data-mdb-input-init class="form-outline mb-4">
+                    <!-- Email -->
+                    <div class="form-outline mb-4">
                       <label class="form-label" for="email">Email</label>
-                      <input
-                        type="email"
-                        id="email"
-                        formControlName="email"
-                        class="form-control"
-                        placeholder=""
-                      />
-                      <div
-                        *ngIf="
-                          signUpForm.get('email')?.invalid &&
-                          signUpForm.get('email')?.touched
-                        "
-                      >
-                        <div
-                          *ngIf="signUpForm.get('email')?.errors?.['required']"
-                        >
-                          Email is required.
-                        </div>
-                        <div *ngIf="signUpForm.get('email')?.errors?.['email']">
-                          Invalid email format.
-                        </div>
+                      <input type="email" id="email" formControlName="email" class="form-control input-wide" />
+                      <div *ngIf="signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched">
+                        <small>Invalid email format.</small>
                       </div>
                     </div>
 
-                    <div data-mdb-input-init class="form-outline mb-4">
+                    <!-- Password -->
+                    <div class="form-outline mb-4">
                       <label class="form-label" for="password">Password</label>
-                      <input
-                        type="password"
-                        id="password"
-                        formControlName="password"
-                        class="form-control"
-                        placeholder=""
-                      />
-                      <div
-                        *ngIf="
-                          signUpForm.get('password')?.invalid &&
-                          signUpForm.get('password')?.touched
-                        "
-                      >
-                        <div
-                          *ngIf="signUpForm.get('password')?.errors?.['required']"
-                        >
-                          Password is required.
-                        </div>
-                        <div
-                          *ngIf="signUpForm.get('password')?.errors?.['minlength']"
-                        >
-                          Password must be at least 6 characters long.
-                        </div>
+                      <input type="password" id="password" formControlName="password" class="form-control input-wide" />
+                      <div *ngIf="signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched">
+                        <small>Password is required and must be at least 6 characters long.</small>
                       </div>
                     </div>
 
-                    <button
-                      type="submit"
-                      class="btn btn-primary"
-                      [disabled]="signUpForm.invalid"
-                    >
+                    <button type="submit" class="btn btn-primary btn-block gradient-custom-2 mb-3" [disabled]="signUpForm.invalid">
                       Sign Up
                     </button>
-                  </form>
-                  <div *ngIf="message" class="alert alert-info mt-3">
-                    {{ message }}
-                    <button
-                      *ngIf="message.includes('verify your email')"
-                      class="btn btn-link"
-                      (click)="checkVerificationStatus()"
-                    >
-                      Check Verification Status
-                    </button>
-                    <button
-                      *ngIf="isVerified"
-                      class="btn btn-primary"
-                      (click)="onEmailVerified()"
-                    >
-                      Go to Login
-                    </button>
                   </div>
-                </div>
+                </form>
               </div>
             </div>
-            <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
-              <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                <div>
-                  <img
-                    src="../../../assets/img/login2.png"
-                    class="centered-image"
-                    alt="logo"
-                  />
-                </div>
-              </div>
+            <div class="col-lg-6 d-flex align-items-center justify-content-start">
+              <img src="../../../assets/img/login2.png" class="side-image" alt="logo" />
             </div>
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Icons Section -->
+    <div class="icon-bar mt-4 text-center">
+      <i class="fab fa-html5"></i>
+      <i class="fab fa-css3-alt"></i>
+      <i class="fab fa-js-square"></i>
+      <i class="fab fa-angular"></i>
+      <i class="fab fa-react"></i>
+      <i class="fab fa-python"></i>
+      <i class="fab fa-java"></i>
+      <i class="fab fa-node"></i>
+      <i class="fab fa-docker"></i>
     </div>
   </div>
 </section>

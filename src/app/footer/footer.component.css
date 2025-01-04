@@ -1,0 +1,15 @@
+.footer {
+    background-color: #7234f0; /* Purple color */
+    color: white; /* White text */
+    padding: 20px 0;
+    text-align: center; /* Center the text */
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  .footer-content p {
+    margin: 0;
+    font-size: 1rem;
+  }
+  
