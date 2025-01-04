@@ -15,15 +15,15 @@
       </div>
     </div>
 
-    <h2 class="section-title"><i class="fas fa-flask"></i> Your Enrolled Courses</h2>
+    <h2 class="section-title"><i class="fas fa-flask"></i> Your Unfinished Enrolled Courses</h2>
     <div class="card datalab-card wide-card">
       <div *ngIf="courses.length > 0" class="courses-container">
         <ul>
           <li *ngFor="let course of courses" class="course-card">
             <div class="course-content">
-              <h3>{{ course?.title }}</h3>
-              <p>{{ course?.description }}</p>
-              <img *ngIf="course?.imageUrl" [src]="course?.imageUrl" alt="{{ course?.title }}" class="course-image" />
+              <h3>{{ course.title }}</h3>
+              <p>{{ course.description }}</p>
+              <img *ngIf="course.imageUrl" [src]="course.imageUrl" alt="{{ course.title }}" class="course-image" />
             </div>
             <button class="btn-course">Continue</button>
           </li>

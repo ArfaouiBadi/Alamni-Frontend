@@ -12,7 +12,8 @@ import { CommonModule } from '@angular/common';
 })
 export class LibraryComponent implements OnInit {
   id: string = ''; 
-  courses: Course[] = []; 
+  courses: any[] = []; 
+  allCourses: any[] = [];
   constructor(private enrollmentService: EnrollmentService){}
   ngOnInit(): void {
    
@@ -20,10 +21,27 @@ export class LibraryComponent implements OnInit {
         if (this.id) {
           this.enrollmentService.getCoursesByUserId(this.id).subscribe((courses) => {
             this.courses = courses;
+            this.allCourses = courses; 
             console.log(this.courses);
           });
         }
+        
       
     
+  }
+  filterCourses(event: Event): void {
+    const filterValue = (event.target as HTMLSelectElement).value;
+
+    if (filterValue === 'all') {
+      this.courses = this.allCourses; // Reset to all courses
+    } else if (filterValue === 'finished') {
+      this.enrollmentService.getFinishedCoursesByUserId(this.id).subscribe((finishedCourses) => {
+        this.courses = finishedCourses;
+      });
+    } else if (filterValue === 'unfinished') {
+      this.enrollmentService.getUnfinishedCoursesByUserId(this.id).subscribe((unfinishedCourses) => {
+        this.courses = unfinishedCourses;
+      });
+    }
   }
 }

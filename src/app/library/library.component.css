@@ -73,4 +73,15 @@
  .btn-course:hover {
    background-color: #5e27d3; 
  }
- 
+ .filter-container {
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+.filter-dropdown {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}

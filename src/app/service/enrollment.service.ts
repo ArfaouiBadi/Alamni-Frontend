@@ -20,4 +20,11 @@ export class EnrollmentService {
   getTotalEnrollmentCount(): Observable<number> {
     return this.http.get<number>('http://localhost:8000/api/enrollments/total-enrollment-count');
   }
+  getUnfinishedCoursesByUserId(userId: string): Observable<{ name: string, description: string, imageUrl: string }[]> {
+    return this.http.get<{ name: string, description: string, imageUrl: string }[]>(`${this.apiUrl}/${userId}/unfinished-courses`);
+  }
+
+  getFinishedCoursesByUserId(userId: string): Observable<{ name: string, description: string, imageUrl: string }[]> {
+    return this.http.get<{ name: string, description: string, imageUrl: string }[]>(`${this.apiUrl}/${userId}/finished-courses`);
+  }
 }

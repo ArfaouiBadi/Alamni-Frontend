@@ -17,7 +17,7 @@ export class HomePageComponent implements OnInit {
   username: string | null = null;
   id: string = ''; 
   user: User | null = null;
-  courses: Course[] = []; 
+  courses: any = []; 
   lastUnfinishedCourse: Course | null = null;
 
   constructor(private userService: UserService, private enrollmentService: EnrollmentService) {}
@@ -32,7 +32,7 @@ export class HomePageComponent implements OnInit {
       if (this.user) {
         this.id = localStorage.getItem('id') || '';  
         if (this.id) {
-          this.enrollmentService.getCoursesByUserId(this.id).subscribe((courses) => {
+          this.enrollmentService.getUnfinishedCoursesByUserId(this.id).subscribe((courses) => {
             this.courses = courses;
             console.log(this.courses);
           });
