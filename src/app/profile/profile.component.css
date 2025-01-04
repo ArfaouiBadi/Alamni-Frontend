@@ -78,3 +78,7 @@ body {
     cursor: pointer;
     border: solid 1px #BA68C8;
 }
+.text{
+    font-family: 'Archivo', sans-serif;
+    font-weight: 900;
+}

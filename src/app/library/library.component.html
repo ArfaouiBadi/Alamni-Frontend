@@ -12,7 +12,7 @@
       <ul class="course-list">
         <li *ngFor="let course of courses" class="course-card">
           <div class="course-content">
-            <h3>{{ course?.name }}</h3>
+            <h3>{{ course?.title }}</h3>
             <p>{{ course?.description }}</p>
             <img *ngIf="course?.imageUrl" [src]="course?.imageUrl" alt="{{ course?.name }}" class="course-image" />
           </div>

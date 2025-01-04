@@ -8,8 +8,15 @@
             width="150px"
             src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
           /><span class="font-weight-bold">{{ username }}</span
-          ><span class="text-black-50">{{ email }}</span
-          ><span> </span>
+          >
+          <span class="text-black-50">
+            <i class="fas fa-trophy"></i> Level {{ user.level }}
+          </span>
+          <span class="text-black-50">
+            <i class="fas fa-star"></i> {{ user.points }} points
+          </span>
+          
+          <span> </span>
         </div>
       </div>
       <div class="col-md-5 border-right">
@@ -23,18 +30,18 @@
               ><input
                 type="text"
                 class="form-control"
-                placeholder="{{ user.firstName }}"
-                value=""
-              />
+                placeholder=""
+                value="{{ user.firstName }}"
+              disabled/>
             </div>
             <div class="col-md-6">
               <label class="labels">Lastname</label
               ><input
                 type="text"
                 class="form-control"
-                value=""
-                placeholder="{{ user.lastName }}"
-              />
+                value="{{ user.lastName }}"
+                placeholder=""
+              disabled/>
             </div>
           </div>
           <div class="row mt-3">
@@ -43,132 +50,62 @@
               ><input
                 type="text"
                 class="form-control"
-                placeholder="{{ user.email }}"
-                value=""
-              />
+                placeholder=""
+                value="{{ user.email }}"
+              disabled/>
             </div>
             <div class="col-md-12">
               <label class="labels">Username</label
               ><input
                 type="text"
                 class="form-control"
-                placeholder="{{ user.username }}"
-                value=""
-              />
+                placeholder=""
+                value="{{ user.username }}"
+              disabled/>
             </div>
             <div class="col-md-12">
               <label class="labels">Birth Date</label
               ><input
-                type="text"
+                type="date"
                 class="form-control"
-                placeholder="{{ user.dateOfBirth }}"
-                value=""
-              />
+                placeholder=""
+                value="{{ user.dateOfBirth }}"
+              disabled/>
             </div>
             <div class="col-md-12">
-              <label class="labels">Level</label
+              <label class="labels">Password</label
               ><input
-                type="text"
+                type="password"
                 class="form-control"
-                placeholder="{{ user.level }}"
-                value=""
-              />
+                placeholder=""
+                value="{{ user.password }}"
+              disabled/>
             </div>
             <div class="col-md-12">
-              <label class="labels">Points</label
+              <label class="labels"> Confirm new Password</label
               ><input
-                type="text"
+                type="password"
                 class="form-control"
-                placeholder="{{ user.points }}"
-                value=""
-              />
+                placeholder=""
+                value="{{ user.password }}"
+              disabled/>
             </div>
-            <div class="col-md-12">
-              <label class="labels">Area</label
-              ><input
-                type="text"
-                class="form-control"
-                placeholder=" address line 2"
-                value=""
-              />
-            </div>
-            <div class="col-md-12">
-              <label class="labels">Email ID</label
-              ><input
-                type="text"
-                class="form-control"
-                placeholder=" email id"
-                value=""
-              />
-            </div>
-            <div class="col-md-12">
-              <label class="labels">Education</label
-              ><input
-                type="text"
-                class="form-control"
-                placeholder="education"
-                value=""
-              />
-            </div>
-          </div>
-          <div class="row mt-3">
-            <div class="col-md-6">
-              <label class="labels">Country</label
-              ><input
-                type="text"
-                class="form-control"
-                placeholder="country"
-                value=""
-              />
-            </div>
-            <div class="col-md-6">
-              <label class="labels">State/Region</label
-              ><input
-                type="text"
-                class="form-control"
-                value=""
-                placeholder="state"
-              />
-            </div>
+           
           </div>
           <div class="mt-5 text-center">
             <button class="btn btn-primary profile-button" type="button">
-              Save Profile
+              Change password
             </button>
           </div>
         </div>
       </div>
       <div class="col-md-4">
         <div class="p-3 py-5">
-          <div
-            class="d-flex justify-content-between align-items-center experience"
-          >
-            <span>Edit Experience</span
-            ><span class="border px-3 p-1 add-experience"
-              ><i class="fa fa-plus"></i>&nbsp;Experience</span
-            >
-          </div>
-          <br />
-          <div class="col-md-12">
-            <label class="labels">Experience in Designing</label
-            ><input
-              type="text"
-              class="form-control"
-              placeholder="experience"
-              value=""
-            />
-          </div>
-          <br />
-          <div class="col-md-12">
-            <label class="labels">Additional Details</label
-            ><input
-              type="text"
-              class="form-control"
-              placeholder="additional details"
-              value=""
-            />
-          </div>
+          <h4 class="text">
+            <i class="fas fa-award"></i> Badges
+          </h4>
         </div>
+        
       </div>
     </div>
   </div>
