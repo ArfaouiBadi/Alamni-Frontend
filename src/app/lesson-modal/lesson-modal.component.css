@@ -1,0 +1,20 @@
+button[mat-dialog-close] {
+   margin-top: 20px;
+   background-color: #007bff;
+   color: white;
+   border: none;
+   padding: 10px 20px;
+   cursor: pointer;
+   transition: background-color 0.3s;
+ }
+ 
+ button[mat-dialog-close]:hover {
+   background-color: #0056b3;
+ }
+ .modal-container{
+   
+   
+   position: fixed;
+   top: 0;
+   
+ }

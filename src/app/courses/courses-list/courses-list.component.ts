@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Console } from 'console';
 import { CourseService } from '../../service/course.service';
+import { FileUploadService } from '../../service/file-upload.service';
 
 @Component({
   selector: 'app-courses-list',
@@ -24,10 +25,13 @@ export class CoursesListComponent implements OnInit {
   successMessage: string | null = null;
   errorMessage: string | null = null;
   courseIdToDelete: string | null = null;
+  selectedFiles: { [key: string]: File | null } = {};
+  selectedEditFiles: { [key: string]: File | null } = {};
   constructor(
     private readonly fb: FormBuilder,
     private readonly courseService: CourseService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private fileUploadService: FileUploadService
   ) {
     this.addCourseForm = this.fb.group({
       title: ['', Validators.required],
@@ -45,6 +49,7 @@ export class CoursesListComponent implements OnInit {
     });
 
     this.editCourseForm = this.fb.group({
+      id: [''],
       title: ['', Validators.required],
       imageUrl: ['', Validators.required],
       description: ['', Validators.required],
@@ -170,32 +175,86 @@ export class CoursesListComponent implements OnInit {
     this.editBadges.removeAt(index);
   }
 
+  onFileSelected(event: Event, moduleIndex: number, lessonIndex: number): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.selectedFiles[`${moduleIndex}-${lessonIndex}`] = file;
+    }
+  }
+
   onAddCourse(): void {
     if (this.addCourseForm.invalid) {
-      this.toastr.error('Please fill in all required fields.');
       return;
     }
 
-    const newCourse: Course = this.addCourseForm.value;
+    const courseData = this.addCourseForm.value;
 
-    this.courseService.addCourse(newCourse).subscribe({
-      next: (addedCourse) => {
-        this.addCourseForm.reset();
-        this.loadCourses();
-        this.toastr.success('Course added successfully!');
-      },
-      error: (error) => {
-        console.error('Error adding course:', error);
-        this.toastr.error('Failed to add course. Please try again.');
-      },
+    // Upload files and update URLs
+    const uploadPromises = Object.keys(this.selectedFiles).map((key) => {
+      const [moduleIndex, lessonIndex] = key.split('-').map(Number);
+      const file = this.selectedFiles[key];
+      if (file) {
+        return this.fileUploadService
+          .uploadFile(file)
+          .toPromise()
+          .then((url) => {
+            const lessons = this.modules
+              .at(moduleIndex)
+              .get('lessons') as FormArray;
+            const lesson = lessons.at(lessonIndex);
+            if (lesson.get('type')?.value === 'PDF') {
+              lesson.patchValue({ pdfUrl: url });
+            } else if (lesson.get('type')?.value === 'Video') {
+              lesson.patchValue({ videoUrl: url });
+            }
+          });
+      }
+      return Promise.resolve();
     });
+
+    Promise.all(uploadPromises)
+      .then(() => {
+        this.courseService.addCourse(courseData).subscribe({
+          next: (data) => {
+            this.successMessage = 'Course added successfully!';
+            this.errorMessage = null;
+          },
+          error: (err) => {
+            this.errorMessage = 'Error adding course: ' + err.message;
+            this.successMessage = null;
+          },
+        });
+      })
+      .catch((err) => {
+        this.errorMessage = 'Error uploading files: ' + err.message;
+        this.successMessage = null;
+      });
+  }
+
+  onEditFileSelected(
+    event: Event,
+    moduleIndex: number,
+    lessonIndex: number
+  ): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.selectedEditFiles[`${moduleIndex}-${lessonIndex}`] = file;
+    }
   }
 
   onEditCourse(course: Course): void {
-    this.selectedCourse = course;
-    this.editCourseForm.patchValue(course);
+    console.log('Editing course:', course);
+    this.editCourseForm.patchValue({
+      id: course.id,
+      title: course.title,
+      description: course.description,
+      duration: course.duration,
+      category: course.category,
+      levelRequired: course.levelRequired,
+    });
 
-    // Clear existing modules and lessons
     this.editModules.clear();
     course.modules!.forEach((module) => {
       const moduleGroup = this.fb.group({
@@ -220,32 +279,88 @@ export class CoursesListComponent implements OnInit {
 
       this.editModules.push(moduleGroup);
     });
-
-    // Clear existing badges
-    this.editBadges.clear();
-    course.rewardSystem!.badges!.forEach((badge) => {
-      this.editBadges.push(this.fb.control(badge));
-    });
   }
 
-  onUpdateCourse(): void {
-    if (this.editCourseForm.invalid) {
-      return;
-    }
-    const updatedCourse: Course = this.editCourseForm.value;
-    updatedCourse.id = this.selectedCourse?.id; // Ensure the id is set correctly
-    console.log(updatedCourse);
-    this.courseService.updateCourse(updatedCourse).subscribe({
-      next: (updatedCourse) => {
-        this.loadCourses();
-        this.toastr.success('Course updated successfully!');
-      },
-      error: (error) => {
-        console.error('Error updating course:', error);
-        this.toastr.error('Failed to update course. Please try again.');
-      },
+  // filepath: /d:/Projects/Alamni-Frontend/src/app/courses/courses-list/courses-list.component.ts
+  onEditCourseSubmit(): void {
+    const courseData = this.editCourseForm.value;
+    console.log('this.editCourseForm.value:', this.editCourseForm.value);
+    console.log('Editing course:', courseData);
+    // Upload files and update URLs
+    const uploadPromises = Object.keys(this.selectedEditFiles).map((key) => {
+      const [moduleIndex, lessonIndex] = key.split('-').map(Number);
+      const file = this.selectedEditFiles[key];
+      if (file) {
+        return this.fileUploadService
+          .uploadFile(file)
+          .toPromise()
+          .then((url) => {
+            const lessons = this.editModules
+              .at(moduleIndex)
+              .get('lessons') as FormArray;
+            const lesson = lessons.at(lessonIndex);
+            if (lesson.get('type')?.value === 'PDF') {
+              lesson.patchValue({ pdfUrl: url });
+            } else if (lesson.get('type')?.value === 'Video') {
+              lesson.patchValue({ videoUrl: url });
+            }
+            console.log(
+              `File uploaded for module ${moduleIndex}, lesson ${lessonIndex}: ${url}`
+            );
+          })
+          .catch((err) => {
+            console.error(
+              `Error uploading file for module ${moduleIndex}, lesson ${lessonIndex}: ${err.message}`
+            );
+            throw err;
+          });
+      }
+      return Promise.resolve();
     });
+    Promise.all(uploadPromises)
+      .then(() => {
+        console.log('All files uploaded successfully');
+        this.courseService.updateCourse(courseData).subscribe({
+          next: (data) => {
+            this.successMessage = 'Course updated successfully!';
+            this.errorMessage = null;
+            console.log('Course updated successfully');
+            console.log('data:', data);
+          },
+          error: (err) => {
+            this.errorMessage = 'Error updating course: ' + err.message;
+            this.successMessage = null;
+            console.error('Error updating course:', err.message);
+          },
+        });
+      })
+      .catch((err) => {
+        this.errorMessage = 'Error uploading files: ' + err.message;
+        this.successMessage = null;
+        console.error('Error uploading files:', err.message);
+      });
   }
+
+  // onUpdateCourse(): void {
+  //   // if (this.editCourseForm.invalid) {
+  //   //   return;
+  //   // }
+  //   console.log('Updating course:', this.editCourseForm.value);
+  //   const updatedCourse: Course = this.editCourseForm.value;
+  //   updatedCourse.id = this.editCourseForm.value.id;
+  //   updatedCourse.id = this.selectedCourse?.id; // Ensure the id is set correctly
+  //   console.log(updatedCourse);
+  //   this.courseService.updateCourse(updatedCourse).subscribe({
+  //     next: (updatedCourse) => {
+  //       this.loadCourses();
+  //       this.toastr.success('Course updated successfully!');
+  //     },
+  //     error: (error) => {
+  //       console.error('Error updating course:', error);
+  //       this.toastr.error('Failed to update course. Please try again.');
+  //     },
+  //   });
+  // }
 
   deleteCourse(): void {
     console.log('Deleting course:', this.courseIdToDelete);

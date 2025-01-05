@@ -1,0 +1,13 @@
+<div class="lesson-details">
+  <h2>{{ lesson.title }}</h2>
+  <div *ngIf="lesson.type === 'PDF'">
+    <embed [src]="safeUrl" width="100%" height="600px" type="application/pdf" />
+  </div>
+  <div *ngIf="lesson.type === 'Video'">
+    <video width="100%" height="600px" controls>
+      <source [src]="safeUrl" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+  <button (click)="markAsFinished()">Mark as Finished</button>
+</div>

@@ -1,72 +1,79 @@
 <app-navbar></app-navbar>
+
 <div *ngIf="isLoading" class="loading-overlay">
   <div class="loading-spinner">
     <!-- You can use an actual spinner here -->
     Loading...
   </div>
 </div>
-<div class="course-container" *ngIf="course">
-  <div class="course-header">
-    <div class="header-left">
-      <h1>{{ course.title }}</h1>
-      <button class="enroll-btn" (click)="enrollCourse(course.id!)">
-        Enroll for Free
-      </button>
-      <br />
+<div class="course-detail-container">
+  <app-sidebar></app-sidebar>
+  <div class="course-container" *ngIf="course">
+    <div class="course-header">
+      <div class="header-left">
+        <h1>{{ course.title }}</h1>
+        <button class="enroll-btn" (click)="enrollCourse(course.id!)">
+          Enroll for Free
+        </button>
+        <br />
 
-      <p class="stats">Already enrolled</p>
-      <p class="coursera-plus">
-        Included with <span class="plus">Alamni</span>
-      </p>
+        <p class="stats">Already enrolled</p>
+        <p class="coursera-plus">
+          Included with <span class="plus">Alamni</span>
+        </p>
 
-      <div
-        class="modules-section"
-        *ngIf="course.modules && course.modules.length > 0"
-      >
-        <h3>Modules</h3>
-        <ul class="modules-list">
-          <li *ngFor="let module of course.modules">
-            <span>{{ module.title }}</span>
-            <ul>
-              <li *ngFor="let lesson of module.lessons">
-                {{ lesson.title }} - {{ lesson.type }}
-                <button *ngIf="lesson.type === 'Video'" class="lesson-btn">
-                  Watch Video
-                </button>
-                <button *ngIf="lesson.type === 'PDF'" class="lesson-btn">
-                  Read PDF
-                </button>
-                <button
-                  *ngIf="lesson.type === 'PDF'"
-                  class="lesson-btn read-pdf-btn"
-                  (click)="startQuiz(module, lesson)"
+        <div
+          class="modules-section"
+          *ngIf="course.modules && course.modules.length > 0"
+        >
+          <h3>Modules</h3>
+          <ul class="modules-list">
+            <li *ngFor="let module of course.modules" class="module">
+              <p class="module-title">{{ module.title }}</p>
+              <ul>
+                <li
+                  *ngFor="let lesson of module.lessons; index as i"
+                  class="lesson"
+                  (click)="goToLesson(course.id!, lesson)"
+                  class="lesson"
                 >
-                  Start Quiz
-                </button>
-              </li>
-            </ul>
-          </li>
-        </ul>
+                  <div class="lesson-title">
+                    <span *ngIf="lesson.type === 'Video'" class="lesson-icon">
+                      <i class="fa fa-video-camera"></i>
+                    </span>
+                    <span *ngIf="lesson.type === 'PDF'" class="lesson-icon">
+                      <i class="fa fa-file-pdf-o"></i>
+                    </span>
+                    Lesson {{ i + 1 }} : {{ lesson.title }} - {{ lesson.type }}
+                  </div>
+                  <span class="lesson-check">
+                    <i class="fa fa-check"></i>
+                  </span>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="course-details">
-    <div class="detail-box">
-      <h3>Category</h3>
-      <p>{{ course.category }}</p>
-    </div>
-    <div class="detail-box">
-      <h3>Level Required</h3>
-      <p>{{ course.levelRequired }}</p>
-    </div>
-    <div class="detail-box">
-      <h3>Duration</h3>
-      <p>{{ course.duration }} mins</p>
-    </div>
-    <div class="detail-box">
-      <h3>Description</h3>
-      <p>{{ course.description }}</p>
+    <div class="course-details">
+      <div class="detail-box">
+        <h3>Category</h3>
+        <p>{{ course.category }}</p>
+      </div>
+      <div class="detail-box">
+        <h3>Level Required</h3>
+        <p>{{ course.levelRequired }}</p>
+      </div>
+      <div class="detail-box">
+        <h3>Duration</h3>
+        <p>{{ course.duration }} mins</p>
+      </div>
+      <div class="detail-box">
+        <h3>Description</h3>
+        <p>{{ course.description }}</p>
+      </div>
     </div>
   </div>
 </div>

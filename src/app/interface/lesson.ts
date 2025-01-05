@@ -1,4 +1,5 @@
 export interface Lesson {
+id: string;
   title: string;
   type: 'Video' | 'PDF';
   videoUrl?: string;

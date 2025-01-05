@@ -22,7 +22,7 @@ export class CourseService {
     return this.http.get<Course[]>(`${this.apiUrl}/courses`);
   }
   updateCourse(course: Course): Observable<any> {
-    console.log(course);
+    console.log('service update' + course.id);
     return this.http.put(`${this.apiUrl}/courses`, course);
   }
 

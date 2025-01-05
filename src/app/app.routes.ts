@@ -15,6 +15,7 @@ import { CoursesComponent } from './courses/course/courses.component';
 import { CoursesDetailsComponent } from './courses/courses-details/courses-details.component';
 import { LibraryComponent } from './library/library.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
+import { LessonComponent } from './lesson/lesson.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -52,4 +53,5 @@ export const routes: Routes = [
     path: 'course-details/:id',
     component: CoursesDetailsComponent,
   },
+  { path: 'lesson/:lessonId', component: LessonComponent },
 ];

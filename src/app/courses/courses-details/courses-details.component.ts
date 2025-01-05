@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from '../../interface/course';
 import { CourseService } from '../../service/course.service';
 import { CommonModule } from '@angular/common';
@@ -7,10 +7,11 @@ import { QuizService } from '../../service/quiz.service';
 import { Lesson } from '../../interface/lesson';
 import { Module } from '../../interface/module';
 import { NavbarComponent } from '../../navbar/navbar.component';
+import { SidebarComponent } from '../../sidebar/sidebar.component';
 @Component({
   selector: 'app-courses-details',
   standalone: true,
-  imports: [CommonModule, NavbarComponent],
+  imports: [CommonModule, NavbarComponent, SidebarComponent],
   templateUrl: './courses-details.component.html',
   styleUrl: './courses-details.component.css',
 })
@@ -18,8 +19,10 @@ export class CoursesDetailsComponent implements OnInit {
   course!: Course;
   courseDetails!: string;
   isLoading: boolean = false;
+
   constructor(
     private readonly route: ActivatedRoute,
+    private readonly router: Router,
     private readonly courseService: CourseService,
     private readonly quizService: QuizService
   ) {}
@@ -63,5 +66,8 @@ export class CoursesDetailsComponent implements OnInit {
         console.error('Error enrolling course:', err);
       },
     });
+  }
+  goToLesson(courseId: string, lesson: Lesson) {
+    this.router.navigate(['lesson', courseId], { state: { lesson } });
   }
 }

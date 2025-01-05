@@ -6,6 +6,7 @@
     padding: 50px 4%;
     background-color: #f7f9fc;
   }
+ 
   /* Section Titles */
   .section-title {
     margin-top: 30px;
@@ -95,28 +96,54 @@
   /* Profile Section */
   .profile-summary {
     text-align: center;
+    padding: 30px;
   }
   
   .profile-name {
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
+    font-family: 'Archivo ', sans-serif;
   }
-  
+  .profile-summary p {
+    color: #666;
+    font-size: 15px;
+    margin: 10px 0;
+  }
   .profile-completion {
     color: #666;
     margin: 10px 0;
   }
-  
+  .status-container{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .status-text{
+    color: #666;
+    display: flex;
+    margin: auto 0;
+  }
+  .status-text.not-finished {
+    color: red;
+  }
   /* Stats Card */
   .stats-card {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 15px;
+    flex-direction: row;
+    padding: 50px 120px;
   }
-  
+  .stats-card p{
+    margin-top: 10px;
+   
+  }
   .stat {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
   }
   
   .stat-value {

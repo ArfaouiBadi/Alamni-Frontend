@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { UserService } from '../service/user.service';
 import { User } from '../interface/user';
 import { EnrollmentService } from '../service/enrollment.service';
@@ -9,18 +9,21 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [NavbarComponent, RouterOutlet, CommonModule],
+  imports: [NavbarComponent, RouterOutlet, CommonModule, RouterModule],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
 export class HomePageComponent implements OnInit {
   username: string | null = null;
-  id: string = ''; 
+  id: string = '';
   user: User | null = null;
-  courses: any = []; 
+  courses: any = [];
   lastUnfinishedCourse: Course | null = null;
 
-  constructor(private userService: UserService, private enrollmentService: EnrollmentService) {}
+  constructor(
+    private userService: UserService,
+    private enrollmentService: EnrollmentService
+  ) {}
 
   ngOnInit(): void {
     if (localStorage.getItem('username')) {
@@ -30,19 +33,22 @@ export class HomePageComponent implements OnInit {
       this.user = user;
       console.log(this.user);
       if (this.user) {
-        this.id = localStorage.getItem('id') || '';  
+        this.id = localStorage.getItem('id') || '';
         if (this.id) {
-          this.enrollmentService.getUnfinishedCoursesByUserId(this.id).subscribe((courses) => {
-            this.courses = courses;
-            console.log(this.courses);
-          });
-          this.enrollmentService.getLastUnfinishedCourseByUserId(this.id).subscribe((course) => {
-            this.lastUnfinishedCourse = course;
-            console.log(this.lastUnfinishedCourse);
-          });
+          this.enrollmentService
+            .getUnfinishedCoursesByUserId(this.id)
+            .subscribe((courses) => {
+              this.courses = courses;
+              console.log(this.courses);
+            });
+          this.enrollmentService
+            .getLastUnfinishedCourseByUserId(this.id)
+            .subscribe((course) => {
+              this.lastUnfinishedCourse = course;
+              console.log(this.lastUnfinishedCourse);
+            });
         }
       }
     });
   }
 }
-

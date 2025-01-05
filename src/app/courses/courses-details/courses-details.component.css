@@ -4,13 +4,21 @@
     padding: 0;
     box-sizing: border-box;
     color: #f3f3f3;
+    
   }
-  
+  .course-detail-container{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100%;
+    background-color: white;
+  }
   /* Main Container */
   .course-container {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    
     width: 100%;
     background-color: white;
     
@@ -27,11 +35,13 @@
     background-size: cover; /* Cover the entire header area */
     background-position: center; /* Center the image */
     color: white; /* Make sure text is readable on top of the background */
+    font-family: 'Archivo', sans-serif;
   }
   
   .header-left {
     width: 40%; /* Adjust this percentage to control the size */
     text-align: left;
+    font-family: 'Archivo', sans-serif;
   }
   
   .header-left .logo {
@@ -43,6 +53,8 @@
     font-size: 50px;
     color: #fff;
     margin-bottom: 15px;
+    font-family: 'Archivo', sans-serif;
+    font-weight: 900;
   }
   
   .header-left .instructor {
@@ -57,7 +69,7 @@
   }
   
   .header-left .enroll-btn {
-    background-color: #A020F0;
+    background-color: #8243fe;
     color: white;
     border: none;
     padding: 15px 30px;
@@ -65,10 +77,12 @@
     border-radius: 5px;
     cursor: pointer;
     margin-bottom: 10px;
+    transition: all 0.3s ease;
   }
   
   .header-left .enroll-btn:hover {
-    background-color: #800080;
+    background-color: #A020F0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
   .header-left .stats,
@@ -105,6 +119,7 @@
     font-size: 30px;
     color: #555;
     margin-bottom: 10px;
+    font-family: 'Archivo', sans-serif;
   }
   
   .detail-box p {
@@ -113,31 +128,76 @@
   }
   .modules-section {
     margin-top: 20px;
+    width: 200%;
+    
   }
   
   .modules-section h3 {
-    font-size: 30px;
+    font-size: 41px;
     color: white;
     margin-bottom: 10px;
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+  }
+  .module-title{
+    font-size: 20px;
+    color: #000;
+    font-family: 'Archivo', sans-serif;
+    font-weight: bold;
   }
   
   .modules-list {
     list-style-type: none;
     padding: 0;
+    
   }
   
-  .modules-list li {
+  .modules-list .module {
     margin: 5px 0;
-    padding: 10px;
+    padding: 20px 30px;
     background-color: #f9f9f9;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     color:black;
   }
+  .lesson{
+    font-family: 'Archivo', sans-serif;
+    font-weight: 300;
+    margin: 5px 0;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .lesson-title{
+    font-size: 16px;
+    color: #000;
+    font-family: 'Archivo', sans-serif;
+    font-weight: 500;
+  }
+  .lesson:hover {
+    background-color: #f3f3f3;
+  }
   
   .modules-list li span {
     font-size: 14px;
     color: #555;
+  }
+  .lesson-icon {
+    margin-left: 10px;
+    
+  }
+  .fa-video-camera , .fa-file-pdf-o{
+    margin-right: 5px;
+    color: black;
+  }
+  .fa-check{
+    color: black;
+    margin-right: 10px;
   }
   .lesson-btn {
     background-color: #A020F0;

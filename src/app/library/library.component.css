@@ -73,10 +73,6 @@
  .btn-course:hover {
    background-color: #5e27d3; 
  }
- .filter-container {
-  margin-bottom: 20px;
-  text-align: right;
-}
 
 .filter-dropdown {
   padding: 10px;
@@ -84,4 +80,23 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   cursor: pointer;
+}
+.filter-container {
+  display: flex;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.filter-item {
+  padding: 10px 20px;
+  background-color: #fff;
+  border: 1px solid #000;
+  color: #000;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.filter-item:hover {
+  background-color: #e0e0e0;
 }

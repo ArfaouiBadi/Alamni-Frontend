@@ -3,7 +3,8 @@
     <h2 class="section-title"><i class="fas fa-book"></i> Learn</h2>
     <div class="card track-card wide-card">
       <p class="enrollment-text">
-        You're enrolled in the <a href="#">{{ lastUnfinishedCourse?.title }}</a> track.
+        You're enrolled in the
+        <a href="#">{{ lastUnfinishedCourse?.title }}</a> track.
       </p>
       <h3 class="card-title">{{ lastUnfinishedCourse?.description }}</h3>
       <div class="status-container">
@@ -11,11 +12,18 @@
         <p class="status-text">Not finished yet</p>
       </div>
       <div class="button-container">
-        <button class="btn-primary">Keep Making Progress</button>
+        <button
+          class="btn-primary"
+          [routerLink]="['/course-details', lastUnfinishedCourse?.id]"
+        >
+          Keep Making Progress
+        </button>
       </div>
     </div>
 
-    <h2 class="section-title"><i class="fas fa-flask"></i> Your Unfinished Enrolled Courses</h2>
+    <h2 class="section-title">
+      <i class="fas fa-flask"></i> Your Unfinished Enrolled Courses
+    </h2>
     <div class="card datalab-card wide-card">
       <div *ngIf="courses.length > 0" class="courses-container">
         <ul>
@@ -23,42 +31,42 @@
             <div class="course-content">
               <h3>{{ course.title }}</h3>
               <p>{{ course.description }}</p>
-              <img *ngIf="course.imageUrl" [src]="course.imageUrl" alt="{{ course.title }}" class="course-image" />
+              <img
+                *ngIf="course.imageUrl"
+                [src]="course.imageUrl"
+                alt="{{ course.title }}"
+                class="course-image"
+              />
             </div>
             <button class="btn-course">Continue</button>
           </li>
         </ul>
       </div>
     </div>
-    
-    
   </div>
 
-  
   <div class="section profile-section">
     <div class="card profile-summary">
       <h3 class="profile-name">
         <i class="fas fa-user-circle"></i> Hey, {{ username }}!
       </h3>
-     
-      
-        <p>Every great journey begins with the first step. Let's dive in and start learning something new today!</p>
-   
+      <p>
+        Every great journey begins with the first step. Let's dive in and start
+        learning something new today!
+      </p>
     </div>
 
     <div class="card stats-card">
       <div class="stat">
-        <i class="fas fa-trophy stat-icon">  <p class="stat-label">Level</p></i>
+        <i class="fas fa-trophy stat-icon"> <p class="stat-label">Level</p></i>
+
         <p class="stat-value">{{ user?.level }}</p>
-      
       </div>
       <div class="stat">
         <i class="fas fa-star stat-icon"><p class="stat-label">Points</p></i>
         <p class="stat-value">{{ user?.points }}</p>
-        
       </div>
     </div>
-    
 
     <div class="card progress-card">
       <p>
@@ -73,6 +81,3 @@
     </div>
   </div>
 </div>
-
- 
-

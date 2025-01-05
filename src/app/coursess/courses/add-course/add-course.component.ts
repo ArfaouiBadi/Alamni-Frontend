@@ -7,8 +7,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { CourseService } from '../../service/course.service';
-import { Course } from '../../interface/course';
+import { CourseService } from '../../../service/course.service';
 
 @Component({
   selector: 'app-add-course',
