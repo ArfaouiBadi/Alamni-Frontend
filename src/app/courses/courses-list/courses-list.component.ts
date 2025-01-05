@@ -301,9 +301,12 @@ export class CoursesListComponent implements OnInit {
             const lesson = lessons.at(lessonIndex);
             if (lesson.get('type')?.value === 'PDF') {
               lesson.patchValue({ pdfUrl: url });
+              lesson.patchValue({ videoUrl: '' });
             } else if (lesson.get('type')?.value === 'Video') {
               lesson.patchValue({ videoUrl: url });
+              lesson.patchValue({ pdfUrl: '' });
             }
+            console.log('File uploaded for module:', moduleIndex, lessonIndex);
             console.log(
               `File uploaded for module ${moduleIndex}, lesson ${lessonIndex}: ${url}`
             );
