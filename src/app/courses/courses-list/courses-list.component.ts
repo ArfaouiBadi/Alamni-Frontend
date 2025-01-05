@@ -1,3 +1,4 @@
+// filepath: /d:/Projects/Alamni-Frontend/src/app/courses/courses-list/courses-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Course } from '../../interface/course';
@@ -5,9 +6,9 @@ import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Console } from 'console';
 import { CourseService } from '../../service/course.service';
 import { FileUploadService } from '../../service/file-upload.service';
+import { Category } from '../../interface/category';
 
 @Component({
   selector: 'app-courses-list',
@@ -27,6 +28,12 @@ export class CoursesListComponent implements OnInit {
   courseIdToDelete: string | null = null;
   selectedFiles: { [key: string]: File | null } = {};
   selectedEditFiles: { [key: string]: File | null } = {};
+  categories: Category[] = [];
+  selectedImage: File | null = null;
+  selectedEditImage: File | null = null;
+  imagePreview: string | ArrayBuffer | null = null;
+  editImagePreview: string | ArrayBuffer | null = null;
+
   constructor(
     private readonly fb: FormBuilder,
     private readonly courseService: CourseService,
@@ -67,6 +74,7 @@ export class CoursesListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCourses();
+    this.loadCategories();
   }
 
   loadCourses(): void {
@@ -74,9 +82,22 @@ export class CoursesListComponent implements OnInit {
       this.courses = courses;
     });
   }
+
+  loadCategories(): void {
+    this.courseService.getCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories;
+      },
+      error: (err) => {
+        console.error('Error loading categories:', err);
+      },
+    });
+  }
+
   confirmDeleteCourse(courseId: string): void {
     this.courseIdToDelete = courseId;
   }
+
   get modules(): FormArray {
     return this.addCourseForm.get('modules') as FormArray;
   }
@@ -190,6 +211,24 @@ export class CoursesListComponent implements OnInit {
 
     const courseData = this.addCourseForm.value;
 
+    // Upload image if selected
+    if (this.selectedImage) {
+      this.fileUploadService.uploadFile(this.selectedImage).subscribe({
+        next: (url) => {
+          courseData.imageUrl = url;
+          this.addCourse(courseData);
+        },
+        error: (err) => {
+          this.errorMessage = 'Error uploading image: ' + err.message;
+          this.successMessage = null;
+        },
+      });
+    } else {
+      this.addCourse(courseData);
+    }
+  }
+
+  addCourse(courseData: any): void {
     // Upload files and update URLs
     const uploadPromises = Object.keys(this.selectedFiles).map((key) => {
       const [moduleIndex, lessonIndex] = key.split('-').map(Number);
@@ -219,6 +258,7 @@ export class CoursesListComponent implements OnInit {
           next: (data) => {
             this.successMessage = 'Course added successfully!';
             this.errorMessage = null;
+            this.loadCourses();
           },
           error: (err) => {
             this.errorMessage = 'Error adding course: ' + err.message;
@@ -253,7 +293,11 @@ export class CoursesListComponent implements OnInit {
       duration: course.duration,
       category: course.category,
       levelRequired: course.levelRequired,
+      imageUrl: course.imageUrl,
     });
+
+    console.log('course.imageUrl:', course.imageUrl);
+    this.editImagePreview = `http://localhost:8000/api${course.imageUrl}`;
 
     this.editModules.clear();
     course.modules!.forEach((module) => {
@@ -281,11 +325,29 @@ export class CoursesListComponent implements OnInit {
     });
   }
 
-  // filepath: /d:/Projects/Alamni-Frontend/src/app/courses/courses-list/courses-list.component.ts
   onEditCourseSubmit(): void {
     const courseData = this.editCourseForm.value;
     console.log('this.editCourseForm.value:', this.editCourseForm.value);
     console.log('Editing course:', courseData);
+
+    // Upload image if selected
+    if (this.selectedEditImage) {
+      this.fileUploadService.uploadFile(this.selectedEditImage).subscribe({
+        next: (url) => {
+          courseData.imageUrl = url;
+          this.updateCourse(courseData);
+        },
+        error: (err) => {
+          this.errorMessage = 'Error uploading image: ' + err.message;
+          this.successMessage = null;
+        },
+      });
+    } else {
+      this.updateCourse(courseData);
+    }
+  }
+
+  updateCourse(courseData: any): void {
     // Upload files and update URLs
     const uploadPromises = Object.keys(this.selectedEditFiles).map((key) => {
       const [moduleIndex, lessonIndex] = key.split('-').map(Number);
@@ -320,6 +382,7 @@ export class CoursesListComponent implements OnInit {
       }
       return Promise.resolve();
     });
+
     Promise.all(uploadPromises)
       .then(() => {
         console.log('All files uploaded successfully');
@@ -329,6 +392,7 @@ export class CoursesListComponent implements OnInit {
             this.errorMessage = null;
             console.log('Course updated successfully');
             console.log('data:', data);
+            this.loadCourses();
           },
           error: (err) => {
             this.errorMessage = 'Error updating course: ' + err.message;
@@ -344,27 +408,6 @@ export class CoursesListComponent implements OnInit {
       });
   }
 
-  // onUpdateCourse(): void {
-  //   // if (this.editCourseForm.invalid) {
-  //   //   return;
-  //   // }
-  //   console.log('Updating course:', this.editCourseForm.value);
-  //   const updatedCourse: Course = this.editCourseForm.value;
-  //   updatedCourse.id = this.editCourseForm.value.id;
-  //   updatedCourse.id = this.selectedCourse?.id; // Ensure the id is set correctly
-  //   console.log(updatedCourse);
-  //   this.courseService.updateCourse(updatedCourse).subscribe({
-  //     next: (updatedCourse) => {
-  //       this.loadCourses();
-  //       this.toastr.success('Course updated successfully!');
-  //     },
-  //     error: (error) => {
-  //       console.error('Error updating course:', error);
-  //       this.toastr.error('Failed to update course. Please try again.');
-  //     },
-  //   });
-  // }
-
   deleteCourse(): void {
     console.log('Deleting course:', this.courseIdToDelete);
     if (!this.courseIdToDelete) return;
@@ -379,5 +422,29 @@ export class CoursesListComponent implements OnInit {
         this.toastr.error('Failed to delete course. Please try again.');
       },
     });
+  }
+
+  onImageSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedImage = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+      };
+      reader.readAsDataURL(this.selectedImage);
+    }
+  }
+
+  onEditImageSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedEditImage = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.editImagePreview = reader.result;
+      };
+      reader.readAsDataURL(this.selectedEditImage);
+    }
   }
 }

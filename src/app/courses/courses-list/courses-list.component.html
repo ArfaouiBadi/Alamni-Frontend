@@ -102,7 +102,7 @@
                 <td>{{ course.description }}</td>
                 <td>{{ course.levelRequired }}</td>
                 <td>{{ course.duration }}</td>
-                <td>{{ course.category }}</td>
+                <td>{{ course.category.name }}</td>
                 <td>
                   <a
                     href="#editCourseModal"
@@ -168,44 +168,13 @@
               </button>
             </div>
             <div class="modal-body">
-              <div
-                class="form-group"
-                [ngClass]="{
-                  'has-error':
-                    addCourseForm.get('title')?.invalid &&
-                    addCourseForm.get('title')?.touched
-                }"
-              >
-                <label>Title</label>
+              <div class="form-group">
+                <label for="image">Image</label>
                 <input
-                  type="text"
+                  type="file"
+                  id="image"
                   class="form-control"
-                  formControlName="title"
-                  required
-                />
-                <div
-                  *ngIf="
-                    addCourseForm.get('title')?.invalid &&
-                    addCourseForm.get('title')?.touched
-                  "
-                  class="text-danger"
-                >
-                  Title is required.
-                </div>
-              </div>
-              <div
-                class="form-group"
-                [ngClass]="{
-                  'has-error':
-                    addCourseForm.get('imageUrl')?.invalid &&
-                    addCourseForm.get('imageUrl')?.touched
-                }"
-              >
-                <label>Image URL</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  formControlName="imageUrl"
+                  (change)="onImageSelected($event)"
                   required
                 />
                 <div
@@ -215,8 +184,14 @@
                   "
                   class="text-danger"
                 >
-                  Image URL is required.
+                  Image is required.
                 </div>
+                <img
+                  *ngIf="imagePreview"
+                  [src]="imagePreview"
+                  alt="Image Preview"
+                  class="img-preview"
+                />
               </div>
               <div
                 class="form-group"
@@ -267,6 +242,7 @@
                   Duration is required.
                 </div>
               </div>
+              <!-- filepath: /d:/Projects/Alamni-Frontend/src/app/courses/courses-list/courses-list.component.html -->
               <div
                 class="form-group"
                 [ngClass]="{
@@ -275,13 +251,21 @@
                     addCourseForm.get('category')?.touched
                 }"
               >
-                <label>Category</label>
-                <input
-                  type="text"
+                <label for="category">Category</label>
+                <select
+                  id="category"
                   class="form-control"
                   formControlName="category"
                   required
-                />
+                >
+                  <option value="" disabled>Select Category</option>
+                  <option
+                    *ngFor="let category of categories"
+                    [value]="category.id"
+                  >
+                    {{ category.name }}
+                  </option>
+                </select>
                 <div
                   *ngIf="
                     addCourseForm.get('category')?.invalid &&
@@ -699,19 +683,13 @@
                   Title is required.
                 </div>
               </div>
-              <div
-                class="form-group"
-                [ngClass]="{
-                  'has-error':
-                    editCourseForm.get('imageUrl')?.invalid &&
-                    editCourseForm.get('imageUrl')?.touched
-                }"
-              >
-                <label>Image URL</label>
+              <div class="form-group">
+                <label for="editImage">Image</label>
                 <input
-                  type="text"
+                  type="file"
+                  id="editImage"
                   class="form-control"
-                  formControlName="imageUrl"
+                  (change)="onEditImageSelected($event)"
                   required
                 />
                 <div
@@ -721,8 +699,14 @@
                   "
                   class="text-danger"
                 >
-                  Image URL is required.
+                  Image is required.
                 </div>
+                <img
+                  *ngIf="editImagePreview"
+                  [src]="editImagePreview"
+                  alt="Image Preview"
+                  class="img-preview"
+                />
               </div>
               <div
                 class="form-group"
@@ -781,13 +765,21 @@
                     editCourseForm.get('category')?.touched
                 }"
               >
-                <label>Category</label>
-                <input
-                  type="text"
+                <label for="category">Category</label>
+                <select
+                  id="category"
                   class="form-control"
                   formControlName="category"
                   required
-                />
+                >
+                  <option value="" disabled>Select Category</option>
+                  <option
+                    *ngFor="let category of categories"
+                    [value]="category.id"
+                  >
+                    {{ category.name }}
+                  </option>
+                </select>
                 <div
                   *ngIf="
                     editCourseForm.get('category')?.invalid &&

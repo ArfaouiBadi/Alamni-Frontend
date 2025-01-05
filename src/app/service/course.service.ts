@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Course } from '../interface/course';
 import { Category } from '../interface/category';
 
@@ -19,7 +19,14 @@ export class CourseService {
     return this.http.get<Course>(`${this.apiUrl}/courses/${id}`);
   }
   getCourses(): Observable<Course[]> {
-    return this.http.get<Course[]>(`${this.apiUrl}/courses`);
+    return this.http.get<Course[]>(`${this.apiUrl}/courses`).pipe(
+      map((courses: Course[]) => {
+        return courses.map((course) => {
+          course.imageUrl = `http://localhost:8000/api${course.imageUrl}`;
+          return course;
+        });
+      })
+    );
   }
   updateCourse(course: Course): Observable<any> {
     console.log('service update' + course.id);
