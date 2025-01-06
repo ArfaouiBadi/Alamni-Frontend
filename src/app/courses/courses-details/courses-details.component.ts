@@ -8,6 +8,7 @@ import { Lesson } from '../../interface/lesson';
 import { Module } from '../../interface/module';
 import { NavbarComponent } from '../../navbar/navbar.component';
 import { SidebarComponent } from '../../sidebar/sidebar.component';
+import { EnrollmentService } from '../../service/enrollment.service';
 @Component({
   selector: 'app-courses-details',
   standalone: true,
@@ -19,20 +20,22 @@ export class CoursesDetailsComponent implements OnInit {
   course!: Course;
   courseDetails!: string;
   isLoading: boolean = false;
-
+  userId: string | null = localStorage.getItem('id');
+  isEnrolled: boolean = false;
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly courseService: CourseService,
+    private readonly enrollmentService: EnrollmentService,
     private readonly quizService: QuizService
   ) {}
   ngOnInit(): void {
-    // Get the course ID from the route
     const courseId = this.route.snapshot.paramMap.get('id');
     if (courseId) {
       this.courseService.getCourseById(courseId).subscribe({
         next: (data) => {
           this.course = data;
+          this.checkEnrollment(courseId);
         },
         error: (err) => {
           console.error('Error fetching course details:', err);
@@ -47,11 +50,11 @@ export class CoursesDetailsComponent implements OnInit {
     this.quizService.startQuiz(this.courseDetails).subscribe({
       next: (data) => {
         console.log('Quiz started:', data);
-        this.isLoading = false; // Stop loading on success
+        this.isLoading = false; 
       },
       error: (err) => {
         console.error('Error starting quiz:', err);
-        this.isLoading = false; // Stop loading on error
+        this.isLoading = false; 
       },
     });
   }
@@ -70,4 +73,17 @@ export class CoursesDetailsComponent implements OnInit {
   goToLesson(courseId: string, lesson: Lesson) {
     this.router.navigate(['lesson', courseId], { state: { lesson } });
   }
+  private checkEnrollment(courseId: string): void {
+    if (this.userId) {
+      this.enrollmentService.getCoursesByUserId(this.userId).subscribe({
+        next: (courses) => {
+          this.isEnrolled = courses.some((course) => course.id === courseId);
+        },
+        error: (err) => {
+          console.error('Error checking enrollment:', err);
+        },
+      });
+    }
+  }
+
 }
