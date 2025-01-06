@@ -8,6 +8,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { AuthService } from '../../service/auth.service';
+import Swal from 'sweetalert2'; // Import SweetAlert2
 
 @Component({
   selector: 'app-users-list',
@@ -61,10 +62,11 @@ export class UsersListComponent implements OnInit {
       this.authService.signUp(this.addUserForm.value).subscribe(
         (response: any) => {
           console.log('User registered successfully', response);
-          alert('User registered successfully. Please verify your email.');
+          Swal.fire('Success', 'User registered successfully. Please verify your email.', 'success');
         },
         (error: any) => {
           console.error('Error registering user', error);
+          Swal.fire('Error', 'Failed to register user. Please try again.', 'error');
         }
       );
     }
@@ -77,13 +79,14 @@ export class UsersListComponent implements OnInit {
         (response: any) => {
           if (response.verified) {
             this.isEmailVerified = true;
-            alert('Email verified successfully.');
+            Swal.fire('Success', 'Email verified successfully.', 'success');
           } else {
-            alert('Email verification failed.');
+            Swal.fire('Error', 'Email verification failed.', 'error');
           }
         },
         (error: any) => {
           console.error('Error verifying email', error);
+          Swal.fire('Error', 'Failed to verify email. Please try again.', 'error');
         }
       );
     }
@@ -91,25 +94,41 @@ export class UsersListComponent implements OnInit {
 
   confirmDeleteUser(id: number): void {
     this.userIdToDelete = id; // Store the user ID to delete
+    this.deleteUser();
   }
 
   deleteUser(): void {
-    if (this.userIdToDelete !== null) {
-      this.userService.deleteUser(this.userIdToDelete).subscribe(
-        () => {
-          console.log('User deleted successfully');
-
-          this.users = this.users.filter(
-            (user) => user.id !== this.userIdToDelete
+    if (this.userIdToDelete !== null) {  // Ensure it's not null before proceeding
+      const userId = this.userIdToDelete; // Now we are certain it's a number
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You won’t be able to revert this!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, keep it',
+      }).then((result) => {
+        if (result.isConfirmed) {
+        
+          this.userService.deleteUser(userId).subscribe(
+            () => {
+              console.log('User deleted successfully');
+              this.users = this.users.filter((user) => user.id !== userId);
+              this.userIdToDelete = null; 
+              Swal.fire('Deleted!', 'User has been deleted.', 'success');
+            },
+            (error: any) => {
+              console.error('Error deleting user', error);
+              Swal.fire('Error', 'Failed to delete user. Please try again.', 'error');
+              this.userIdToDelete = null; 
+            }
           );
-          this.userIdToDelete = null; // Reset the user ID to delete
-        },
-        (error: any) => {
-          console.error('Error deleting user', error);
-          alert('Error deleting user.');
-          this.userIdToDelete = null; // Reset the user ID to delete
+        } else {
+          this.userIdToDelete = null;
         }
-      );
+      });
     }
   }
+  
+  
 }
