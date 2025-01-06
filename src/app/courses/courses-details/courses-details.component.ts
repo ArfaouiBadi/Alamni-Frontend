@@ -50,11 +50,11 @@ export class CoursesDetailsComponent implements OnInit {
     this.quizService.startQuiz(this.courseDetails).subscribe({
       next: (data) => {
         console.log('Quiz started:', data);
-        this.isLoading = false; 
+        this.isLoading = false;
       },
       error: (err) => {
         console.error('Error starting quiz:', err);
-        this.isLoading = false; 
+        this.isLoading = false;
       },
     });
   }
@@ -75,9 +75,11 @@ export class CoursesDetailsComponent implements OnInit {
   }
   private checkEnrollment(courseId: string): void {
     if (this.userId) {
-      this.enrollmentService.getCoursesByUserId(this.userId).subscribe({
-        next: (courses) => {
-          this.isEnrolled = courses.some((course) => course.id === courseId);
+      this.enrollmentService.getEnrollmentsByUserId(this.userId).subscribe({
+        next: (enrollments) => {
+          this.isEnrolled = enrollments.some(
+            (enrollment) => enrollment.course.id === courseId
+          );
         },
         error: (err) => {
           console.error('Error checking enrollment:', err);
@@ -85,5 +87,4 @@ export class CoursesDetailsComponent implements OnInit {
       });
     }
   }
-
 }

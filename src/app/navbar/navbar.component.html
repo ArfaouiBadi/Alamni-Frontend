@@ -16,7 +16,13 @@
     <a [routerLink]="['/profile']" routerLinkActive="active" class="menu-item"
       >Profile</a
     >
-    <a *ngIf="isUserLoggedIn && userRole === 'ROLE_ADMIN'" [routerLink]="['/admin-dashboard']" routerLinkActive="active" class="menu-item">Dashboard</a>
+    <a
+      *ngIf="isUserLoggedIn && userRole === 'ROLE_ADMIN'"
+      [routerLink]="['/admin-dashboard']"
+      routerLinkActive="active"
+      class="menu-item"
+      >Dashboard</a
+    >
   </div>
 
   <div class="search-zone">
