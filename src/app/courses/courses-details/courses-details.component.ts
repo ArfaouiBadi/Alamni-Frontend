@@ -9,6 +9,8 @@ import { Module } from '../../interface/module';
 import { NavbarComponent } from '../../navbar/navbar.component';
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { EnrollmentService } from '../../service/enrollment.service';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-courses-details',
   standalone: true,
@@ -64,6 +66,17 @@ export class CoursesDetailsComponent implements OnInit {
     this.courseService.enrollCourse(courseId, id!).subscribe({
       next: (data) => {
         console.log('Course enrolled:', data);
+        Swal.fire({
+          title: 'Congratulations!',
+          text: 'You have successfully enrolled in this course!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.isConfirmed) {
+           
+            this.router.navigate(['/library']); 
+          }
+        });
       },
       error: (err) => {
         console.error('Error enrolling course:', err);
