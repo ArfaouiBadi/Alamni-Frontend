@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { CourseService } from '../../service/course.service';
-import { Course } from '../../interface/course';
-import { ToastrService } from 'ngx-toastr';
+import { CourseService } from '../../../service/course.service';
+import { Course } from '../../../interface/course';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Console } from 'console';
+import Swal from 'sweetalert2';  
 
 @Component({
   selector: 'app-courses-list',
@@ -24,10 +23,10 @@ export class CoursesListComponent implements OnInit {
   successMessage: string | null = null;
   errorMessage: string | null = null;
   courseIdToDelete: string | null = null;
+
   constructor(
     private readonly fb: FormBuilder,
-    private readonly courseService: CourseService,
-    private toastr: ToastrService
+    private readonly courseService: CourseService
   ) {
     this.addCourseForm = this.fb.group({
       title: ['', Validators.required],
@@ -69,9 +68,11 @@ export class CoursesListComponent implements OnInit {
       this.courses = courses;
     });
   }
+
   confirmDeleteCourse(courseId: string): void {
     this.courseIdToDelete = courseId;
   }
+
   get modules(): FormArray {
     return this.addCourseForm.get('modules') as FormArray;
   }
@@ -111,7 +112,7 @@ export class CoursesListComponent implements OnInit {
       this.fb.group({
         title: ['', Validators.required],
         duration: [0, Validators.required],
-        lessons: this.fb.array([]), // Initialize lessons as a FormArray within each module
+        lessons: this.fb.array([]),
       })
     );
   }
@@ -172,7 +173,7 @@ export class CoursesListComponent implements OnInit {
 
   onAddCourse(): void {
     if (this.addCourseForm.invalid) {
-      this.toastr.error('Please fill in all required fields.');
+      Swal.fire('Error', 'Please fill in all required fields.', 'error');
       return;
     }
 
@@ -182,11 +183,11 @@ export class CoursesListComponent implements OnInit {
       next: (addedCourse) => {
         this.addCourseForm.reset();
         this.loadCourses();
-        this.toastr.success('Course added successfully!');
+        Swal.fire('Success', 'Course added successfully!', 'success');
       },
       error: (error) => {
         console.error('Error adding course:', error);
-        this.toastr.error('Failed to add course. Please try again.');
+        Swal.fire('Error', 'Failed to add course. Please try again.', 'error');
       },
     });
   }
@@ -197,7 +198,7 @@ export class CoursesListComponent implements OnInit {
 
     // Clear existing modules and lessons
     this.editModules.clear();
-    course.modules.forEach((module) => {
+    course.modules?.forEach((module) => {
       const moduleGroup = this.fb.group({
         title: [module.title, Validators.required],
         duration: [module.duration, Validators.required],
@@ -212,7 +213,6 @@ export class CoursesListComponent implements OnInit {
             type: [lesson.type, Validators.required],
             videoUrl: [lesson.videoUrl],
             pdfUrl: [lesson.pdfUrl],
-            generateQuiz: [lesson.generateQuiz],
             content: [lesson.content],
           })
         );
@@ -230,36 +230,48 @@ export class CoursesListComponent implements OnInit {
 
   onUpdateCourse(): void {
     if (this.editCourseForm.invalid) {
+      Swal.fire('Error', 'Please fill in all required fields.', 'error');
       return;
     }
+
     const updatedCourse: Course = this.editCourseForm.value;
     updatedCourse.id = this.selectedCourse?.id; // Ensure the id is set correctly
-    console.log(updatedCourse);
+
     this.courseService.updateCourse(updatedCourse).subscribe({
       next: (updatedCourse) => {
         this.loadCourses();
-        this.toastr.success('Course updated successfully!');
+        Swal.fire('Success', 'Course updated successfully!', 'success');
       },
       error: (error) => {
         console.error('Error updating course:', error);
-        this.toastr.error('Failed to update course. Please try again.');
+        Swal.fire('Error', 'Failed to update course. Please try again.', 'error');
       },
     });
   }
 
   deleteCourse(): void {
-    console.log('Deleting course:', this.courseIdToDelete);
     if (!this.courseIdToDelete) return;
 
-    this.courseService.deleteCourse(this.courseIdToDelete).subscribe({
-      next: () => {
-        this.loadCourses();
-        this.toastr.success('Course deleted successfully!');
-      },
-      error: (error) => {
-        console.error('Error deleting course:', error);
-        this.toastr.error('Failed to delete course. Please try again.');
-      },
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This course will be permanently deleted.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.courseService.deleteCourse(this.courseIdToDelete).subscribe({
+          next: () => {
+            this.loadCourses();
+            Swal.fire('Deleted!', 'The course has been deleted.', 'success');
+          },
+          error: (error) => {
+            console.error('Error deleting course:', error);
+            Swal.fire('Error', 'Failed to delete course. Please try again.', 'error');
+          },
+        });
+      }
     });
   }
 }
