@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';  // Import SweetAlert2
 
 @Component({
   selector: 'app-categories',
@@ -56,7 +57,7 @@ export class CategoriesComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error loading categories:', err);
-        this.errorMessage = 'Failed to load categories.';
+        Swal.fire('Error', 'Failed to load categories.', 'error');
       },
     });
   }
@@ -69,7 +70,7 @@ export class CategoriesComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching total categories:', err);
-        this.errorMessage = 'Failed to fetch total categories.';
+        Swal.fire('Error', 'Failed to fetch total categories.', 'error');
       },
     });
   }
@@ -77,7 +78,7 @@ export class CategoriesComponent implements OnInit {
   // Create a new category
   createCategory(): void {
     if (this.addCategoryForm.invalid) {
-      this.errorMessage = 'Please fill out the form correctly.';
+      Swal.fire('Error', 'Please fill out the form correctly.', 'error');
       return;
     }
 
@@ -91,11 +92,11 @@ export class CategoriesComponent implements OnInit {
         this.categories.push(createdCategory);
         this.getTotalCategories();
         this.addCategoryForm.reset();
-        this.successMessage = 'Category created successfully!';
+        Swal.fire('Success', 'Category created successfully!', 'success');
       },
       error: (err) => {
         console.error('Error creating category:', err);
-        this.errorMessage = 'Failed to create category.';
+        Swal.fire('Error', 'Failed to create category.', 'error');
       },
     });
   }
@@ -113,7 +114,7 @@ export class CategoriesComponent implements OnInit {
   // Update an existing category
   updateCategory(): void {
     if (this.editCategoryForm.invalid) {
-      this.errorMessage = 'Please fill out the form correctly.';
+      Swal.fire('Error', 'Please fill out the form correctly.', 'error');
       return;
     }
 
@@ -124,7 +125,7 @@ export class CategoriesComponent implements OnInit {
     };
 
     if (!updatedCategory.id) {
-      this.errorMessage = 'Invalid category ID.';
+      Swal.fire('Error', 'Invalid category ID.', 'error');
       return;
     }
 
@@ -137,39 +138,42 @@ export class CategoriesComponent implements OnInit {
           );
           if (index !== -1) {
             this.categories[index] = category;
-            this.successMessage = 'Category updated successfully!';
+            Swal.fire('Success', 'Category updated successfully!', 'success');
           }
           this.selectedCategory = null;
         },
         error: (err) => {
           console.error('Error updating category:', err);
-          this.errorMessage = 'Failed to update category.';
+          Swal.fire('Error', 'Failed to update category.', 'error');
         },
       });
   }
 
   // Delete a category
   deleteCategory(id: string): void {
-    if (confirm('Are you sure you want to delete this category?')) {
-      this.categoryService.deleteCategory(id).subscribe({
-        next: () => {
-          this.categories = this.categories.filter(
-            (category) => category.id !== id
-          );
-          this.getTotalCategories();
-          this.successMessage = 'Category deleted successfully!';
-        },
-        error: (err) => {
-          console.error('Error deleting category:', err);
-          this.errorMessage = 'Failed to delete category.';
-        },
-      });
-    }
-  }
-
-  // Clear messages
-  clearMessages(): void {
-    this.errorMessage = '';
-    this.successMessage = '';
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This category will be permanently deleted.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.categoryService.deleteCategory(id).subscribe({
+          next: () => {
+            this.categories = this.categories.filter(
+              (category) => category.id !== id
+            );
+            this.getTotalCategories();
+            Swal.fire('Deleted!', 'Category deleted successfully.', 'success');
+          },
+          error: (err) => {
+            console.error('Error deleting category:', err);
+            Swal.fire('Error', 'Failed to delete category.', 'error');
+          },
+        });
+      }
+    });
   }
 }
