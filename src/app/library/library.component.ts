@@ -4,11 +4,12 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { EnrollmentService } from '../service/enrollment.service';
 import { Course } from '../interface/course';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-library',
   standalone: true,
-  imports: [SidebarComponent, CommonModule],
+  imports: [SidebarComponent, CommonModule,RouterModule],
   templateUrl: './library.component.html',
   styleUrls: ['./library.component.css'],
 })
@@ -20,7 +21,7 @@ export class LibraryComponent implements OnInit {
   finishedCoursesCount: number = 0;
   unfinishedCoursesCount: number = 0;
 
-  constructor(private enrollmentService: EnrollmentService) {}
+  constructor(private enrollmentService: EnrollmentService, private readonly router: Router) {}
 
   ngOnInit(): void {
     this.id = localStorage.getItem('id') || '';
@@ -74,5 +75,9 @@ export class LibraryComponent implements OnInit {
           return course;
         });
     }
+  }
+  viewDetails(courseId: string): void {
+    console.log('Viewing course details:', courseId);
+    this.router.navigate(['/course-details', courseId]);
   }
 }

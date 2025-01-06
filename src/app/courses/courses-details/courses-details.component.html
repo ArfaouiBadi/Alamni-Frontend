@@ -2,7 +2,6 @@
 
 <div *ngIf="isLoading" class="loading-overlay">
   <div class="loading-spinner">
-    <!-- You can use an actual spinner here -->
     Loading...
   </div>
 </div>
@@ -12,13 +11,16 @@
     <div class="course-header">
       <div class="header-left">
         <h1>{{ course.title }}</h1>
-        <button class="enroll-btn" (click)="enrollCourse(course.id!)">
-          Enroll for Free
+        <button
+          class="enroll-btn"
+          (click)="enrollCourse(course.id!)"
+          [disabled]="isEnrolled"
+        >
+          {{ isEnrolled ? 'Already Enrolled' : 'Enroll for Free' }}
         </button>
         <br />
-
-        <p class="stats">Already enrolled</p>
-        <p class="coursera-plus">
+        <p class="stats" *ngIf="isEnrolled">You are enrolled in this course</p>
+        <p class="coursera-plus" *ngIf="!isEnrolled">
           Included with <span class="plus">Alamni</span>
         </p>
 
@@ -34,8 +36,8 @@
                 <li
                   *ngFor="let lesson of module.lessons; index as i"
                   class="lesson"
-                  (click)="goToLesson(course.id!, lesson)"
-                  class="lesson"
+                  [class.disabled]="!isEnrolled"
+                  (click)="isEnrolled && goToLesson(course.id!, lesson)"
                 >
                   <div class="lesson-title">
                     <span *ngIf="lesson.type === 'Video'" class="lesson-icon">
@@ -60,7 +62,7 @@
     <div class="course-details">
       <div class="detail-box">
         <h3>Category</h3>
-        <p>{{ course.category }}</p>
+        <p>{{ course.category.name }}</p>
       </div>
       <div class="detail-box">
         <h3>Level Required</h3>
