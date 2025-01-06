@@ -7,8 +7,8 @@
     <a [routerLink]="['/home']" routerLinkActive="active" class="menu-item"
       >Home</a
     >
-    <a [routerLink]="['/learn']" routerLinkActive="active" class="menu-item"
-      >Learn</a
+    <a [routerLink]="['/library']" routerLinkActive="active" class="menu-item"
+      >My Library</a
     >
     <a [routerLink]="['/courses']" routerLinkActive="active" class="menu-item"
       >Courses</a
@@ -16,12 +16,7 @@
     <a [routerLink]="['/profile']" routerLinkActive="active" class="menu-item"
       >Profile</a
     >
-    <a
-      [routerLink]="['/admin-dashboard']"
-      routerLinkActive="active"
-      class="menu-item"
-      >Dashboard</a
-    >
+    <a *ngIf="isUserLoggedIn && userRole === 'ROLE_ADMIN'" [routerLink]="['/admin-dashboard']" routerLinkActive="active" class="menu-item">Dashboard</a>
   </div>
 
   <div class="search-zone">
@@ -50,7 +45,7 @@
         aria-labelledby="profileDropdown"
       >
         <li><a class="dropdown-item" href="/profile">Profile</a></li>
-        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+        <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
       </ul>
     </div>
   </div>

@@ -7,6 +7,7 @@ import { UsersListComponent } from '../users/users-list/users-list.component';
 import { CommonModule } from '@angular/common';
 import { CoursesListComponent } from '../courses/courses-list/courses-list.component';
 import { EnrollmentService } from '../service/enrollment.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
@@ -26,7 +27,8 @@ export class AdminDashboardComponent implements AfterViewInit {
     private courseService: CourseService,
     private userService: UserService,
     private categoryService: CategoryService,
-    private enrollmentService: EnrollmentService
+    private enrollmentService: EnrollmentService,
+    private router:Router
   ) {}
 
   ngAfterViewInit(): void {
@@ -178,4 +180,9 @@ export class AdminDashboardComponent implements AfterViewInit {
   showManageCourses() {
     this.currentView = 'manageCourses';
   }
+  logout() {
+    localStorage.clear(); 
+    this.router.navigate(['/login']); 
+  }
+
 }

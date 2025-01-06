@@ -18,9 +18,11 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { LessonComponent } from './lesson/lesson.component';
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
+import { LogoutComponent } from './auth/logout/logout.component';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
+  { path: 'logout', component: LogoutComponent },
   {
     path: '',
     component: NavbarComponent,
