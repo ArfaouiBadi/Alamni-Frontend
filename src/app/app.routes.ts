@@ -16,42 +16,38 @@ import { CoursesDetailsComponent } from './courses/courses-details/courses-detai
 import { LibraryComponent } from './library/library.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { LessonComponent } from './lesson/lesson.component';
-
+import { AuthGuard } from './guards/auth.guard';
+import { RoleGuard } from './guards/role.guard';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignUpComponent },
   {
     path: '',
     component: NavbarComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomePageComponent },
-      { path: 'courses', component: CoursesComponent },
       { path: 'profile', component: ProfileComponent },
-      { path: 'library', component: LibraryComponent },
-      { path: 'leaderboard', component: LeaderboardComponent },
-    ],
-  },
-  { path: 'signup', component: SignUpComponent },
-  { path: 'home', component: LandingPageComponent },
-  { path: 'ManageUsers', component: UsersListComponent },
-  { path: 'navbar', component: NavbarComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'admin-dashboard', component: AdminDashboardComponent },
-  {
-    path: 'courses',
-    component: CoursesComponent,
-    children: [
+      { path: 'courses', component: CoursesComponent },
       { path: 'library', component: LibraryComponent },
       { path: 'leaderboard', component: LeaderboardComponent },
     ],
   },
   {
-    path: 'courses-admin',
-    component: CoursesListComponent,
+    path: 'admin-dashboard',
+    component: AdminDashboardComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { role: 'ROLE_ADMIN' },
   },
   {
     path: 'course-details/:id',
     component: CoursesDetailsComponent,
+    canActivate: [AuthGuard],
   },
-  { path: 'lesson/:lessonId', component: LessonComponent },
+  {
+    path: 'lesson/:lessonId',
+    component: LessonComponent,
+    canActivate: [AuthGuard],
+  },
 ];
