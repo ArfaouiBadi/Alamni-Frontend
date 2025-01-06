@@ -1,7 +1,7 @@
 <div class="dashboard">
   <div class="section learn-section">
     <h2 class="section-title"><i class="fas fa-book"></i> Learn</h2>
-    <div class="card track-card wide-card">
+    <div *ngIf="lastUnfinishedCourse; else noCoursesMessage" class="card track-card wide-card">
       <p class="enrollment-text">
         You're enrolled in the
         <a href="#">{{ lastUnfinishedCourse?.title }}</a> track.
@@ -20,12 +20,17 @@
         </button>
       </div>
     </div>
+    <ng-template #noCoursesMessage>
+      <div class="card track-card wide-card">
+        <p class="enrollment-text">No enrolled courses yet. Start exploring new courses today!</p>
+      </div>
+    </ng-template>
 
     <h2 class="section-title">
       <i class="fas fa-flask"></i> Your Unfinished Enrolled Courses
     </h2>
     <div class="card datalab-card wide-card">
-      <div *ngIf="courses.length > 0" class="courses-container">
+      <div *ngIf="courses.length > 0; else noEnrolledCourses" class="courses-container">
         <ul>
           <li *ngFor="let course of courses" class="course-card">
             <div class="course-content">
@@ -43,6 +48,11 @@
         </ul>
       </div>
     </div>
+    <ng-template #noEnrolledCourses>
+      <div class="card datalab-card wide-card">
+        <p>No enrolled courses yet. Explore and start learning today!</p>
+      </div>
+    </ng-template>
   </div>
 
   <div class="section profile-section">
@@ -59,7 +69,6 @@
     <div class="card stats-card">
       <div class="stat">
         <i class="fas fa-trophy stat-icon"> <p class="stat-label">Level</p></i>
-
         <p class="stat-value">{{ user?.level }}</p>
       </div>
       <div class="stat">
