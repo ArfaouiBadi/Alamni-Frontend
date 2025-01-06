@@ -54,9 +54,9 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path:'Manage-categories',
-    component:CategoriesComponent,
+    path: 'Managecategories',
+    component: CategoriesComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: { role: 'ROLE_ADMIN' },
-  }
+  },
 ];
