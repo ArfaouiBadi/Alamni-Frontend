@@ -73,6 +73,12 @@
             <span>Manage Courses</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="showManageCategories()">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Manage Categories</span>
+          </a>
+        </li>
 
         <!-- Nav Item - Utilities Collapse Menu -->
         <li class="nav-item">
@@ -616,6 +622,9 @@
             </div>
             <div *ngIf="currentView === 'manageCourses'">
               <app-courses-list></app-courses-list>
+            </div>
+            <div *ngIf="currentView === 'manageCategories'">
+              <app-categories></app-categories>
             </div>
           </div>
           <!-- /.container-fluid -->

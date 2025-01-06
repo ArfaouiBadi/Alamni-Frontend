@@ -8,12 +8,13 @@ import { CommonModule } from '@angular/common';
 import { CoursesListComponent } from '../courses/courses-list/courses-list.component';
 import { EnrollmentService } from '../service/enrollment.service';
 import { Router } from '@angular/router';
+import { CategoriesComponent } from "../categories/categories.component";
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css'],
-  imports: [UsersListComponent, CommonModule, CoursesListComponent],
+  imports: [UsersListComponent, CommonModule, CoursesListComponent, CategoriesComponent],
 })
 export class AdminDashboardComponent implements AfterViewInit {
   totalCourses: number = 0;
@@ -180,6 +181,9 @@ export class AdminDashboardComponent implements AfterViewInit {
   }
   showManageCourses() {
     this.currentView = 'manageCourses';
+  }
+  showManageCategories(){
+    this.currentView='manageCategories';
   }
   logout() {
     localStorage.clear(); 

@@ -1,4 +1,3 @@
-// filepath: /d:/Projects/Alamni-Frontend/src/app/home-page/home-page.component.ts
 import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { RouterModule, RouterOutlet } from '@angular/router';
@@ -58,7 +57,7 @@ export class HomePageComponent implements OnInit {
           course.imageUrl = `http://localhost:8000/api${course.imageUrl}`;
           return course;
         });
-        this.courses = this.allCourses; // Initialize courses with all courses
+        this.courses = this.allCourses; 
         console.log(this.courses);
         this.setLastUnfinishedCourse();
       },
