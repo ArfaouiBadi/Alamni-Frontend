@@ -74,14 +74,15 @@ export class AdminDashboardComponent implements AfterViewInit {
   }
 
   fetchEnrolledCourses(): void {
-    this.enrollmentService.getTotalEnrollmentCount().subscribe({
-      next: (total) => {
-        this.totalEnrolledCourses = total;
+    const enrollments = this.enrollmentService.getEnrollments().subscribe(
+      (enrollments) => {
+        this.totalEnrolledCourses = enrollments;
       },
-      error: (err) => {
-        console.error('Error fetching total enrolled courses:', err);
-      },
-    });
+      (err) => {
+        console.error('Error fetching enrolled courses:', err);
+      }
+    );
+    console.log(enrollments);
   }
 
   fetchCoursesPerCategory(): void {

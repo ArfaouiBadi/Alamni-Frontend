@@ -21,13 +21,16 @@
             <img
               *ngIf="course?.imageUrl"
               [src]="course?.imageUrl"
-              alt="{{ course?.name }}"
+              alt="{{ course?.title }}"
               class="course-image"
             />
           </div>
           <button class="btn-course">Examine</button>
         </li>
       </ul>
+    </div>
+    <div *ngIf="courses.length === 0">
+      <p>No courses found.</p>
     </div>
   </div>
 </div>

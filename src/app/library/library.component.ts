@@ -10,12 +10,13 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [SidebarComponent, CommonModule],
   templateUrl: './library.component.html',
-  styleUrl: './library.component.css',
+  styleUrls: ['./library.component.css'],
 })
 export class LibraryComponent implements OnInit {
   id: string = '';
-  courses: any[] = [];
-  allCourses: any[] = [];
+  enrollments: any[] = [];
+  allCourses: Course[] = [];
+  courses: Course[] = [];
   finishedCoursesCount: number = 0;
   unfinishedCoursesCount: number = 0;
 
@@ -24,44 +25,53 @@ export class LibraryComponent implements OnInit {
   ngOnInit(): void {
     this.id = localStorage.getItem('id') || '';
     if (this.id) {
-      this.enrollmentService
-        .getCoursesByUserId(this.id)
-        .subscribe((courses) => {
-          this.courses = courses;
-          this.allCourses = courses;
-          this.updateCourseCounts();
-          console.log(this.courses);
-        });
+      this.getEnrollmentsByUserId(this.id);
     }
   }
 
+  getEnrollmentsByUserId(userId: string): void {
+    this.enrollmentService.getEnrollmentsByUserId(userId).subscribe({
+      next: (enrollments) => {
+        this.enrollments = enrollments;
+        this.allCourses = enrollments.map((enrollment) => {
+          const course = enrollment.course;
+          course.imageUrl = `http://localhost:8000/api${course.imageUrl}`;
+          return course;
+        });
+        this.courses = this.allCourses; // Initialize courses with all courses
+        this.updateCourseCounts();
+      },
+      error: (err) => {
+        console.error('Error fetching enrollments:', err);
+      },
+    });
+  }
   updateCourseCounts(): void {
-    this.enrollmentService
-      .getFinishedCoursesByUserId(this.id)
-      .subscribe((finishedCourses) => {
-        this.finishedCoursesCount = finishedCourses.length;
-      });
-    this.enrollmentService
-      .getUnfinishedCoursesByUserId(this.id)
-      .subscribe((unfinishedCourses) => {
-        this.unfinishedCoursesCount = unfinishedCourses.length;
-      });
+    this.finishedCoursesCount = this.enrollments.filter(
+      (enrollment) => enrollment.finished
+    ).length;
+    this.unfinishedCoursesCount = this.enrollments.filter(
+      (enrollment) => !enrollment.finished
+    ).length;
   }
 
   filterCoursesByType(type: string): void {
     if (type === 'all') {
       this.courses = this.allCourses; // Reset to all courses
     } else if (type === 'finished') {
-      this.enrollmentService
-        .getFinishedCoursesByUserId(this.id)
-        .subscribe((finishedCourses) => {
-          this.courses = finishedCourses;
+      this.courses = this.enrollments
+        .filter((enrollment) => enrollment.finished)
+        .map((enrollment) => {
+          const course = enrollment.course;
+
+          return course;
         });
     } else if (type === 'unfinished') {
-      this.enrollmentService
-        .getUnfinishedCoursesByUserId(this.id)
-        .subscribe((unfinishedCourses) => {
-          this.courses = unfinishedCourses;
+      this.courses = this.enrollments
+        .filter((enrollment) => !enrollment.finished)
+        .map((enrollment) => {
+          const course = enrollment.course;
+          return course;
         });
     }
   }

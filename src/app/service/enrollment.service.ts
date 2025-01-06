@@ -1,30 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Course } from '../interface/course';
+import { Enrollment } from '../interface/Enrollment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EnrollmentService {
-  private apiUrl = 'http://localhost:8000/api/enrollments/user';
+  private apiUrl = 'http://localhost:8000/api/enrollments';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getCoursesByUserId(userId: string): Observable<Course[]> {
-    return this.http.get<Course[]>(`${this.apiUrl}/${userId}/courses`);
+  getEnrollmentsByUserId(userId: string): Observable<Enrollment[]> {
+    console.log('getEnrollmentsByUserId');
+    return this.http.get<Enrollment[]>(
+      `${this.apiUrl}/user/${userId}/enrollments`
+    );
   }
-  getLastUnfinishedCourseByUserId(userId: string): Observable<Course> {
-    return this.http.get<Course>(`${this.apiUrl}/${userId}/last-unfinished-course`);
-  }
-  getTotalEnrollmentCount(): Observable<number> {
-    return this.http.get<number>('http://localhost:8000/api/enrollments/total-enrollment-count');
-  }
-  getUnfinishedCoursesByUserId(userId: string): Observable<{ name: string, description: string, imageUrl: string }[]> {
-    return this.http.get<{ name: string, description: string, imageUrl: string }[]>(`${this.apiUrl}/${userId}/unfinished-courses`);
-  }
-
-  getFinishedCoursesByUserId(userId: string): Observable<{ name: string, description: string, imageUrl: string }[]> {
-    return this.http.get<{ name: string, description: string, imageUrl: string }[]>(`${this.apiUrl}/${userId}/finished-courses`);
+  getEnrollments(): Observable<any> {
+    return this.http.get<any[]>(`${this.apiUrl}/total-enrollment-count`);
   }
 }
