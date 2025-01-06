@@ -10,6 +10,7 @@ export interface Course {
   duration: number; // Total duration in minutes
   category: Category;
   levelRequired: number;
+  pointsRequired: number;
   modules?: Module[];
   rewardSystem?: RewardSystem;
   enrollments?: Course[];

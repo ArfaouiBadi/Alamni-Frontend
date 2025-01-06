@@ -22,7 +22,6 @@ export class CourseService {
     return this.http.get<Course[]>(`${this.apiUrl}/courses`).pipe(
       map((courses: Course[]) => {
         return courses.map((course) => {
-          course.imageUrl = `http://localhost:8000/api${course.imageUrl}`;
           return course;
         });
       })
@@ -50,4 +49,6 @@ export class CourseService {
   enrollCourse(courseId: string, userId: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/users/enroll`, { userId, courseId });
   }
+
+  
 }

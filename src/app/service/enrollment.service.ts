@@ -13,9 +13,13 @@ export class EnrollmentService {
   constructor(private http: HttpClient) {}
 
   getEnrollmentsByUserId(userId: string): Observable<Enrollment[]> {
-    console.log('getEnrollmentsByUserId');
     return this.http.get<Enrollment[]>(
       `${this.apiUrl}/user/${userId}/enrollments`
+    );
+  }
+  getEnrollementsCountByCourseId(courseId: string): Observable<number> {
+    return this.http.get<number>(
+      `${this.apiUrl}/${courseId}/enrollments-count`
     );
   }
   getEnrollments(): Observable<any> {

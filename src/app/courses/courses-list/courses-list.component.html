@@ -85,6 +85,7 @@
                 <th>Title</th>
                 <th>Description</th>
                 <th>Level Required</th>
+                <th>Points Required</th>
                 <th>Duration</th>
                 <th>Category</th>
                 <th>Action</th>
@@ -101,6 +102,7 @@
                 <td>{{ course.title }}</td>
                 <td>{{ course.description }}</td>
                 <td>{{ course.levelRequired }}</td>
+                <td>{{ course.pointsRequired }}</td>
                 <td>{{ course.duration }}</td>
                 <td>{{ course.category.name }}</td>
                 <td>
@@ -310,6 +312,31 @@
                   class="text-danger"
                 >
                   Level Required is required.
+                </div>
+              </div>
+              <div
+                class="form-group"
+                [ngClass]="{
+                  'has-error':
+                    addCourseForm.get('pointsRequired')?.invalid &&
+                    addCourseForm.get('pointsRequired')?.touched
+                }"
+              >
+                <label>Points Required</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="pointsRequired"
+                  required
+                />
+                <div
+                  *ngIf="
+                    addCourseForm.get('pointsRequired')?.invalid &&
+                    addCourseForm.get('pointsRequired')?.touched
+                  "
+                  class="text-danger"
+                >
+                  Points Required is required.
                 </div>
               </div>
               <div class="form-group">
@@ -810,6 +837,31 @@
                   class="text-danger"
                 >
                   Level Required is required.
+                </div>
+              </div>
+              <div
+                class="form-group"
+                [ngClass]="{
+                  'has-error':
+                    editCourseForm.get('pointsRequired')?.invalid &&
+                    editCourseForm.get('pointsRequired')?.touched
+                }"
+              >
+                <label>Points Required</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="pointsRequired"
+                  required
+                />
+                <div
+                  *ngIf="
+                    editCourseForm.get('pointsRequired')?.invalid &&
+                    editCourseForm.get('pointsRequired')?.touched
+                  "
+                  class="text-danger"
+                >
+                  Pointes Required is required.
                 </div>
               </div>
               <div class="form-group">

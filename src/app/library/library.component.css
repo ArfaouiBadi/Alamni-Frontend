@@ -37,14 +37,12 @@
 .course-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
   padding: 0;
   list-style-type: none;
 }
 
 .course-card {
-  position: relative;
-  width: calc(33.33% - 20px);
+  
   background-color: #f9f9f9;
   border-radius: 8px;
   padding: 20px;
@@ -80,9 +78,7 @@
 }
 
 .btn-course {
-  position: absolute;
   bottom: 50px; /* Pushed to the bottom */
-  left: 0;
   width: 100%;
   background-color: #7234f0;
   color: white;

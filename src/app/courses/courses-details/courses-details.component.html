@@ -1,9 +1,7 @@
 <app-navbar></app-navbar>
 
 <div *ngIf="isLoading" class="loading-overlay">
-  <div class="loading-spinner">
-    Loading...
-  </div>
+  <div class="loading-spinner">Loading...</div>
 </div>
 <div class="course-detail-container">
   <app-sidebar></app-sidebar>
@@ -16,14 +14,35 @@
           (click)="enrollCourse(course.id!)"
           [disabled]="isEnrolled"
         >
-          {{ isEnrolled ? 'Already Enrolled' : 'Enroll for Free' }}
+          {{ isEnrolled ? "Already Enrolled" : "Enroll for Free" }}
         </button>
         <br />
-        <p class="stats" *ngIf="isEnrolled">You are enrolled in this course</p>
-        <p class="coursera-plus" *ngIf="!isEnrolled">
+        <p class="stats fontStyle" *ngIf="isEnrolled">
+          You are enrolled in this course
+        </p>
+        <p class="coursera-plus fontStyle" *ngIf="!isEnrolled">
           Included with <span class="plus">Alamni</span>
         </p>
-
+        <p class="stats fontStyle">
+          <span class="students-count">{{ studentCount }}</span>
+          students enrolled
+        </p>
+        <div class="fontStyle">
+          <div
+            [ngStyle]="{
+              color: user!.level < course.levelRequired ? 'red' : 'white'
+            }"
+          >
+            <b>Required Level : </b> {{ course.levelRequired }}
+          </div>
+          <div
+            [ngStyle]="{
+              color: user!.points < course.pointsRequired ? 'red' : 'white'
+            }"
+          >
+            <b>Required Points : </b> {{ course.pointsRequired }}
+          </div>
+        </div>
         <div
           class="modules-section"
           *ngIf="course.modules && course.modules.length > 0"

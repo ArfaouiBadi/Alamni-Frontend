@@ -28,21 +28,19 @@ export class CoursesComponent implements OnInit {
   constructor(private coursesService: CourseService, private router: Router) {}
 
   ngOnInit(): void {
-    console.log('CoursesComponent initialized');
     this.coursesService.getCourses().subscribe((data: Course[]) => {
-      console.log('Courses:', data);
       this.courses = data;
+      this.courses.forEach((course) => {
+        course.imageUrl = `http://localhost:8000/api${course.imageUrl}`;
+      });
       this.filteredCourses = data;
     });
     this.coursesService.getCategories().subscribe((data: Category[]) => {
-      console.log('Categories:', data);
       this.categories = data;
     });
   }
 
   filterCourses(): void {
-    console.log('Filtering courses');
-    console.log('Selected category:', this.selectedCategory);
     this.filteredCourses = this.courses.filter((course) => {
       return (
         (this.selectedCategory.id === '' ||
@@ -98,7 +96,6 @@ export class CoursesComponent implements OnInit {
   }
 
   viewDetails(courseId: string): void {
-    console.log('Viewing course details:', courseId);
     this.router.navigate(['/course-details', courseId]);
   }
 }

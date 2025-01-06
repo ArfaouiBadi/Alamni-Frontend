@@ -10,6 +10,8 @@ import { NavbarComponent } from '../../navbar/navbar.component';
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { EnrollmentService } from '../../service/enrollment.service';
 import Swal from 'sweetalert2';
+import { UserService } from '../../service/user.service';
+import { User } from '../../interface/user';
 
 @Component({
   selector: 'app-courses-details',
@@ -24,12 +26,15 @@ export class CoursesDetailsComponent implements OnInit {
   isLoading: boolean = false;
   userId: string | null = localStorage.getItem('id');
   isEnrolled: boolean = false;
+  studentCount: number = 0;
+  user: User | null = null;
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly courseService: CourseService,
     private readonly enrollmentService: EnrollmentService,
-    private readonly quizService: QuizService
+    private readonly quizService: QuizService,
+    private readonly userService: UserService
   ) {}
   ngOnInit(): void {
     const courseId = this.route.snapshot.paramMap.get('id');
@@ -38,12 +43,31 @@ export class CoursesDetailsComponent implements OnInit {
         next: (data) => {
           this.course = data;
           this.checkEnrollment(courseId);
+          this.enrollmentService
+            .getEnrollementsCountByCourseId(courseId)
+            .subscribe({
+              next: (count) => {
+                this.studentCount = count;
+              },
+              error: (err) => {
+                console.error('Error fetching student count:', err);
+              },
+            });
         },
         error: (err) => {
           console.error('Error fetching course details:', err);
         },
       });
     }
+
+    this.userService.getUserById(this.userId!).subscribe({
+      next: (data) => {
+        this.user = data;
+      },
+      error: (err) => {
+        console.error('Error fetching user details:', err);
+      },
+    });
   }
   startQuiz(module: Module, lesson: Lesson) {
     this.isLoading = true; // Start loading
@@ -70,16 +94,21 @@ export class CoursesDetailsComponent implements OnInit {
           title: 'Congratulations!',
           text: 'You have successfully enrolled in this course!',
           icon: 'success',
-          confirmButtonText: 'OK'
+          confirmButtonText: 'OK',
         }).then((result) => {
           if (result.isConfirmed) {
-           
-            this.router.navigate(['/library']); 
+            this.router.navigate(['/library']);
           }
         });
       },
       error: (err) => {
         console.error('Error enrolling course:', err);
+        Swal.fire({
+          title: 'Error',
+          text: 'Failed to enroll in this course.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
       },
     });
   }
@@ -95,7 +124,7 @@ export class CoursesDetailsComponent implements OnInit {
           );
         },
         error: (err) => {
-          console.error('Error checking enrollment:', err);
+          console.error('Error checking enrollment:', err.message);
         },
       });
     }

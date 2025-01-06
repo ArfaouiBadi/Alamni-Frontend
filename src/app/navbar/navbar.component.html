@@ -25,13 +25,15 @@
     >
   </div>
 
-  <div class="search-zone">
+  <!-- <div class="search-zone">
     <input type="text" placeholder="Search" class="search-input" />
     <button class="search-button">
       <i class="fas fa-search"></i>
     </button>
-  </div>
+  </div> -->
   <div class="profile">
+    <div class="lvl"><b>Level </b>{{ userLoggedin?.level }}</div>
+    <div class="Points"><b>Credits </b> {{ userLoggedin?.points }}</div>
     <i class="fas fa-bell notification-icon"></i>
     <div class="dropdown">
       <div

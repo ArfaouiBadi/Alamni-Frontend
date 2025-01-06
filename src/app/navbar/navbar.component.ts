@@ -9,6 +9,8 @@ import {
   transition,
 } from '@angular/animations';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../service/user.service';
+import { User } from '../interface/user';
 
 @Component({
   selector: 'app-navbar',
@@ -33,18 +35,25 @@ export class NavbarComponent implements OnInit {
   currentView: string = 'learn';
   isUserLoggedIn: boolean = false;
   userRole: string | null = null;
+  userId: string | null = localStorage.getItem('id');
+  userLoggedin: User | null = null;
 
-  constructor(private router: Router) {}
+  constructor(
+    private readonly router: Router,
+    private readonly userService: UserService
+  ) {}
 
   ngOnInit(): void {
     if (typeof localStorage !== 'undefined') {
       this.username = localStorage.getItem('username');
       this.isUserLoggedIn = !!localStorage.getItem('token');
-
+      if (this.username) {
+        this.userService.getUser(this.username).subscribe((user) => {
+          this.userLoggedin = user;
+        });
+      }
       const roles = JSON.parse(localStorage.getItem('role') || '[]');
-      console.log('User roles:', roles);
       this.userRole = roles;
-      console.log('User role:', this.userRole);
     }
   }
 

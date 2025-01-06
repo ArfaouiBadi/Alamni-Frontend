@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import Swal from 'sweetalert2';  // Import SweetAlert2
+import Swal from 'sweetalert2'; // Import SweetAlert2
 
 @Component({
   selector: 'app-categories',

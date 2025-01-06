@@ -36,11 +36,9 @@ export class HomePageComponent implements OnInit {
     if (this.username) {
       this.userService.getUser(this.username).subscribe((user) => {
         this.user = user;
-        console.log(this.user);
         if (this.user) {
           this.id = localStorage.getItem('id') || '';
           if (this.id) {
-            console.log('Getting enrollments for user:', this.id);
             this.getEnrollmentsByUserId(this.id);
           }
         }
@@ -48,7 +46,6 @@ export class HomePageComponent implements OnInit {
     }
   }
   getEnrollmentsByUserId(userId: string): void {
-    console.log('getEnrollmentsByUserId');
     this.enrollmentService.getEnrollmentsByUserId(userId).subscribe({
       next: (enrollments) => {
         this.enrollments = enrollments;
@@ -57,8 +54,7 @@ export class HomePageComponent implements OnInit {
           course.imageUrl = `http://localhost:8000/api${course.imageUrl}`;
           return course;
         });
-        this.courses = this.allCourses; 
-        console.log(this.courses);
+        this.courses = this.allCourses;
         this.setLastUnfinishedCourse();
       },
       error: (err) => {

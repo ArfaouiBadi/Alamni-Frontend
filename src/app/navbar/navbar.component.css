@@ -13,9 +13,16 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  
 }
-
+.lvl ,.Points{
+  font-size: 15px;
+  font-weight: 200;
+  color: #000;
+}
+.lvl b,.Points b{
+  font-weight: 200;
+  color: #000;
+}
 .logo img {
   height: 40px;
 }

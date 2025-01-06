@@ -49,6 +49,7 @@ export class CoursesListComponent implements OnInit {
       duration: [0, Validators.required],
       category: ['', Validators.required],
       levelRequired: [0, Validators.required],
+      pointsRequired: [0, Validators.required],
       modules: this.fb.array([]), // Initialize modules as a FormArray
       rewardSystem: this.fb.group({
         points: [0],
@@ -65,6 +66,7 @@ export class CoursesListComponent implements OnInit {
       duration: [0, Validators.required],
       category: ['', Validators.required],
       levelRequired: [0, Validators.required],
+      pointsRequired: [0, Validators.required],
       modules: this.fb.array([]), // Initialize modules as a FormArray
       rewardSystem: this.fb.group({
         points: [0],
@@ -220,7 +222,7 @@ export class CoursesListComponent implements OnInit {
     formData.append('duration', courseData.duration.toString());
     formData.append('category', courseData.category);
     formData.append('levelRequired', courseData.levelRequired.toString());
-
+    formData.append('pointsRequired', courseData.pointsRequired.toString());
     // Append the image file if selected
     if (this.selectedImage) {
       formData.append('image', this.selectedImage);
@@ -349,6 +351,7 @@ export class CoursesListComponent implements OnInit {
       duration: course.duration,
       category: course.category,
       levelRequired: course.levelRequired,
+      pointsRequired: course.pointsRequired,
       imageUrl: course.imageUrl,
     });
 
