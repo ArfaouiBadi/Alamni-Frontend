@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import {
   trigger,
@@ -8,11 +8,12 @@ import {
   animate,
   transition,
 } from '@angular/animations';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
   animations: [
@@ -38,19 +39,18 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     if (typeof localStorage !== 'undefined') {
       this.username = localStorage.getItem('username');
-      this.isUserLoggedIn = !!localStorage.getItem('token'); 
+      this.isUserLoggedIn = !!localStorage.getItem('token');
 
-     
-      const roles = JSON.parse(localStorage.getItem('roles') || '[]');
-      if (roles.length > 0) {
-        this.userRole = roles[0].name; 
-      }
+      const roles = JSON.parse(localStorage.getItem('role') || '[]');
+      console.log('User roles:', roles);
+      this.userRole = roles;
+      console.log('User role:', this.userRole);
     }
   }
 
   logout() {
-    localStorage.clear(); 
-    this.router.navigate(['/login']); 
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 
   switchView(view: string) {
