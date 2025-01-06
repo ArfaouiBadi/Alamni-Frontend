@@ -167,7 +167,26 @@
                 &times;
               </button>
             </div>
+
             <div class="modal-body">
+              <div class="form-group">
+                <label>Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="title"
+                  required
+                />
+                <div
+                  *ngIf="
+                    addCourseForm.get('title')?.invalid &&
+                    addCourseForm.get('title')?.touched
+                  "
+                  class="text-danger"
+                >
+                  Title is required.
+                </div>
+              </div>
               <div class="form-group">
                 <label for="image">Image</label>
                 <input
@@ -177,15 +196,7 @@
                   (change)="onImageSelected($event)"
                   required
                 />
-                <div
-                  *ngIf="
-                    addCourseForm.get('imageUrl')?.invalid &&
-                    addCourseForm.get('imageUrl')?.touched
-                  "
-                  class="text-danger"
-                >
-                  Image is required.
-                </div>
+
                 <img
                   *ngIf="imagePreview"
                   [src]="imagePreview"
@@ -629,13 +640,7 @@
                 data-dismiss="modal"
                 value="Cancel"
               />
-              <button
-                type="submit"
-                class="btn btn-primary"
-                [disabled]="addCourseForm.invalid"
-              >
-                Add Course
-              </button>
+              <button type="submit" class="btn btn-primary">Add Course</button>
             </div>
           </form>
         </div>
@@ -692,15 +697,7 @@
                   (change)="onEditImageSelected($event)"
                   required
                 />
-                <div
-                  *ngIf="
-                    editCourseForm.get('imageUrl')?.invalid &&
-                    editCourseForm.get('imageUrl')?.touched
-                  "
-                  class="text-danger"
-                >
-                  Image is required.
-                </div>
+
                 <img
                   *ngIf="editImagePreview"
                   [src]="editImagePreview"

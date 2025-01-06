@@ -9,6 +9,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CourseService } from '../../service/course.service';
 import { FileUploadService } from '../../service/file-upload.service';
 import { Category } from '../../interface/category';
+import { Module } from '../../interface/module';
+import { Lesson } from '../../interface/lesson';
 
 @Component({
   selector: 'app-courses-list',
@@ -42,7 +44,7 @@ export class CoursesListComponent implements OnInit {
   ) {
     this.addCourseForm = this.fb.group({
       title: ['', Validators.required],
-      imageUrl: ['', Validators.required],
+      imageUrl: [''],
       description: ['', Validators.required],
       duration: [0, Validators.required],
       category: ['', Validators.required],
@@ -211,21 +213,75 @@ export class CoursesListComponent implements OnInit {
 
     const courseData = this.addCourseForm.value;
 
-    // Upload image if selected
+    // Create a FormData object to handle file uploads
+    const formData = new FormData();
+    formData.append('title', courseData.title);
+    formData.append('description', courseData.description);
+    formData.append('duration', courseData.duration.toString());
+    formData.append('category', courseData.category);
+    formData.append('levelRequired', courseData.levelRequired.toString());
+
+    // Append the image file if selected
     if (this.selectedImage) {
-      this.fileUploadService.uploadFile(this.selectedImage).subscribe({
-        next: (url) => {
-          courseData.imageUrl = url;
-          this.addCourse(courseData);
-        },
-        error: (err) => {
-          this.errorMessage = 'Error uploading image: ' + err.message;
-          this.successMessage = null;
-        },
-      });
-    } else {
-      this.addCourse(courseData);
+      formData.append('image', this.selectedImage);
     }
+
+    // Append modules and lessons data
+    courseData.modules.forEach((module: Module, moduleIndex: number) => {
+      formData.append(`modules[${moduleIndex}].title`, module.title);
+      formData.append(
+        `modules[${moduleIndex}].duration`,
+        module.duration.toString()
+      );
+
+      module.lessons.forEach((lesson: Lesson, lessonIndex: number) => {
+        formData.append(
+          `modules[${moduleIndex}].lessons[${lessonIndex}].title`,
+          lesson.title
+        );
+        formData.append(
+          `modules[${moduleIndex}].lessons[${lessonIndex}].type`,
+          lesson.type
+        );
+
+        formData.append(
+          `modules[${moduleIndex}].lessons[${lessonIndex}].content`,
+          lesson.content!
+        );
+
+        // Append lesson files if selected
+        const fileKey = `${moduleIndex}-${lessonIndex}`;
+        if (this.selectedFiles[fileKey]) {
+          formData.append(
+            `modules[${moduleIndex}].lessons[${lessonIndex}].file`,
+            this.selectedFiles[fileKey]
+          );
+        }
+      });
+    });
+
+    // Append reward system data
+    formData.append('rewardSystem.points', courseData.rewardSystem.points);
+    courseData.rewardSystem.badges.forEach(
+      (badge: string, badgeIndex: number) => {
+        formData.append(`rewardSystem.badges[${badgeIndex}]`, badge);
+      }
+    );
+    // Ensure levels is sent as an array
+    formData.append('rewardSystem.levels', courseData.rewardSystem.levels);
+
+    // Send the form data using the course service
+    this.courseService.addCourse(formData).subscribe({
+      next: (data) => {
+        this.successMessage = 'Course added successfully!';
+        this.errorMessage = null;
+        this.loadCourses();
+      },
+      error: (err) => {
+        this.errorMessage = 'Error adding course: ' + err.message;
+        this.successMessage = null;
+      },
+    });
   }
 
   addCourse(courseData: any): void {
@@ -315,7 +371,6 @@ export class CoursesListComponent implements OnInit {
             type: [lesson.type, Validators.required],
             videoUrl: [lesson.videoUrl],
             pdfUrl: [lesson.pdfUrl],
-            generateQuiz: [lesson.generateQuiz],
             content: [lesson.content],
           })
         );

@@ -12,8 +12,8 @@ export class CourseService {
 
   constructor(private readonly http: HttpClient) {}
 
-  addCourse(course: Course): Observable<any> {
-    return this.http.post(`${this.apiUrl}/courses`, course);
+  addCourse(courseData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/courses`, courseData);
   }
   getCourseById(id: string): Observable<Course> {
     return this.http.get<Course>(`${this.apiUrl}/courses/${id}`);
