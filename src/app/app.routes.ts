@@ -19,6 +19,7 @@ import { LessonComponent } from './lesson/lesson.component';
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
 import { LogoutComponent } from './auth/logout/logout.component';
+import { CategoriesComponent } from './categories/categories.component';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
@@ -52,4 +53,10 @@ export const routes: Routes = [
     component: LessonComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path:'Manage-categories',
+    component:CategoriesComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { role: 'ROLE_ADMIN' },
+  }
 ];
