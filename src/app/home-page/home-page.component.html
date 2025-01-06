@@ -1,12 +1,12 @@
 <div class="dashboard">
   <div class="section learn-section">
     <h2 class="section-title"><i class="fas fa-book"></i> Learn</h2>
-    <div *ngIf="lastUnfinishedCourse; else noCoursesMessage" class="card track-card wide-card">
+    <div *ngIf="lastUnfinishedCourse; else noCourseMessage" class="card track-card wide-card">
       <p class="enrollment-text">
         You're enrolled in the
-        <a href="#">{{ lastUnfinishedCourse?.title }}</a> track.
+        <a href="#">{{ lastUnfinishedCourse.title }}</a> track.
       </p>
-      <h3 class="card-title">{{ lastUnfinishedCourse?.description }}</h3>
+      <h3 class="card-title">{{ lastUnfinishedCourse.description }}</h3>
       <div class="status-container">
         <i class="fas fa-hourglass-half"></i>
         <p class="status-text">Not finished yet</p>
@@ -14,16 +14,14 @@
       <div class="button-container">
         <button
           class="btn-primary"
-          [routerLink]="['/course-details', lastUnfinishedCourse?.id]"
+          [routerLink]="['/course-details', lastUnfinishedCourse.id]"
         >
           Keep Making Progress
         </button>
       </div>
     </div>
-    <ng-template #noCoursesMessage>
-      <div class="card track-card wide-card">
-        <p class="enrollment-text">No enrolled courses yet. Start exploring new courses today!</p>
-      </div>
+    <ng-template #noCourseMessage>
+      <p class="no-courses-message">No enrolled courses yet.</p>
     </ng-template>
 
     <h2 class="section-title">
@@ -49,9 +47,7 @@
       </div>
     </div>
     <ng-template #noEnrolledCourses>
-      <div class="card datalab-card wide-card">
-        <p>No enrolled courses yet. Explore and start learning today!</p>
-      </div>
+      <p class="no-courses-message">No enrolled courses yet.</p>
     </ng-template>
   </div>
 
@@ -69,6 +65,7 @@
     <div class="card stats-card">
       <div class="stat">
         <i class="fas fa-trophy stat-icon"> <p class="stat-label">Level</p></i>
+
         <p class="stat-value">{{ user?.level }}</p>
       </div>
       <div class="stat">
