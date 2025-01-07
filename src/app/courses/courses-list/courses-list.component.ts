@@ -12,6 +12,7 @@ import { Category } from '../../interface/category';
 import { Module } from '../../interface/module';
 import { Lesson } from '../../interface/lesson';
 import Swal from 'sweetalert2';
+import { forkJoin, Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'app-courses-list',
@@ -101,7 +102,6 @@ export class CoursesListComponent implements OnInit {
 
   confirmDeleteCourse(courseId: string): void {
     this.courseIdToDelete = courseId;
-    
   }
 
   get modules(): FormArray {
@@ -216,112 +216,52 @@ export class CoursesListComponent implements OnInit {
     }
 
     const courseData = this.addCourseForm.value;
+    console.log(courseData);
 
-    // Create a FormData object to handle file uploads
-    const formData = new FormData();
-    formData.append('title', courseData.title);
-    formData.append('description', courseData.description);
-    formData.append('duration', courseData.duration.toString());
-    formData.append('category', courseData.category);
-    formData.append('levelRequired', courseData.levelRequired.toString());
-    formData.append('pointsRequired', courseData.pointsRequired.toString());
-    // Append the image file if selected
+    const uploadTasks: Observable<any>[] = [];
+
+    // Upload the image file if selected
     if (this.selectedImage) {
-      formData.append('image', this.selectedImage);
+      uploadTasks.push(
+        this.fileUploadService.uploadFile(this.selectedImage).pipe(
+          tap((response: any) => {
+            courseData.imageUrl = response; // Assuming the response contains the file path
+          })
+        )
+      );
     }
 
-    // Append modules and lessons data
-    courseData.modules.forEach((module: Module, moduleIndex: number) => {
-      formData.append(`modules[${moduleIndex}].title`, module.title);
-      formData.append(
-        `modules[${moduleIndex}].duration`,
-        module.duration.toString()
-      );
-
-      module.lessons.forEach((lesson: Lesson, lessonIndex: number) => {
-        formData.append(
-          `modules[${moduleIndex}].lessons[${lessonIndex}].title`,
-          lesson.title
-        );
-        formData.append(
-          `modules[${moduleIndex}].lessons[${lessonIndex}].type`,
-          lesson.type
-        );
-
-        formData.append(
-          `modules[${moduleIndex}].lessons[${lessonIndex}].content`,
-          lesson.content!
-        );
-
-        // Append lesson files if selected
-        const fileKey = `${moduleIndex}-${lessonIndex}`;
-        if (this.selectedFiles[fileKey]) {
-          formData.append(
-            `modules[${moduleIndex}].lessons[${lessonIndex}].file`,
-            this.selectedFiles[fileKey]
-          );
-        }
-      });
-    });
-
-    // Append reward system data
-    formData.append('rewardSystem.points', courseData.rewardSystem.points);
-    courseData.rewardSystem.badges.forEach(
-      (badge: string, badgeIndex: number) => {
-        formData.append(`rewardSystem.badges[${badgeIndex}]`, badge);
-      }
-    );
-    // Ensure levels is sent as an array
-    formData.append('rewardSystem.levels', courseData.rewardSystem.levels);
-
-    // Send the form data using the course service
-    this.courseService.addCourse(formData).subscribe({
-      next: (data) => {
-        Swal.fire({
-          title: 'Success!',
-          text: 'Course added successfully!',
-          icon: 'success',
-          confirmButtonText: 'OK'
-        });
-        this.successMessage = 'Course added successfully!';
-        this.errorMessage = null;
-        this.loadCourses();
-      },
-      error: (err) => {
-        this.errorMessage = 'Error adding course: ' + err.message;
-        this.successMessage = null;
-      },
-    });
-  }
-
-  addCourse(courseData: any): void {
-    // Upload files and update URLs
-    const uploadPromises = Object.keys(this.selectedFiles).map((key) => {
-      const [moduleIndex, lessonIndex] = key.split('-').map(Number);
-      const file = this.selectedFiles[key];
-      if (file) {
-        return this.fileUploadService
-          .uploadFile(file)
-          .toPromise()
-          .then((url) => {
-            const lessons = this.modules
-              .at(moduleIndex)
-              .get('lessons') as FormArray;
-            const lesson = lessons.at(lessonIndex);
-            if (lesson.get('type')?.value === 'PDF') {
-              lesson.patchValue({ pdfUrl: url });
-            } else if (lesson.get('type')?.value === 'Video') {
-              lesson.patchValue({ videoUrl: url });
+    // Upload lesson files if selected
+    Object.keys(this.selectedFiles).forEach((fileKey) => {
+      uploadTasks.push(
+        this.fileUploadService.uploadFile(this.selectedFiles[fileKey]!).pipe(
+          tap((response) => {
+            const [moduleIndex, lessonIndex] = fileKey.split('-').map(Number);
+            console.log('response:', response);
+            const lesson = courseData.modules[moduleIndex].lessons[lessonIndex];
+            if (lesson.type === 'PDF') {
+              lesson.pdfUrl = response; // Assuming the response contains the file path
+            } else if (lesson.type === 'Video') {
+              lesson.videoUrl = response; // Assuming the response contains the file path
             }
-          });
-      }
-      return Promise.resolve();
+          })
+        )
+      );
     });
 
-    Promise.all(uploadPromises)
-      .then(() => {
+    courseData.category = { id: courseData.category };
+    // Execute all upload tasks
+    forkJoin(uploadTasks).subscribe({
+      next: () => {
+        // Send the course data using the course service
         this.courseService.addCourse(courseData).subscribe({
           next: (data) => {
+            Swal.fire({
+              title: 'Success!',
+              text: 'Course added successfully!',
+              icon: 'success',
+              confirmButtonText: 'OK',
+            });
             this.successMessage = 'Course added successfully!';
             this.errorMessage = null;
             this.loadCourses();
@@ -331,12 +271,59 @@ export class CoursesListComponent implements OnInit {
             this.successMessage = null;
           },
         });
-      })
-      .catch((err) => {
+      },
+      error: (err) => {
         this.errorMessage = 'Error uploading files: ' + err.message;
         this.successMessage = null;
-      });
+      },
+    });
   }
+
+  // addCourse(courseData: any): void {
+  //   // Upload files and update URLs
+  //   const uploadPromises = Object.keys(this.selectedFiles).map((key) => {
+  //     const [moduleIndex, lessonIndex] = key.split('-').map(Number);
+  //     const file = this.selectedFiles[key];
+  //     if (file) {
+  //       return this.fileUploadService
+  //         .uploadFile(file)
+  //         .toPromise()
+  //         .then((url) => {
+  //           const lessons = this.modules
+  //             .at(moduleIndex)
+  //             .get('lessons') as FormArray;
+  //           const lesson = lessons.at(lessonIndex);
+  //           if (lesson.get('type')?.value === 'PDF') {
+  //             console.log('PDF URL:', url);
+  //             lesson.patchValue({ pdfUrl: url });
+  //           } else if (lesson.get('type')?.value === 'Video') {
+  //             console.log('Video URL:', url);
+  //             lesson.patchValue({ videoUrl: url });
+  //           }
+  //         });
+  //     }
+  //     return Promise.resolve();
+  //   });
+
+  //   Promise.all(uploadPromises)
+  //     .then(() => {
+  //       this.courseService.addCourse(courseData).subscribe({
+  //         next: (data) => {
+  //           this.successMessage = 'Course added successfully!';
+  //           this.errorMessage = null;
+  //           this.loadCourses();
+  //         },
+  //         error: (err) => {
+  //           this.errorMessage = 'Error adding course: ' + err.message;
+  //           this.successMessage = null;
+  //         },
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       this.errorMessage = 'Error uploading files: ' + err.message;
+  //       this.successMessage = null;
+  //     });
+  // }
 
   onEditFileSelected(
     event: Event,
@@ -458,7 +445,7 @@ export class CoursesListComponent implements OnInit {
               title: 'Success!',
               text: 'Course updated successfully!',
               icon: 'success',
-              confirmButtonText: 'OK'
+              confirmButtonText: 'OK',
             });
             this.successMessage = 'Course updated successfully!';
             this.errorMessage = null;
@@ -491,7 +478,7 @@ export class CoursesListComponent implements OnInit {
           title: 'Deleted!',
           text: 'The course has been deleted.',
           icon: 'success',
-          confirmButtonText: 'OK'
+          confirmButtonText: 'OK',
         });
         this.toastr.success('Course deleted successfully!');
       },

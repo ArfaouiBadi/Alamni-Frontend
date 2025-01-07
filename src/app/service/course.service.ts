@@ -12,7 +12,8 @@ export class CourseService {
 
   constructor(private readonly http: HttpClient) {}
 
-  addCourse(courseData: FormData): Observable<any> {
+  addCourse(courseData: Course): Observable<any> {
+    console.log('service add', JSON.stringify(courseData));
     return this.http.post(`${this.apiUrl}/courses`, courseData);
   }
   getCourseById(id: string): Observable<Course> {
@@ -49,6 +50,4 @@ export class CourseService {
   enrollCourse(courseId: string, userId: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/users/enroll`, { userId, courseId });
   }
-
-  
 }

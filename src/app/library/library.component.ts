@@ -9,7 +9,7 @@ import { Router, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-library',
   standalone: true,
-  imports: [SidebarComponent, CommonModule,RouterModule],
+  imports: [SidebarComponent, CommonModule, RouterModule],
   templateUrl: './library.component.html',
   styleUrls: ['./library.component.css'],
 })
@@ -21,7 +21,10 @@ export class LibraryComponent implements OnInit {
   finishedCoursesCount: number = 0;
   unfinishedCoursesCount: number = 0;
 
-  constructor(private enrollmentService: EnrollmentService, private readonly router: Router) {}
+  constructor(
+    private enrollmentService: EnrollmentService,
+    private readonly router: Router
+  ) {}
 
   ngOnInit(): void {
     this.id = localStorage.getItem('id') || '';
@@ -36,6 +39,7 @@ export class LibraryComponent implements OnInit {
         this.enrollments = enrollments;
         this.allCourses = enrollments.map((enrollment) => {
           const course = enrollment.course;
+          console.log('Course:', course);
           course.imageUrl = `http://localhost:8000/api${course.imageUrl}`;
           return course;
         });
