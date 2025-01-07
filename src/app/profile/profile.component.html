@@ -7,15 +7,14 @@
             class="rounded-circle mt-5"
             width="150px"
             src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
-          /><span class="font-weight-bold">{{ username }}</span
-          >
+          /><span class="font-weight-bold">{{ username }}</span>
           <span class="text-black-50">
             <i class="fas fa-trophy"></i> Level {{ user.level }}
           </span>
           <span class="text-black-50">
             <i class="fas fa-star"></i> {{ user.points }} points
           </span>
-          
+
           <span> </span>
         </div>
       </div>
@@ -32,7 +31,7 @@
                 class="form-control"
                 placeholder=""
                 [(ngModel)]="user.firstName"
-                [disabled]="false" 
+                [disabled]="false"
               />
             </div>
             <div class="col-md-6">
@@ -53,7 +52,8 @@
                 class="form-control"
                 placeholder=""
                 value="{{ user.email }}"
-              disabled/>
+                disabled
+              />
             </div>
             <div class="col-md-12">
               <label class="labels">Username</label
@@ -62,7 +62,8 @@
                 class="form-control"
                 placeholder=""
                 value="{{ user.username }}"
-              disabled/>
+                disabled
+              />
             </div>
             <div class="col-md-12">
               <label class="labels">Birth Date</label
@@ -71,29 +72,35 @@
                 class="form-control"
                 placeholder=""
                 value="{{ user.dateOfBirth }}"
-              disabled/>
+                disabled
+              />
             </div>
-          
-           
           </div>
           <div class="mt-5 text-center">
-            <button 
-              class="btn btn-primary profile-button" 
-              type="button" 
-              (click)="updateProfile()">
+            <button
+              class="btn btn-primary profile-button"
+              type="button"
+              (click)="updateProfile()"
+            >
               Update Profile
             </button>
-
           </div>
         </div>
       </div>
       <div class="col-md-4">
         <div class="p-3 py-5">
-          <h4 class="text">
-            <i class="fas fa-award"></i> Badges
-          </h4>
+          <h4 class="text"><i class="fas fa-award"></i> Badges</h4>
+          <div class="badges-grid">
+            <div *ngFor="let badge of badges" class="badge-container">
+              <img
+                [src]="badge.icon"
+                [alt]="badge.name"
+                class="badge-icon"
+              />
+              <span class="badge-name">{{ badge.name }}</span>
+            </div>
+          </div>
         </div>
-        
       </div>
     </div>
   </div>

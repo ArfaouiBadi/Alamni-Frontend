@@ -82,3 +82,29 @@ body {
     font-family: 'Archivo', sans-serif;
     font-weight: 900;
 }
+.badges-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Adjust the gap between badges as needed */
+  }
+  
+  .badge-container {
+    flex: 0 1 calc(50% - 20px); /* 2 badges per row, adjust the gap as needed */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .badge-icon {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .badge-name {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    color: #682773;
+    text-align: center;
+  }
