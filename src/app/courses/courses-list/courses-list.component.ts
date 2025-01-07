@@ -11,6 +11,7 @@ import { FileUploadService } from '../../service/file-upload.service';
 import { Category } from '../../interface/category';
 import { Module } from '../../interface/module';
 import { Lesson } from '../../interface/lesson';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-courses-list',
@@ -100,6 +101,7 @@ export class CoursesListComponent implements OnInit {
 
   confirmDeleteCourse(courseId: string): void {
     this.courseIdToDelete = courseId;
+    
   }
 
   get modules(): FormArray {
@@ -275,6 +277,12 @@ export class CoursesListComponent implements OnInit {
     // Send the form data using the course service
     this.courseService.addCourse(formData).subscribe({
       next: (data) => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Course added successfully!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
         this.successMessage = 'Course added successfully!';
         this.errorMessage = null;
         this.loadCourses();
@@ -446,6 +454,12 @@ export class CoursesListComponent implements OnInit {
         console.log('All files uploaded successfully');
         this.courseService.updateCourse(courseData).subscribe({
           next: (data) => {
+            Swal.fire({
+              title: 'Success!',
+              text: 'Course updated successfully!',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            });
             this.successMessage = 'Course updated successfully!';
             this.errorMessage = null;
             console.log('Course updated successfully');
@@ -473,6 +487,12 @@ export class CoursesListComponent implements OnInit {
     this.courseService.deleteCourse(this.courseIdToDelete).subscribe({
       next: () => {
         this.loadCourses();
+        Swal.fire({
+          title: 'Deleted!',
+          text: 'The course has been deleted.',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
         this.toastr.success('Course deleted successfully!');
       },
       error: (error) => {

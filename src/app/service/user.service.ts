@@ -46,4 +46,9 @@ export class UserService {
       `${this.apiUrl}/users/age-distribution`
     );
   }
+  updateUserName(id: string, userData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/users/${id}/update-name`, userData);
+  }
+  
+  
 }

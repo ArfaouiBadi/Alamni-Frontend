@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../service/auth.service';
 import { FooterComponent } from "../../footer/footer.component";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -46,16 +47,35 @@ export class LoginComponent {
           localStorage.setItem('role', JSON.stringify(response.roles[0])); // Store the user role in local storage
           localStorage.setItem('username', response.username); 
           localStorage.setItem('email', response.email); 
-          localStorage.setItem('id',response.id);
+          localStorage.setItem('id', response.id);
+  
           // Navigate to the home page
           this.router.navigate(['/home']);
         },
         (error: any) => {
           console.error('Login error', error);
-          // Handle login error (e.g., show a message to the user)
+          
+          // Show SweetAlert if the password is incorrect
+          if (error.status === 401) {
+            Swal.fire({
+              title: 'Error!',
+              text: 'Invalid credentials, please check your email and password.',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          } else {
+            // Handle other types of errors if necessary
+            Swal.fire({
+              title: 'Error!',
+              text: 'An unexpected error occurred. Please try again later.',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }
         }
       );
     }
   }
+  
   
 }

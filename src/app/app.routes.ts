@@ -29,7 +29,7 @@ export const routes: Routes = [
     component: NavbarComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'home', component: HomePageComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'courses', component: CoursesComponent },

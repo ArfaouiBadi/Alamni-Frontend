@@ -23,6 +23,7 @@ export class HomePageComponent implements OnInit {
   allCourses: Course[] = [];
   courses: Course[] = [];
   lastUnfinishedCourse: Course | null = null;
+  finishedCoursesCount: number = 0;
 
   constructor(
     private userService: UserService,
@@ -40,10 +41,22 @@ export class HomePageComponent implements OnInit {
           this.id = localStorage.getItem('id') || '';
           if (this.id) {
             this.getEnrollmentsByUserId(this.id);
+            this.getFinishedCoursesByUserId(this.id); 
           }
         }
       });
     }
+  }
+  getFinishedCoursesByUserId(userId: string): void {
+    this.enrollmentService.getFinishedCoursesByUserId(userId).subscribe({
+      next: (finishedCourses) => {
+        this.finishedCoursesCount = finishedCourses.length;
+        console.log('Finished Courses Count:', this.finishedCoursesCount);
+      },
+      error: (err) => {
+        console.error('Error fetching finished courses:', err);
+      },
+    });
   }
   getEnrollmentsByUserId(userId: string): void {
     this.enrollmentService.getEnrollmentsByUserId(userId).subscribe({

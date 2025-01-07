@@ -31,17 +31,18 @@
                 type="text"
                 class="form-control"
                 placeholder=""
-                value="{{ user.firstName }}"
-              disabled/>
+                [(ngModel)]="user.firstName"
+                [disabled]="false" 
+              />
             </div>
             <div class="col-md-6">
               <label class="labels">Lastname</label
               ><input
                 type="text"
                 class="form-control"
-                value="{{ user.lastName }}"
-                placeholder=""
-              disabled/>
+                [(ngModel)]="user.lastName"
+                [disabled]="false"
+              />
             </div>
           </div>
           <div class="row mt-3">
@@ -72,30 +73,17 @@
                 value="{{ user.dateOfBirth }}"
               disabled/>
             </div>
-            <div class="col-md-12">
-              <label class="labels">Password</label
-              ><input
-                type="password"
-                class="form-control"
-                placeholder=""
-                value="{{ user.password }}"
-              disabled/>
-            </div>
-            <div class="col-md-12">
-              <label class="labels"> Confirm new Password</label
-              ><input
-                type="password"
-                class="form-control"
-                placeholder=""
-                value="{{ user.password }}"
-              disabled/>
-            </div>
+          
            
           </div>
           <div class="mt-5 text-center">
-            <button class="btn btn-primary profile-button" type="button">
-              Change password
+            <button 
+              class="btn btn-primary profile-button" 
+              type="button" 
+              (click)="updateProfile()">
+              Update Profile
             </button>
+
           </div>
         </div>
       </div>

@@ -30,7 +30,7 @@ export class CategoriesComponent implements OnInit {
     private categoryService: CategoryService,
     private fb: FormBuilder
   ) {
-    // Initialize the add category form
+  
     this.addCategoryForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
@@ -139,6 +139,7 @@ export class CategoriesComponent implements OnInit {
           if (index !== -1) {
             this.categories[index] = category;
             Swal.fire('Success', 'Category updated successfully!', 'success');
+            
           }
           this.selectedCategory = null;
         },
@@ -147,6 +148,7 @@ export class CategoriesComponent implements OnInit {
           Swal.fire('Error', 'Failed to update category.', 'error');
         },
       });
+
   }
 
   // Delete a category

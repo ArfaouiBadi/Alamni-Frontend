@@ -9,12 +9,13 @@ import { CoursesListComponent } from '../courses/courses-list/courses-list.compo
 import { EnrollmentService } from '../service/enrollment.service';
 import { Router } from '@angular/router';
 import { CategoriesComponent } from "../categories/categories.component";
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css'],
-  imports: [UsersListComponent, CommonModule, CoursesListComponent, CategoriesComponent],
+  imports: [UsersListComponent, CommonModule, CoursesListComponent, CategoriesComponent,RouterModule],
 })
 export class AdminDashboardComponent implements AfterViewInit {
   totalCourses: number = 0;
@@ -23,7 +24,7 @@ export class AdminDashboardComponent implements AfterViewInit {
   totalEnrolledCourses: number = 0;
   chart: any;
   ageDistribution: any = {};
-
+  courses: any[] = [];
   constructor(
     private courseService: CourseService,
     private userService: UserService,
@@ -41,6 +42,8 @@ export class AdminDashboardComponent implements AfterViewInit {
     this.fetchEnrolledCourses();
     this.fetchCoursesPerCategory();
     this.fetchAgeDistribution();
+    this.fetchCourses();
+  
   }
 
   fetchTotalCourses(): void {
@@ -89,15 +92,26 @@ export class AdminDashboardComponent implements AfterViewInit {
   }
 
   fetchCoursesPerCategory(): void {
-    this.courseService.getCoursesPerCategory().subscribe({
-      next: (data) => {
-        const categories = data.map((item) => item.category);
-        const counts = data.map((item) => item.count);
-
+    this.courseService.getCourses().subscribe({
+      next: (courses) => {
+        // Group courses by category and count them
+        const categoryCounts = courses.reduce((acc, course) => {
+          const categoryName = course.category.name;
+          if (!acc[categoryName]) {
+            acc[categoryName] = 0;
+          }
+          acc[categoryName]++;
+          return acc;
+        }, {} as Record<string, number>);
+  
+        const categories = Object.keys(categoryCounts);
+        const counts = Object.values(categoryCounts);
+  
         if (this.chart) {
           this.chart.destroy();
         }
-
+  
+        // Create a bar chart
         this.chart = new Chart('myAreaChart', {
           type: 'bar',
           data: {
@@ -125,10 +139,11 @@ export class AdminDashboardComponent implements AfterViewInit {
         });
       },
       error: (err) => {
-        console.error('Error fetching courses per category:', err);
+        console.error('Error fetching courses:', err);
       },
     });
   }
+  
 
   fetchAgeDistribution(): void {
     this.userService.getUsersByAgeGroup().subscribe({
@@ -178,6 +193,7 @@ export class AdminDashboardComponent implements AfterViewInit {
 
   showDashboard() {
     this.currentView = 'dashboard';
+    location.reload();
   }
   showManageCourses() {
     this.currentView = 'manageCourses';
@@ -185,9 +201,37 @@ export class AdminDashboardComponent implements AfterViewInit {
   showManageCategories(){
     this.currentView='manageCategories';
   }
+  fetchCourses(): void {
+    this.courseService.getCourses().subscribe({
+      next: (data) => {
+        this.courses = data.map((course) => ({
+          title: course.title,
+          duration: course.duration,
+        }));
+      },
+      error: (err) => {
+        console.error('Error fetching courses:', err);
+      },
+    });
+  }
+  getProgressPercentage(duration: number): number {
+    const maxDuration = 700; 
+    return Math.min((duration / maxDuration) * 100, 100);
+  }
+  
+  getProgressBarClass(duration: number): string {
+    const percentage = this.getProgressPercentage(duration);
+    if (percentage <= 20) return 'bg-danger';
+    if (percentage <= 40) return 'bg-warning';
+    if (percentage <= 60) return 'bg-info';
+    if (percentage <= 80) return 'bg-primary';
+    return 'bg-success';
+  }
+  
   logout() {
     localStorage.clear(); 
     this.router.navigate(['/login']); 
   }
+
 
 }

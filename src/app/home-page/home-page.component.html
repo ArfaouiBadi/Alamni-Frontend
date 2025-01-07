@@ -41,7 +41,7 @@
                 class="course-image"
               />
             </div>
-            <button class="btn-course">Continue</button>
+            <button class="btn-course" [routerLink]="['/course-details', course.id]">Continue</button>
           </li>
         </ul>
       </div>
@@ -77,13 +77,9 @@
     <div class="card progress-card">
       <p>
         <i class="fas fa-check-circle"></i> Courses completed:
-        <strong>0</strong>
+        <strong>{{ finishedCoursesCount }}</strong>
       </p>
-      <p><i class="fas fa-trophy"></i> Tracks completed: <strong>0</strong></p>
-      <p>
-        <i class="fas fa-clipboard-list"></i> Projects completed:
-        <strong>0</strong>
-      </p>
+     
     </div>
   </div>
 </div>

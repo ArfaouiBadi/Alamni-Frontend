@@ -25,4 +25,9 @@ export class EnrollmentService {
   getEnrollments(): Observable<any> {
     return this.http.get<any[]>(`${this.apiUrl}/total-enrollment-count`);
   }
+  getFinishedCoursesByUserId(userId: string): Observable<Map<string, string>[]> {
+    return this.http.get<Map<string, string>[]>(
+      `${this.apiUrl}/user/${userId}/finished-courses`
+    );
+  }
 }
