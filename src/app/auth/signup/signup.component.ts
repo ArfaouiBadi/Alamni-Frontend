@@ -35,7 +35,7 @@ export class SignUpComponent {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       username: ['', Validators.required],
-      birthDate: ['', [Validators.required, this.ageValidator]],
+      dateOfBirth: ['', [Validators.required, this.ageValidator]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
@@ -43,13 +43,13 @@ export class SignUpComponent {
 
   // Custom validator for birth date to check age (16 or older)
   ageValidator(control: AbstractControl): ValidationErrors | null {
-    const birthDate = control.value;
-    if (!birthDate) return null;
+    const dateOfBirth = control.value;
+    if (!dateOfBirth) return null;
 
     const today = new Date();
-    const birthDateObj = new Date(birthDate);
-    const age = today.getFullYear() - birthDateObj.getFullYear();
-    const month = today.getMonth() - birthDateObj.getMonth();
+    const dateOfBirthObj = new Date(dateOfBirth);
+    const age = today.getFullYear() - dateOfBirthObj.getFullYear();
+    const month = today.getMonth() - dateOfBirthObj.getMonth();
     
     // Check if the user is 16 years old or older
     if (age > 16 || (age === 16 && month >= 0)) {
