@@ -42,7 +42,7 @@
           class="sidebar-brand d-flex align-items-center justify-content-center"
           [routerLink]="['/home']"
         >
-          <div class="sidebar-brand-text mx-3 fontLobser" >Alamni</div>
+          <div class="sidebar-brand-text mx-3 fontLobser">Alamni</div>
         </a>
 
         <!-- Divider -->
@@ -50,7 +50,7 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item">
-          <a class="nav-link" (click)="showDashboard()" >
+          <a class="nav-link" (click)="showDashboard()">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span clas>Dashboard</span>
           </a>
@@ -75,7 +75,6 @@
             <span>Manage Courses</span>
           </a>
         </li>
-       
 
         <!-- Nav Item - Utilities Collapse Menu -->
         <li class="nav-item">
@@ -121,7 +120,7 @@
               <h6 class="collapse-header">Login Screens:</h6>
               <a class="collapse-item" [routerLink]="['/login']">Login</a>
               <a class="collapse-item" [routerLink]="['/signup']">Register</a>
-              
+
               <div class="collapse-divider"></div>
               <h6 class="collapse-header">Other Pages:</h6>
               <a class="collapse-item" [routerLink]="['/home']">Home</a>
@@ -132,8 +131,6 @@
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block" />
-
-      
       </ul>
       <!-- End of Sidebar -->
 
@@ -154,12 +151,9 @@
             </button>
 
             <!-- Topbar Search -->
-          
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
-              
-
               <div class="topbar-divider d-none d-sm-block"></div>
 
               <!-- Nav Item - User Information -->
@@ -190,7 +184,7 @@
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
                   </a>
-              
+
                   <div class="dropdown-divider"></div>
                   <a
                     class="dropdown-item"
@@ -219,7 +213,6 @@
                 <h1 class="h3 mb-0 text-gray-800 fontArchivos font-weight-bold">
                   Dashboard
                 </h1>
-          
               </div>
 
               <!-- Content Row -->
@@ -408,22 +401,30 @@
                   <!-- Project Card Example -->
                   <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                      <h6 class="m-0 font-weight-bold text-primary">Courses Duration</h6>
+                      <h6 class="m-0 font-weight-bold text-primary">
+                        Courses Duration
+                      </h6>
                     </div>
                     <div class="card-body">
                       <ng-container *ngIf="courses.length > 0; else noCourses">
                         <div *ngFor="let course of courses">
                           <h4 class="small font-weight-bold">
                             {{ course.title }}
-                            <span class="float-right">{{ course.duration }} mins</span>
+                            <span class="float-right"
+                              >{{ course.duration }} mins</span
+                            >
                           </h4>
                           <div class="progress mb-4">
                             <div
                               class="progress-bar"
                               [ngClass]="getProgressBarClass(course.duration)"
                               role="progressbar"
-                              [style.width]="getProgressPercentage(course.duration) + '%'"
-                              [attr.aria-valuenow]="getProgressPercentage(course.duration)"
+                              [style.width]="
+                                getProgressPercentage(course.duration) + '%'
+                              "
+                              [attr.aria-valuenow]="
+                                getProgressPercentage(course.duration)
+                              "
                               aria-valuemin="0"
                               aria-valuemax="100"
                             ></div>
@@ -435,7 +436,6 @@
                       </ng-template>
                     </div>
                   </div>
-                  
 
                   <!-- Color System -->
                   <div class="row">
@@ -515,14 +515,17 @@
                       </h6>
                     </div>
                     <div class="card-body">
-                      
                       <p>
-                        <a
-                          target="_blank"
-                          rel="nofollow"
-                          
-                          >Alamni Dashboard</a
-                        >, is a user-friendly administrative platform that provides key website statistics and facilitates efficient management of categories, courses, and users. It enables administrators to monitor data through visualized metrics, organize content by managing categories, handle courses with detailed control, and oversee user accounts with role assignments and activity tracking. Designed for simplicity and efficiency, the dashboard ensures seamless website operation and enhances user experience.
+                        <a target="_blank" rel="nofollow">Alamni Dashboard</a>,
+                        is a user-friendly administrative platform that provides
+                        key website statistics and facilitates efficient
+                        management of categories, courses, and users. It enables
+                        administrators to monitor data through visualized
+                        metrics, organize content by managing categories, handle
+                        courses with detailed control, and oversee user accounts
+                        with role assignments and activity tracking. Designed
+                        for simplicity and efficiency, the dashboard ensures
+                        seamless website operation and enhances user experience.
                       </p>
                       <a
                         target="_blank"
@@ -532,8 +535,6 @@
                       >
                     </div>
                   </div>
-
-                 
                 </div>
               </div>
             </div>
@@ -566,7 +567,6 @@
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-   
 
     <!-- Logout Modal-->
     <div
@@ -579,7 +579,7 @@
     >
       
     </div>
-    
+
     <!-- Bootstrap core JavaScript-->
     <script src="../../assets/dashboard/vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

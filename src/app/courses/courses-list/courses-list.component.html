@@ -135,9 +135,9 @@
           </table>
           <div class="clearfix">
             <div class="hint-text">
-              Showing <b>{{ courses.length }}</b> out of <b>{{ courses.length }}</b> entries
+              Showing <b>{{ courses.length }}</b> out of
+              <b>{{ courses.length }}</b> entries
             </div>
-           
           </div>
         </div>
       </div>
@@ -587,41 +587,45 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label>Badges</label>
-                    <div formArrayName="badges">
-                      <div
-                        *ngFor="let badge of badges.controls; let i = index"
-                        [ngClass]="{
-                          'has-error': badge.invalid && badge.touched
-                        }"
-                      >
-                        <input
-                          type="text"
-                          class="form-control"
-                          [formControlName]="i"
-                        />
+                    <label for="badges">Badges</label>
+                    <div>
+                      <div formArrayName="badges">
                         <div
-                          *ngIf="badge.invalid && badge.touched"
-                          class="text-danger"
+                          *ngFor="let badge of badges.controls; let i = index"
+                          [formGroupName]="i"
                         >
-                          Badge is required.
+                          <div class="badge-item mb-3">
+                            <input
+                              type="text"
+                              formControlName="name"
+                              placeholder="Badge Name"
+                              class="form-control mb-2"
+                              required
+                            />
+                            <input
+                              type="file"
+                              (change)="onBadgeIconSelected($event, i)"
+                              class="form-control-file mb-2"
+                              required
+                            />
+                            <button
+                              type="button"
+                              (click)="removeBadge(i)"
+                              class="btn btn-danger btn-sm"
+                            >
+                              Remove Badge
+                            </button>
+                          </div>
                         </div>
-                        <button
-                          type="button"
-                          class="btn btn-danger"
-                          (click)="removeBadge(i)"
-                        >
-                          Remove Badge
-                        </button>
                       </div>
-                      <button
-                        type="button"
-                        class="btn btn-secondary"
-                        (click)="addBadge()"
-                      >
-                        Add Badge
-                      </button>
                     </div>
+                    <button
+                      type="button"
+                      (click)="addBadge()"
+                      class="btn btn-primary btn-sm"
+                    >
+                      Add Badge
+                    </button>
                   </div>
                   <div
                     class="form-group"
@@ -1113,38 +1117,48 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label>Badges</label>
-                    <div formArrayName="badges">
-                      <div
-                        *ngFor="let badge of editBadges.controls; let i = index"
-                      >
-                        <input
-                          type="text"
-                          class="form-control"
-                          [formControlName]="i"
-                        />
+                    <label for="badges">Badges</label>
+                    <div>
+                      <div formArrayName="badges">
                         <div
-                          *ngIf="badge.invalid && badge.touched"
-                          class="text-danger"
+                          *ngFor="
+                            let badge of editBadges.controls;
+                            let i = index
+                          "
+                          [formGroupName]="i"
                         >
-                          Badge is required.
+                          <div class="badge-item mb-3">
+                            <input
+                              type="text"
+                              formControlName="name"
+                              placeholder="Badge Name"
+                              class="form-control mb-2"
+                              required
+                            />
+                            <input
+                              type="file"
+                              (change)="onEditBadgeIconSelected($event, i)"
+                              class="form-control-file mb-2"
+                              required
+                            />
+                            <button
+                              type="button"
+                              (click)="removeEditBadge(i)"
+                              class="btn btn-danger btn-sm"
+                            >
+                              Remove Badge
+                            </button>
+                          </div>
                         </div>
-                        <button
-                          type="button"
-                          class="btn btn-danger"
-                          (click)="removeEditBadge(i)"
-                        >
-                          Remove Badge
-                        </button>
                       </div>
-                      <button
-                        type="button"
-                        class="btn btn-secondary"
-                        (click)="addEditBadge()"
-                      >
-                        Add Badge
-                      </button>
                     </div>
+                    <button
+                      type="button"
+                      (click)="addEditBadge()"
+                      class="btn btn-primary btn-sm"
+                    >
+                      Add Badge
+                    </button>
                   </div>
                   <div
                     class="form-group"

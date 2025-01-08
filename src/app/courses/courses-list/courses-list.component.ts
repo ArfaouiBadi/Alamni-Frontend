@@ -1,4 +1,3 @@
-// filepath: /d:/Projects/Alamni-Frontend/src/app/courses/courses-list/courses-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Course } from '../../interface/course';
@@ -11,6 +10,7 @@ import { FileUploadService } from '../../service/file-upload.service';
 import { Category } from '../../interface/category';
 import { Module } from '../../interface/module';
 import { Lesson } from '../../interface/lesson';
+
 import Swal from 'sweetalert2';
 import { forkJoin, Observable, tap } from 'rxjs';
 
@@ -37,12 +37,13 @@ export class CoursesListComponent implements OnInit {
   selectedEditImage: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
   editImagePreview: string | ArrayBuffer | null = null;
+  selectedBadgeIcons: { [key: number]: File | null } = {};
+  selectedEditBadgeIcons: { [key: number]: File | null } = {};
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly courseService: CourseService,
-    private toastr: ToastrService,
-    private fileUploadService: FileUploadService
+    private readonly fileUploadService: FileUploadService
   ) {
     this.addCourseForm = this.fb.group({
       title: ['', Validators.required],
@@ -187,11 +188,21 @@ export class CoursesListComponent implements OnInit {
   }
 
   addBadge(): void {
-    this.badges.push(this.fb.control(''));
+    this.badges.push(
+      this.fb.group({
+        name: ['', Validators.required],
+        icon: ['', Validators.required],
+      })
+    );
   }
 
   addEditBadge(): void {
-    this.editBadges.push(this.fb.control(''));
+    this.editBadges.push(
+      this.fb.group({
+        name: ['', Validators.required],
+        icon: ['', Validators.required],
+      })
+    );
   }
 
   removeBadge(index: number): void {
@@ -210,13 +221,32 @@ export class CoursesListComponent implements OnInit {
     }
   }
 
-  onAddCourse(): void {
-    if (this.addCourseForm.invalid) {
-      return;
+  onBadgeIconSelected(event: Event, badgeIndex: number): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.selectedBadgeIcons[badgeIndex] = file;
     }
+  }
 
+  onEditBadgeIconSelected(event: Event, badgeIndex: number): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.selectedEditBadgeIcons[badgeIndex] = file;
+    }
+  }
+
+  // Handle Add Course
+  onAddCourse(): void {
+    console.log('Adding course:', this.addCourseForm.value);
+    console.log('valid:', this.addCourseForm.invalid);
+    // if (this.addCourseForm.invalid) {
+    //   return;
+    // }
+    console.log('Adding course:', this.addCourseForm.value);
     const courseData = this.addCourseForm.value;
-    console.log(courseData);
+    console.log('Initial courseData:', courseData);
 
     const uploadTasks: Observable<any>[] = [];
 
@@ -233,27 +263,45 @@ export class CoursesListComponent implements OnInit {
 
     // Upload lesson files if selected
     Object.keys(this.selectedFiles).forEach((fileKey) => {
-      uploadTasks.push(
-        this.fileUploadService.uploadFile(this.selectedFiles[fileKey]!).pipe(
-          tap((response) => {
-            const [moduleIndex, lessonIndex] = fileKey.split('-').map(Number);
-            console.log('response:', response);
-            const lesson = courseData.modules[moduleIndex].lessons[lessonIndex];
-            if (lesson.type === 'PDF') {
-              lesson.pdfUrl = response; // Assuming the response contains the file path
-            } else if (lesson.type === 'Video') {
-              lesson.videoUrl = response; // Assuming the response contains the file path
-            }
-          })
-        )
-      );
+      const file = this.selectedFiles[fileKey];
+      if (file) {
+        uploadTasks.push(
+          this.fileUploadService.uploadFile(file).pipe(
+            tap((response: any) => {
+              const [moduleIndex, lessonIndex] = fileKey.split('-').map(Number);
+              const lesson =
+                courseData.modules[moduleIndex].lessons[lessonIndex];
+              if (lesson.type === 'PDF') {
+                lesson.pdfUrl = response;
+              } else if (lesson.type === 'Video') {
+                lesson.videoUrl = response;
+              }
+            })
+          )
+        );
+      }
     });
 
+    // Upload badge icons if selected
+    Object.keys(this.selectedBadgeIcons).forEach((badgeIndex: string) => {
+      const index = parseInt(badgeIndex, 10);
+      const file = this.selectedBadgeIcons[index];
+      if (file) {
+        uploadTasks.push(
+          this.fileUploadService.uploadFile(file).pipe(
+            tap((response: any) => {
+              const badge = courseData.rewardSystem.badges[index];
+              badge.icon = response;
+            })
+          )
+        );
+      }
+    });
     courseData.category = { id: courseData.category };
     // Execute all upload tasks
     forkJoin(uploadTasks).subscribe({
       next: () => {
-        // Send the course data using the course service
+        console.log('All files uploaded successfully');
         this.courseService.addCourse(courseData).subscribe({
           next: (data) => {
             Swal.fire({
@@ -278,52 +326,6 @@ export class CoursesListComponent implements OnInit {
       },
     });
   }
-
-  // addCourse(courseData: any): void {
-  //   // Upload files and update URLs
-  //   const uploadPromises = Object.keys(this.selectedFiles).map((key) => {
-  //     const [moduleIndex, lessonIndex] = key.split('-').map(Number);
-  //     const file = this.selectedFiles[key];
-  //     if (file) {
-  //       return this.fileUploadService
-  //         .uploadFile(file)
-  //         .toPromise()
-  //         .then((url) => {
-  //           const lessons = this.modules
-  //             .at(moduleIndex)
-  //             .get('lessons') as FormArray;
-  //           const lesson = lessons.at(lessonIndex);
-  //           if (lesson.get('type')?.value === 'PDF') {
-  //             console.log('PDF URL:', url);
-  //             lesson.patchValue({ pdfUrl: url });
-  //           } else if (lesson.get('type')?.value === 'Video') {
-  //             console.log('Video URL:', url);
-  //             lesson.patchValue({ videoUrl: url });
-  //           }
-  //         });
-  //     }
-  //     return Promise.resolve();
-  //   });
-
-  //   Promise.all(uploadPromises)
-  //     .then(() => {
-  //       this.courseService.addCourse(courseData).subscribe({
-  //         next: (data) => {
-  //           this.successMessage = 'Course added successfully!';
-  //           this.errorMessage = null;
-  //           this.loadCourses();
-  //         },
-  //         error: (err) => {
-  //           this.errorMessage = 'Error adding course: ' + err.message;
-  //           this.successMessage = null;
-  //         },
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       this.errorMessage = 'Error uploading files: ' + err.message;
-  //       this.successMessage = null;
-  //     });
-  // }
 
   onEditFileSelected(
     event: Event,
@@ -375,6 +377,15 @@ export class CoursesListComponent implements OnInit {
       });
 
       this.editModules.push(moduleGroup);
+    });
+
+    this.editBadges.clear();
+    course.rewardSystem!.badges!.forEach((badge, index) => {
+      const badgeGroup = this.fb.group({
+        name: [badge.name, Validators.required],
+        icon: [badge.icon, Validators.required],
+      });
+      this.editBadges.push(badgeGroup);
     });
   }
 
@@ -436,6 +447,29 @@ export class CoursesListComponent implements OnInit {
       return Promise.resolve();
     });
 
+    // Upload badge icons if selected
+    Object.keys(this.selectedEditBadgeIcons).forEach((badgeIndex: string) => {
+      const file = this.selectedEditBadgeIcons[parseInt(badgeIndex, 10)];
+      if (file) {
+        uploadPromises.push(
+          this.fileUploadService
+            .uploadFile(file)
+            .toPromise()
+            .then((url) => {
+              const badge =
+                courseData.rewardSystem.badges[parseInt(badgeIndex, 10)];
+              badge.icon = url;
+            })
+            .catch((err) => {
+              console.error(
+                `Error uploading badge icon for badge ${badgeIndex}: ${err.message}`
+              );
+              throw err;
+            })
+        );
+      }
+    });
+
     Promise.all(uploadPromises)
       .then(() => {
         console.log('All files uploaded successfully');
@@ -480,11 +514,9 @@ export class CoursesListComponent implements OnInit {
           icon: 'success',
           confirmButtonText: 'OK',
         });
-        this.toastr.success('Course deleted successfully!');
       },
       error: (error) => {
         console.error('Error deleting course:', error);
-        this.toastr.error('Failed to delete course. Please try again.');
       },
     });
   }

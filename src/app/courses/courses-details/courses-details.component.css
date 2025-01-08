@@ -80,7 +80,13 @@
     margin-bottom: 10px;
     transition: all 0.3s ease;
   }
-  
+  .progress{
+    margin-top: 15px;
+  }
+  .progress-bar{
+    font-size: 15px;
+    background-color:#A020F0 ;
+  }
   .header-left .enroll-btn:hover {
     background-color: #A020F0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
