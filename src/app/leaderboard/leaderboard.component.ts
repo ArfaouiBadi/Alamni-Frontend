@@ -42,7 +42,7 @@ export class LeaderboardComponent implements OnInit {
   sortUsers(): void {
     this.filteredUsers.sort((a, b) => {
       const comparison = a.points - b.points;
-      return this.sortOrder === 'asc' ? comparison : -comparison;
+      return this.sortOrder === 'desc' ? comparison : -comparison;
     });
     this.totalPages = Math.ceil(this.filteredUsers.length / this.pageSize);
     this.paginateUsers();

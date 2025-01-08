@@ -78,3 +78,66 @@
  .pagination span {
    font-size: 16px;
  }
+ /* Leaderboard Medal Icons */
+.gold-medal {
+  color: gold;
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+.silver-medal {
+  color: silver;
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+.bronze-medal {
+  color: #cd7f32;
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+/* Styling for leaderboard rows */
+.leaderboard-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.leaderboard-cell {
+  flex: 1;
+  text-align: center;
+}
+
+.leaderboard-header h1 {
+  font-size: 32px;
+  color: #7234f0;
+}
+
+.filter-container input,
+.filter-container select {
+  margin: 5px;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 8px 15px;
+  margin: 0 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.pagination button[disabled] {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}

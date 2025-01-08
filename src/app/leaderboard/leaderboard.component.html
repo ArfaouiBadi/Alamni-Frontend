@@ -28,7 +28,25 @@
           *ngFor="let user of paginatedUsers; let i = index"
         >
           <div class="leaderboard-cell">
-            {{ (currentPage - 1) * pageSize + i + 1 }}
+            <!-- Display a medal icon for the top 3 users -->
+            <ng-container *ngIf="(currentPage - 1) * pageSize + i + 1 <= 3">
+              <i
+                *ngIf="(currentPage - 1) * pageSize + i + 1 === 1"
+                class="fas fa-medal gold-medal"
+              ></i>
+              <i
+                *ngIf="(currentPage - 1) * pageSize + i + 1 === 2"
+                class="fas fa-medal silver-medal"
+              ></i>
+              <i
+                *ngIf="(currentPage - 1) * pageSize + i + 1 === 3"
+                class="fas fa-medal bronze-medal"
+              ></i>
+            </ng-container>
+            <!-- Regular rank number -->
+            <ng-container *ngIf="(currentPage - 1) * pageSize + i + 1 > 3">
+              {{ (currentPage - 1) * pageSize + i + 1 }}
+            </ng-container>
           </div>
           <div class="leaderboard-cell">{{ user.username }}</div>
           <div class="leaderboard-cell">{{ user.points }}</div>
