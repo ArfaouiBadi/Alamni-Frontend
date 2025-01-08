@@ -156,11 +156,15 @@ export class AdminDashboardComponent implements AfterViewInit {
       },
     });
   }
-
   createPieChart(): void {
     const labels = Object.keys(this.ageDistribution);
     const data = Object.values(this.ageDistribution);
-
+  
+   
+    if (this.chart) {
+      this.chart.destroy();
+    }
+  
     this.chart = new Chart('ageChart', {
       type: 'pie',
       data: {
@@ -170,12 +174,12 @@ export class AdminDashboardComponent implements AfterViewInit {
             label: 'User Age Distribution',
             data: data,
             backgroundColor: [
-              '#7234f0', // Purple
-              '#0d47a1', // Blue
-              '#00c853', // Green
-              '#ffeb3b', // Yellow
-              '#f44336', // Red
-              '#4caf50', // Light Green
+              '#7234f0', 
+              '#0d47a1',
+              '#00c853',
+              '#ffeb3b',
+              '#f44336',
+              '#4caf50',
             ],
           },
         ],
@@ -185,6 +189,7 @@ export class AdminDashboardComponent implements AfterViewInit {
       },
     });
   }
+  
   currentView: string = 'dashboard';
 
   showManageUsers() {
