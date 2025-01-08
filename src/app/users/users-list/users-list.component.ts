@@ -129,6 +129,55 @@ export class UsersListComponent implements OnInit {
       });
     }
   }
+  editUser(user: any): void {
+    Swal.fire({
+      title: 'Edit User Points and Level',
+      html: `
+        <label for="level">Level:</label>
+        <input type="number" id="level" class="swal2-input" value="${user.level}"><br>
+        <label for="points">Points:</label>
+        <input type="number" id="points" class="swal2-input" value="${user.points}">
+      `,
+      showCancelButton: true,
+      confirmButtonText: 'Update',
+      preConfirm: () => {
+        const levelInput = (<HTMLInputElement>document.getElementById('level')).value;
+        const pointsInput = (<HTMLInputElement>document.getElementById('points')).value;
+
+        if (!levelInput || !pointsInput) {
+          Swal.showValidationMessage('Both fields are required');
+        }
+
+        return {
+          level: parseInt(levelInput, 10),
+          points: parseInt(pointsInput, 10),
+        };
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const updates = {
+          level: result.value?.level,
+          points: result.value?.points,
+        };
+
+        this.userService.updateUserLevelAndPoints(user.id, updates).subscribe(
+          (response) => {
+            Swal.fire('Updated!', 'User points and level have been updated.', 'success');
+            // Update the local users array
+            const updatedUserIndex = this.users.findIndex((u) => u.id === user.id);
+            if (updatedUserIndex !== -1) {
+              this.users[updatedUserIndex].level = updates.level;
+              this.users[updatedUserIndex].points = updates.points;
+            }
+          },
+          (error) => {
+            console.error('Error updating user:', error);
+            Swal.fire('Error', 'Failed to update user. Please try again.', 'error');
+          }
+        );
+      }
+    });
+  }
   
   
 }

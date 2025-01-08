@@ -53,4 +53,8 @@ export class UserService {
   updateUserRewards(id: string, rewardData: RewardSystem): Observable<any> {
     return this.http.post(`${this.apiUrl}/users/${id}/rewards`, rewardData);
   }
+  updateUserLevelAndPoints(id: string, updates: { level: number; points: number }): Observable<any> {
+    return this.http.put(`${this.apiUrl}/users/${id}/update-level-points`, updates);
+  }
+  
 }
