@@ -14,15 +14,18 @@
   align-items: center;
   gap: 10px;
 }
-.lvl ,.Points{
+
+.lvl, .Points {
   font-size: 15px;
   font-weight: 200;
   color: #000;
 }
-.lvl b,.Points b{
+
+.lvl b, .Points b {
   font-weight: 200;
   color: #000;
 }
+
 .logo img {
   height: 40px;
 }
@@ -41,8 +44,7 @@
   gap: 20px;
   background-color: #e6f2ff;
   border-radius: 30px;
-  padding: 5px ;
-  
+  padding: 5px;
   justify-content: center;
 }
 
@@ -60,12 +62,11 @@
 .menu-item.active {
   color: #fff;
   background-color: #7234f0; /* Active background */
-
   transition: all 0.3s ease;
 }
 
 .menu-item:hover {
-  
+  /* Optional hover effect */
 }
 
 /* Search Zone */
@@ -138,4 +139,71 @@
 .custom-dropdown-menu {
   right: 0;
   left: auto;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .menu {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .menu-item {
+    font-size: 16px;
+    padding: 8px 15px;
+  }
+
+  .profile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  .profile-info {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .search-zone {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .search-button {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo span {
+    font-size: 28px;
+  }
+
+  .menu-item {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  .profile-info span {
+    font-size: 14px;
+  }
+
+  .profile-pic {
+    height: 35px;
+    width: 35px;
+  }
 }
