@@ -41,11 +41,12 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  
 }
 
 .course-card {
   flex: 0 1 calc(33% - 20px); /* Adjust the width to 50% minus the gap */
-  min-width: calc(33% - 20px);
+  min-width: 350px;
   box-sizing: border-box;
   background-color: #f9f9f9;
   border-radius: 8px;
