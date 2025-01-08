@@ -12,6 +12,7 @@ import { EnrollmentService } from '../../service/enrollment.service';
 import Swal from 'sweetalert2';
 import { UserService } from '../../service/user.service';
 import { User } from '../../interface/user';
+import { Enrollment } from '../../interface/Enrollment';
 
 @Component({
   selector: 'app-courses-details',
@@ -28,6 +29,8 @@ export class CoursesDetailsComponent implements OnInit {
   isEnrolled: boolean = false;
   studentCount: number = 0;
   user: User | null = null;
+  enrollment: Enrollment | null = null;
+  enrollmentId: string | null = null;
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
@@ -85,43 +88,65 @@ export class CoursesDetailsComponent implements OnInit {
     });
   }
 
-  enrollCourse(courseId: string) {
-    const id = localStorage.getItem('id');
-    this.courseService.enrollCourse(courseId, id!).subscribe({
-      next: (data) => {
-        console.log('Course enrolled:', data);
-        Swal.fire({
-          title: 'Congratulations!',
-          text: 'You have successfully enrolled in this course!',
-          icon: 'success',
-          confirmButtonText: 'OK',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.router.navigate(['/library']);
-          }
+  enrollCourse() {
+    Swal.fire({
+      title: 'Confirm Enrollment',
+      text: `Do you want to enroll in this course for ${this.course.pointsRequired} credits?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, enroll me!',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const id = localStorage.getItem('id');
+        this.courseService.enrollCourse(this.course.id!, id!).subscribe({
+          next: (data) => {
+            console.log('Course enrolled:', data);
+            Swal.fire({
+              title: 'Congratulations!',
+              text: 'You have successfully enrolled in this course!',
+              icon: 'success',
+              confirmButtonText: 'OK',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.router.navigate(['/library']);
+              }
+            });
+          },
+          error: (err) => {
+            console.error('Error enrolling course:', err);
+            Swal.fire({
+              title: 'Error',
+              text: 'Failed to enroll in this course.',
+              icon: 'error',
+              confirmButtonText: 'OK',
+            });
+          },
         });
-      },
-      error: (err) => {
-        console.error('Error enrolling course:', err);
-        Swal.fire({
-          title: 'Error',
-          text: 'Failed to enroll in this course.',
-          icon: 'error',
-          confirmButtonText: 'OK',
-        });
-      },
+      }
     });
   }
   goToLesson(courseId: string, lesson: Lesson) {
-    this.router.navigate(['lesson', courseId], { state: { lesson } });
+    console.log('Navigating to lesson:', lesson);
+    const enrollment = this.enrollment;
+    const userId = this.userId;
+    const courseRewards = this.course.rewardSystem;
+    this.router.navigate(['lesson', courseId], {
+      state: { lesson, enrollment, userId, courseRewards },
+    });
   }
   private checkEnrollment(courseId: string): void {
     if (this.userId) {
       this.enrollmentService.getEnrollmentsByUserId(this.userId).subscribe({
         next: (enrollments) => {
-          this.isEnrolled = enrollments.some(
+          const enrollment = enrollments.find(
             (enrollment) => enrollment.course.id === courseId
           );
+          this.isEnrolled = !!enrollment;
+          if (this.isEnrolled) {
+            this.enrollment = enrollment!;
+            this.enrollmentId = enrollment!.id;
+          }
         },
         error: (err) => {
           console.error('Error checking enrollment:', err.message);

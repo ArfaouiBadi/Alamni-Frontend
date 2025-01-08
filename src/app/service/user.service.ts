@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
+import { RewardSystem } from '../interface/reward-system';
 
 @Injectable({
   providedIn: 'root',
@@ -49,6 +50,7 @@ export class UserService {
   updateUserName(id: string, userData: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/users/${id}/update-name`, userData);
   }
-  
-  
+  updateUserRewards(id: string, rewardData: RewardSystem): Observable<any> {
+    return this.http.post(`${this.apiUrl}/users/${id}/rewards`, rewardData);
+  }
 }

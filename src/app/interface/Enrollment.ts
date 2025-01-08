@@ -11,4 +11,5 @@ export interface Enrollment {
   startDate: Date;
   lastVisitedDate: Date;
   completedLessons: string[];
+  lessonsCount: number;
 }
