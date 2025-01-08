@@ -21,8 +21,8 @@ export class AuthService {
   }
 
   checkEmailVerification(email: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/auth/check-email-verification`, {
-      params: { email },
-    });
+    return this.http.get(
+      `${this.apiUrl}/auth/${email}/check-email-verification`
+    );
   }
 }

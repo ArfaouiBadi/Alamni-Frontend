@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
-import { SignUpComponent } from './auth/signup/signup.component';
+import { SignupComponent } from './auth/signup/signup.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { UsersListComponent } from './users/users-list/users-list.component';
 
@@ -22,7 +22,7 @@ import { LogoutComponent } from './auth/logout/logout.component';
 import { CategoriesComponent } from './categories/categories.component';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignUpComponent },
+  { path: 'signup', component: SignupComponent },
   { path: 'logout', component: LogoutComponent },
   {
     path: '',

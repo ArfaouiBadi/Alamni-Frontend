@@ -9,6 +9,11 @@
         class="col-md-6 d-flex flex-column justify-content-center align-items-start"
       >
         <div class="welcome-message">
+          <img
+            src="../../../assets/img/login2.png"
+            class="side-image"
+            alt="logo"
+          />
           <h1 class="title">Welcome to Alamni!</h1>
           <p class="subtitle">Your gateway to a gamified learning journey.</p>
           <button
@@ -21,16 +26,17 @@
       </div>
 
       <!-- Sign Up Section -->
+      <!-- Sign Up Section -->
       <div class="col-md-6">
         <div
           class="card rounded-3 text-black"
           style="width: 110%; max-height: 600px; overflow: hidden"
         >
           <div class="row g-0">
-            <div class="col-lg-6 d-flex align-items-center">
+            <div class="d-flex align-items-center">
               <div class="card-body p-md-5">
                 <form
-                  [formGroup]="signUpForm"
+                  [formGroup]="signupForm"
                   (ngSubmit)="onSubmit()"
                   class="scrollable-form"
                 >
@@ -47,8 +53,8 @@
                     />
                     <div
                       *ngIf="
-                        signUpForm.get('firstName')?.invalid &&
-                        signUpForm.get('firstName')?.touched
+                        signupForm.get('firstName')?.invalid &&
+                        signupForm.get('firstName')?.touched
                       "
                     >
                       <small>First Name is required.</small>
@@ -66,8 +72,8 @@
                     />
                     <div
                       *ngIf="
-                        signUpForm.get('lastName')?.invalid &&
-                        signUpForm.get('lastName')?.touched
+                        signupForm.get('lastName')?.invalid &&
+                        signupForm.get('lastName')?.touched
                       "
                     >
                       <small>Last Name is required.</small>
@@ -85,8 +91,8 @@
                     />
                     <div
                       *ngIf="
-                        signUpForm.get('username')?.invalid &&
-                        signUpForm.get('username')?.touched
+                        signupForm.get('username')?.invalid &&
+                        signupForm.get('username')?.touched
                       "
                     >
                       <small>Username is required.</small>
@@ -107,13 +113,13 @@
                       />
                       <div
                         *ngIf="
-                          signUpForm.get('dateOfBirth')?.invalid &&
-                          signUpForm.get('dateOfBirth')?.touched
+                          signupForm.get('dateOfBirth')?.invalid &&
+                          signupForm.get('dateOfBirth')?.touched
                         "
                       >
                         <small
                           *ngIf="
-                            signUpForm
+                            signupForm
                               .get('dateOfBirth')
                               ?.hasError('ageTooYoung')
                           "
@@ -121,7 +127,7 @@
                         >
                         <small
                           *ngIf="
-                            signUpForm.get('dateOfBirth')?.hasError('required')
+                            signupForm.get('dateOfBirth')?.hasError('required')
                           "
                           >Birth Date is required.</small
                         >
@@ -139,8 +145,8 @@
                       />
                       <div
                         *ngIf="
-                          signUpForm.get('email')?.invalid &&
-                          signUpForm.get('email')?.touched
+                          signupForm.get('email')?.invalid &&
+                          signupForm.get('email')?.touched
                         "
                       >
                         <small>Invalid email format.</small>
@@ -158,8 +164,8 @@
                       />
                       <div
                         *ngIf="
-                          signUpForm.get('password')?.invalid &&
-                          signUpForm.get('password')?.touched
+                          signupForm.get('password')?.invalid &&
+                          signupForm.get('password')?.touched
                         "
                       >
                         <small
@@ -169,25 +175,42 @@
                       </div>
                     </div>
 
+                    <!-- Confirm Password -->
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="confirmPassword"
+                        >Confirm Password</label
+                      >
+                      <input
+                        type="password"
+                        id="confirmPassword"
+                        formControlName="confirmPassword"
+                        class="form-control input-wide"
+                      />
+                      <div
+                        *ngIf="
+                          signupForm.get('confirmPassword')?.invalid &&
+                          signupForm.get('confirmPassword')?.touched
+                        "
+                      >
+                        <small>Passwords must match.</small>
+                      </div>
+                    </div>
+
                     <button
                       type="submit"
                       class="btn btn-primary btn-block gradient-custom-2 mb-3"
-                      [disabled]="signUpForm.invalid"
+                      [disabled]="signupForm.invalid || isLoading"
                     >
                       Sign Up
                     </button>
+                    <a
+                      class="text-primary mt-3 d-block align-items-center text-center"
+                      href="/login"
+                      >You have an account? Login here</a
+                    >
                   </div>
                 </form>
               </div>
-            </div>
-            <div
-              class="col-lg-6 d-flex align-items-center justify-content-start"
-            >
-              <img
-                src="../../../assets/img/login2.png"
-                class="side-image"
-                alt="logo"
-              />
             </div>
           </div>
         </div>
@@ -208,3 +231,12 @@
     </div>
   </div>
 </section>
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="loading-content">
+    <div class="loading-text">Alamni.</div>
+    <button class="verify-email" (click)="checkVerificationStatus()">
+      Check Verified
+    </button>
+    <button class="verify-email" (click)="cancelLoading()">Cancel</button>
+  </div>
+</div>

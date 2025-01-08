@@ -32,8 +32,13 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   position: relative;
   display: flex;
-  max-height: 600px;
+  
   overflow: hidden;
+}
+.welcome-message img{
+  width: 50%;
+  height: 50%;
+
 }
 
 .scrollable-form {
@@ -141,4 +146,75 @@ body {
   font-weight: bold;
   color: #7234f0;
   font-family: "Lobster", serif !important;
+}
+
+.verify-email {
+  background-color: #8243fe;
+  color: white;
+  border: none;
+  
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+.verify-email:hover {
+  background-color: #8b17cc;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #8143fe87;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loading-text {
+  font-family: 'Lobster', cursive;
+  font-size: 48px;
+  color: white;
+  font-weight: bold;
+  opacity: 0.5;
+  animation: brightening 2s infinite;
+}
+
+.cancel-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-button:hover {
+  background-color: #ff1a1a;
+}
+
+@keyframes brightening {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
 }

@@ -8,20 +8,34 @@
     </div>
     <div class="container py-5 h-100">
       <div class="row h-100 justify-content-center">
-     
-        <div class="col-md-6 d-flex flex-column justify-content-center align-items-start">
+        <div
+          class="col-md-6 d-flex flex-column justify-content-center align-items-start"
+        >
           <div class="welcome-message">
+            <div class="d-flex align-items-center justify-content-start">
+              <img
+                src="../../../assets/img/login2.png"
+                class="side-image"
+                alt="logo"
+              />
+            </div>
             <h1 class="title">Welcome to Alamni!</h1>
             <p class="subtitle">Your gateway to a gamified learning journey.</p>
-            <button class="btn btn-purple-outline mt-3" [routerLink]="['/signup']" routerLinkActive="router-link-active" >Start Learning for Free</button>
+            <button
+              class="btn btn-purple-outline mt-3"
+              [routerLink]="['/signup']"
+              routerLinkActive="router-link-active"
+            >
+              Start Learning for Free
+            </button>
           </div>
         </div>
 
         <!-- Login Section -->
         <div class="col-md-6">
-          <div class="card rounded-3 text-black" style="width: 110%;">
+          <div class="card rounded-3 text-black" style="width: 110%">
             <div class="row g-0">
-              <div class="col-lg-6 d-flex align-items-center">
+              <div class="d-flex align-items-center">
                 <div class="card-body p-md-5">
                   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                     <p class="form-title">Login to your account</p>
@@ -34,9 +48,19 @@
                         class="form-control input-wide"
                         placeholder="Email address"
                       />
-                      <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-                        <small *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</small>
-                        <small *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</small>
+                      <div
+                        *ngIf="
+                          loginForm.get('email')?.invalid &&
+                          loginForm.get('email')?.touched
+                        "
+                      >
+                        <small
+                          *ngIf="loginForm.get('email')?.errors?.['required']"
+                          >Email is required.</small
+                        >
+                        <small *ngIf="loginForm.get('email')?.errors?.['email']"
+                          >Invalid email format.</small
+                        >
                       </div>
                     </div>
                     <div class="form-outline mb-4">
@@ -48,35 +72,51 @@
                         class="form-control input-wide"
                         placeholder="Password"
                       />
-                      <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-                        <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
-                        <small *ngIf="loginForm.get('password')?.errors?.['minlength']">Minimum 6 characters.</small>
+                      <div
+                        *ngIf="
+                          loginForm.get('password')?.invalid &&
+                          loginForm.get('password')?.touched
+                        "
+                      >
+                        <small
+                          *ngIf="loginForm.get('password')?.errors?.['required']"
+                          >Password is required.</small
+                        >
+                        <small
+                          *ngIf="loginForm.get('password')?.errors?.['minlength']"
+                          >Minimum 6 characters.</small
+                        >
                       </div>
                     </div>
                     <div class="text-center pt-1 mb-5 pb-1">
                       <button
-                        class="btn btn-primary btn-block gradient-custom-2 mb-3 btn-wide"
                         type="submit"
-                        [disabled]="loginForm.invalid"
+                        class="btn btn-primary"
+                        [disabled]="loginForm.invalid || isLoading"
                       >
-                        Log in
+                        Login
                       </button>
                       <div class="social-icons mt-3">
-                        <a href="http://localhost:8000/oauth2/authorization/github" class="social-link">
+                        <a
+                          href="http://localhost:8000/oauth2/authorization/github"
+                          class="social-link"
+                        >
                           <i class="fab fa-github"></i>
                         </a>
-                        <a href="http://localhost:8000/oauth2/authorization/google" class="social-link">
+                        <a
+                          href="http://localhost:8000/oauth2/authorization/google"
+                          class="social-link"
+                        >
                           <i class="fab fa-google"></i>
                         </a>
                       </div>
-                      <a class="text-muted mt-3 d-block" href="#">Forgot password?</a>
-                      <a class="text-primary mt-3 d-block" href="/signup">Don't have an account? Sign up here</a>
+
+                      <a class="text-primary mt-3 d-block" href="/signup"
+                        >Don't have an account? Sign up here</a
+                      >
                     </div>
                   </form>
                 </div>
-              </div>
-              <div class="col-lg-6 d-flex align-items-center justify-content-start">
-                <img src="../../../assets/img/login2.png" class="side-image" alt="logo" />
               </div>
             </div>
           </div>
@@ -97,5 +137,11 @@
       </div>
     </div>
   </section>
-
 </body>
+<!-- Loading Screen -->
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="loading-content">
+    <div class="loading-text">Alamni.</div>
+    <button class="cancel-button" (click)="cancelLoading()">Cancel</button>
+  </div>
+</div>

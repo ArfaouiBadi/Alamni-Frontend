@@ -1,105 +1,114 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  Validators,
-  AbstractControl,
-  ValidationErrors,
+  FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
-
-import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { AuthService } from '../../service/auth.service';
-import { ToastrService } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-signup',
+  templateUrl: './signup.component.html',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
 })
-export class SignUpComponent {
-  signUpForm: FormGroup;
-  message: string = '';
-  isVerified: boolean = false;
+export class SignupComponent implements OnInit {
+  signupForm: FormGroup;
+  isLoading: boolean = false;
 
   constructor(
-    private readonly fb: FormBuilder,
-    private readonly authService: AuthService,
-    private readonly router: Router,
-    private toastr: ToastrService
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
   ) {
-    this.signUpForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      username: ['', Validators.required],
-      dateOfBirth: ['', [Validators.required, this.ageValidator]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+    this.signupForm = this.fb.group(
+      {
+        username: ['', Validators.required],
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', Validators.required],
+      },
+      { validator: this.passwordMatchValidator }
+    );
+  }
+
+  ngOnInit(): void {}
+
+  passwordMatchValidator(formGroup: FormGroup) {
+    return formGroup.get('password')!.value ===
+      formGroup.get('confirmPassword')!.value
+      ? null
+      : { mismatch: true };
+  }
+
+  onSubmit(): void {
+    if (this.signupForm.invalid) {
+      return;
+    }
+
+    this.isLoading = true;
+    this.authService.signUp(this.signupForm.value).subscribe({
+      next: (response: any) => {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Signup successful. Please check your email for verification.',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        }).then(() => {
+          this.checkVerificationStatus();
+        });
+      },
+      error: (err) => {
+        this.isLoading = false;
+        Swal.fire({
+          title: 'Error!',
+          text: err.error.message || 'Signup failed. Please try again.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+      },
     });
   }
 
-  // Custom validator for birth date to check age (16 or older)
-  ageValidator(control: AbstractControl): ValidationErrors | null {
-    const dateOfBirth = control.value;
-    if (!dateOfBirth) return null;
-
-    const today = new Date();
-    const dateOfBirthObj = new Date(dateOfBirth);
-    const age = today.getFullYear() - dateOfBirthObj.getFullYear();
-    const month = today.getMonth() - dateOfBirthObj.getMonth();
-    
-    // Check if the user is 16 years old or older
-    if (age > 16 || (age === 16 && month >= 0)) {
-      return null; // Valid age
-    } else {
-      return { ageTooYoung: true }; // Age is under 16
-    }
-  }
-
-  onSubmit() {
-    if (this.signUpForm.valid) {
-      this.authService.signUp(this.signUpForm.value).subscribe(
-        (response: any) => {
-          console.log('Sign up successful', response);
-          this.message = 'Sign up successful! Please verify your email.';
-          this.toastr.success('Sign up successful! Please verify your email.');
-        },
-        (error: any) => {
-          console.error('Sign up error', error);
-          this.message = 'Sign up failed. Please try again.';
-          this.toastr.error('Sign up failed. Please try again.');
-        }
-      );
-    }
-  }
-
-  checkVerificationStatus() {
-    const email = this.signUpForm.get('email')?.value;
-    if (email) {
-      this.authService.checkEmailVerification(email).subscribe(
-        (response: any) => {
-          console.log('Verification check response', response.enabled);
+  checkVerificationStatus(): void {
+    console.log('Checking verification status');
+    console.log('Form:', this.signupForm.value);
+    console.log('Email:', this.signupForm.value.email);
+    this.authService
+      .checkEmailVerification(this.signupForm.value.email)
+      .subscribe({
+        next: (response) => {
+          console.log('Verification status:', response);
           if (response.enabled) {
-            this.isVerified = true;
-            console.log('Email is verified.', response);
-            this.toastr.success('Email is verified.');
+            this.router.navigate(['/login']);
+          } else {
+            Swal.fire({
+              title: 'Verification Pending',
+              text: 'Your email is not verified yet. Please check your email for verification instructions.',
+              icon: 'warning',
+              confirmButtonText: 'OK',
+            });
           }
         },
-        (error: any) => {
-          console.error('Verification check error', error);
-          this.toastr.error('Verification check error');
-        }
-      );
-    } else {
-      console.error('Email is required to check verification status.');
-      this.toastr.error('Email is required to check verification status.');
-    }
+        error: (err) => {
+          Swal.fire({
+            title: 'Error!',
+            text: 'Failed to check verification status. Please try again.',
+            icon: 'error',
+            confirmButtonText: 'OK',
+          });
+        },
+      });
   }
-
-  onEmailVerified() {
-    this.router.navigate(['/login']);
+  cancelLoading(): void {
+    this.isLoading = false;
   }
 }
